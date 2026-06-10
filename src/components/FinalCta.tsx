@@ -23,14 +23,14 @@ export default function FinalCta() {
           <span className="text-gradient">antes de invertir un peso.</span>
         </h2>
         <p data-reveal className="mt-6 max-w-lg text-base leading-relaxed text-ink-muted">
-          Agenda una demo en vivo: te mostramos un agente de IA atendiendo un negocio como
-          el tuyo y resolvemos todas tus preguntas. Si no te convence, no pasa nada.
+          En 30 minutos te mostramos un agente de IA atendiendo un negocio como el tuyo y
+          resolvemos tus preguntas. Si no te convence, quedamos como amigos.
         </p>
         <div data-reveal className="mt-10">
-          <WhatsAppCta href={WA.demo}>Agendar mi demo gratuita</WhatsAppCta>
+          <WhatsAppCta href={WA.demo}>Agendar mi demo gratis</WhatsAppCta>
         </div>
         <p data-reveal className="mt-5 text-xs text-ink-muted/70">
-          Respondemos en menos de un minuto — obviamente.
+          Te va a responder nuestro propio agente en segundos. Para eso es, pruébalo.
         </p>
       </div>
     </section>

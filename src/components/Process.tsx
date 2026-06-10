@@ -1,23 +1,23 @@
 const STEPS = [
   {
     n: "01",
-    title: "Demo en vivo",
-    body: "Agendas 30 minutos y ves un agente de IA funcionando con un caso como el tuyo. Sin presentaciones eternas: el sistema se vende solo.",
+    title: "Hablamos 30 minutos",
+    body: "Una videollamada corta. Nos cuentas cómo vendes hoy y te mostramos un agente funcionando en vivo, con un caso parecido al tuyo.",
   },
   {
     n: "02",
-    title: "Diseño a tu medida",
-    body: "Entrenamos el agente con tu información, tu tono y tus reglas de negocio. Si incluye web o tienda, la diseñamos para convertir.",
+    title: "Lo armamos a tu medida",
+    body: "Entrenamos el agente con tu información, tus precios y tu forma de hablar. Tú lo revisas y lo ajustamos hasta que suene a ti.",
   },
   {
     n: "03",
-    title: "Lanzamiento en días",
-    body: "Conectamos todo a tu WhatsApp, tu calendario y tu web. Empiezas a atender en automático en días, no en meses.",
+    title: "Lo conectamos y arranca",
+    body: "Tu WhatsApp de siempre, tu calendario, tu página. En cuestión de días ya está atendiendo gente real.",
   },
   {
     n: "04",
-    title: "Optimización continua",
-    body: "Monitoreamos las conversaciones reales y afinamos el sistema cada semana para que cierre cada vez más.",
+    title: "Lo seguimos puliendo",
+    body: "Leemos las conversaciones reales y vamos ajustando. Si el agente pierde una venta que pudo cerrar, lo corregimos.",
   },
 ];
 
@@ -31,13 +31,13 @@ export default function Process() {
               Cómo trabajamos
             </span>
             <h2 data-reveal className="display text-3xl font-semibold leading-tight md:text-5xl">
-              De la demo al sistema funcionando,{" "}
-              <span className="text-ink-muted">sin fricción.</span>
+              De la primera llamada al sistema funcionando,{" "}
+              <span className="text-ink-muted">sin enredos.</span>
             </h2>
           </div>
           <p data-reveal className="max-w-xs text-sm leading-relaxed text-ink-muted">
-            Primero lo ves funcionando, después decides. La demo es gratuita y sin
-            compromiso.
+            Primero lo ves funcionando y después decides. Así de simple. La demo no cuesta
+            nada.
           </p>
         </div>
 

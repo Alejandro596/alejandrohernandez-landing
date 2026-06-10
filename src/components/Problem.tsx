@@ -1,23 +1,23 @@
 const PAINS = [
   {
     n: "01",
-    title: "Respondes tarde y el cliente compra en otro lado",
-    body: "En WhatsApp, el negocio que contesta primero se queda con la venta. Cada hora sin responder es dinero que se va a tu competencia.",
+    title: "Te escriben a las 9 de la noche y respondes al otro día",
+    body: "Para cuando contestas, esa persona ya le compró al que sí respondió. En WhatsApp el que llega primero se queda con la venta, así de simple.",
   },
   {
     n: "02",
-    title: "Tu equipo repite las mismas respuestas todo el día",
-    body: "Precios, horarios, ubicación, disponibilidad… el 80% de las conversaciones son idénticas y consumen el tiempo que deberías invertir en cerrar.",
+    title: "Llevas años contestando lo mismo",
+    body: "Que cuánto vale, que dónde están ubicados, que si hay disponibilidad. Casi todas las conversaciones son iguales y te comen el día entero.",
   },
   {
     n: "03",
-    title: "Tu web es una tarjeta de presentación, no una máquina de ventas",
-    body: "Tener página no es lo mismo que tener un sistema que captura leads, los califica y los lleva hasta la compra.",
+    title: "Tienes página web, pero no te trae clientes",
+    body: "Está bonita y ahí se queda. Una cosa es tener página y otra muy distinta es tener un sistema que captura interesados y los lleva hasta la compra.",
   },
   {
     n: "04",
-    title: "Si tú no estás, el negocio no vende",
-    body: "Las ventas dependen de que estés pegado al celular. Eso no escala, no descansa y no se puede delegar… hasta ahora.",
+    title: "Si tú no estás, no se vende",
+    body: "Un viaje, una gripa, un día ocupado, y las ventas se frenan. Un negocio que depende de que estés pegado al celular no puede crecer.",
   },
 ];
 
@@ -34,7 +34,7 @@ export default function Problem() {
             className="display text-3xl font-semibold leading-tight md:text-5xl"
           >
             Tu negocio pierde ventas todos los días.{" "}
-            <span className="text-ink-muted">Y casi nunca te das cuenta.</span>
+            <span className="text-ink-muted">¿Te suena alguna de estas?</span>
           </h2>
         </div>
 

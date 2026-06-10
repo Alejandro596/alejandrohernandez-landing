@@ -5,23 +5,23 @@ import { useState } from "react";
 const FAQS = [
   {
     q: "¿Necesito saber de tecnología?",
-    a: "No. Nosotros instalamos, configuramos y mantenemos todo. Tú solo apruebas cómo habla el agente y recibes los clientes listos en tu WhatsApp y tu calendario.",
+    a: "Para nada. Nosotros montamos todo y lo dejamos andando. Tú solo nos dices cómo quieres que hable el agente y revisas que te guste. Los clientes te llegan a tu WhatsApp y a tu calendario como siempre.",
   },
   {
     q: "¿El agente suena robótico?",
-    a: "No. Lo entrenamos con tu tono, tus productos y tus reglas de negocio. Conversa de forma natural, maneja objeciones y, cuando un caso lo requiere, te lo pasa a ti o a tu equipo.",
+    a: "Esa es la pregunta que más nos hacen, y la respuesta corta es no. Lo entrenamos con tu forma de hablar y tus productos. De hecho, a la mayoría de los clientes nadie les ha preguntado si es un bot.",
   },
   {
     q: "¿En cuánto tiempo está funcionando?",
-    a: "En días. El agente de IA suele estar en producción la primera semana; una web o tienda online completa toma un poco más según el alcance.",
+    a: "El agente de IA suele quedar la primera semana. Una página o tienda completa tarda un poco más, depende de qué tan grande sea el proyecto.",
   },
   {
-    q: "¿Qué pasa si el cliente pregunta algo que el agente no sabe?",
-    a: "El agente reconoce sus límites: nunca inventa. Escala la conversación a un humano y te notifica al instante para que nadie quede sin respuesta.",
+    q: "¿Y si le preguntan algo que no sabe?",
+    a: "No inventa. Si no sabe algo, lo dice, te pasa la conversación y te avisa al momento. Preferimos que conteste un humano a que el agente diga cualquier cosa.",
   },
   {
     q: "¿Cuánto cuesta?",
-    a: "Depende del alcance de tu proyecto. En la demo gratuita revisamos tu caso, te mostramos el sistema funcionando y te damos una propuesta clara, sin letra pequeña ni permanencias.",
+    a: "Depende de lo que necesites, por eso no ponemos un precio fijo aquí. En la demo revisamos tu caso y te damos una propuesta concreta. Sin permanencias ni letra pequeña.",
   },
 ];
 
@@ -40,8 +40,8 @@ export default function Faq() {
             <span className="text-ink-muted">antes de empezar.</span>
           </h2>
           <p data-reveal className="mt-5 max-w-sm text-sm leading-relaxed text-ink-muted">
-            ¿Tienes otra duda? Escríbenos por WhatsApp y te responde un humano — o nuestro
-            agente, y no vas a notar la diferencia.
+            ¿Tienes otra duda? Escríbenos por WhatsApp. Te responde nuestro propio agente
+            y, si hace falta, uno de nosotros.
           </p>
         </div>
 

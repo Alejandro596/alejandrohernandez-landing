@@ -21,8 +21,8 @@ export default function Services() {
             Lo que instalamos
           </span>
           <h2 data-reveal className="display text-3xl font-semibold leading-tight md:text-5xl">
-            Un sistema completo de ventas,{" "}
-            <span className="text-gradient">no piezas sueltas.</span>
+            Un solo sistema que se encarga{" "}
+            <span className="text-gradient">de todo el embudo.</span>
           </h2>
         </div>
 
@@ -35,10 +35,10 @@ export default function Services() {
                 Agentes de IA para WhatsApp
               </h3>
               <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-muted">
-                Un asesor virtual con tu tono y tu conocimiento del negocio que responde al
-                instante, califica cada lead, agenda citas y demos directamente en tu
-                calendario, envía recordatorios y hace seguimiento a quien no contestó.
-                Funciona de día, de noche y los festivos.
+                Un asesor virtual que habla como tú y conoce tu negocio. Responde al
+                instante, agenda citas directo en tu calendario, manda recordatorios y le
+                vuelve a escribir al que quedó de pensarlo. De día, de noche y los
+                festivos. Tus clientes ni se enteran de que no eres tú.
               </p>
 
               {/* Mini demo de conversación */}
@@ -71,8 +71,8 @@ export default function Services() {
               <IconLayout />
               <h3 className="display mt-6 text-xl font-semibold md:text-2xl">Desarrollo web</h3>
               <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-                Páginas rápidas, hermosas y pensadas para convertir: cada sección guía al
-                visitante hacia una sola acción — contactarte.
+                Nada de plantillas genéricas. Una página que carga rápido, se ve seria y
+                está armada para una sola cosa: que el que entre te escriba.
               </p>
               <a
                 href={WA.web}
@@ -92,8 +92,8 @@ export default function Services() {
               <IconBag />
               <h3 className="display mt-6 text-xl font-semibold md:text-2xl">E-commerce</h3>
               <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-                Tiendas online listas para vender: catálogo, pagos y logística — integradas
-                con tu agente de IA para recuperar carritos y cerrar por WhatsApp.
+                Tu tienda con catálogo, pagos y envíos resueltos. Y conectada al agente de
+                IA, porque en Colombia la gente pregunta por WhatsApp antes de pagar.
               </p>
               <a
                 href={WA.ecommerce}
@@ -115,9 +115,9 @@ export default function Services() {
                   Automatización y seguimiento
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-                  Nada se queda en el aire: seguimiento automático a leads fríos,
-                  recordatorios de cita, notificaciones a tu equipo y todos los datos de tus
-                  conversaciones organizados para decidir con números, no con intuición.
+                  El que no contestó hoy recibe un mensaje mañana. El que agendó cita
+                  recibe su recordatorio. Y tú ves todo organizado: quién escribió, qué
+                  preguntó y en qué quedó cada conversación.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">

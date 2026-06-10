@@ -2,9 +2,9 @@ import WhatsAppCta from "./WhatsAppCta";
 import { WA } from "@/lib/site";
 
 const STATS = [
-  { value: "24/7", label: "atención automática, sin descansos" },
-  { value: "<60s", label: "tiempo de respuesta a cada lead" },
-  { value: "0", label: "oportunidades perdidas por no contestar" },
+  { value: "24/7", label: "tu WhatsApp contestando, incluso un domingo a medianoche" },
+  { value: "1 min", label: "o menos en responderle a cada persona que escribe" },
+  { value: "Días", label: "lo que tardamos en dejarlo funcionando, no meses" },
 ];
 
 export default function Hero() {
@@ -48,18 +48,18 @@ export default function Hero() {
         data-reveal
         className="mt-7 max-w-xl text-center text-base leading-relaxed text-ink-muted md:text-lg"
       >
-        Agentes de inteligencia artificial en WhatsApp, páginas web y tiendas online que
-        atienden, agendan y convierten conversaciones en clientes — mientras tú te dedicas
-        a dirigir tu empresa.
+        Montamos agentes de inteligencia artificial en tu WhatsApp, páginas web y tiendas
+        online. El sistema contesta, agenda y cierra. Tú te dedicas a manejar tu negocio,
+        no a responder el celular.
       </p>
 
       <div data-reveal className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
-        <WhatsAppCta href={WA.demo}>Agendar demo gratuita</WhatsAppCta>
+        <WhatsAppCta href={WA.demo}>Quiero ver una demo</WhatsAppCta>
         <a
           href="#servicios"
           className="rounded-full px-6 py-3 text-sm text-ink-muted t-premium hover:text-ink"
         >
-          Ver servicios
+          Primero quiero ver qué hacen
         </a>
       </div>
 

@@ -5,24 +5,24 @@ const SECTORS = [
   {
     sector: "Educación",
     result:
-      "Un instituto atiende a cientos de aspirantes al tiempo: el agente responde dudas del programa, califica interesados y los asesores solo hablan con quien de verdad va a matricularse.",
+      "Un instituto recibe cientos de mensajes de aspirantes cada semana. El agente responde las dudas del programa y los asesores solo hablan con quien de verdad quiere matricularse. Antes se les perdían mensajes; ya no.",
   },
   {
     sector: "Salud y bienestar",
     result:
-      "Centros de masajes y terapias agendan citas a domicilio en automático, con confirmación, recordatorios y reagendamiento sin intervención humana.",
+      "Un centro de masajes a domicilio agenda sus citas solo: el agente confirma la hora, manda el recordatorio y si el cliente no puede, le reagenda. La dueña dejó de cuadrar citas a mano.",
   },
   {
     sector: "Venta de productos",
     result:
-      "Marcas de consumo cierran pedidos por WhatsApp con el agente recomendando productos, validando cobertura de envío y registrando cada venta.",
+      "Una marca que vende por WhatsApp dejó al agente recomendando el producto, confirmando si hay envío a tu ciudad y tomando el pedido. Los vendedores entran solo cuando hace falta.",
   },
 ];
 
 const METRICS = [
-  { value: 10000, suffix: "+", label: "conversaciones gestionadas por nuestros agentes" },
-  { value: 3, suffix: " líneas", label: "de negocio cubiertas: IA, web y e-commerce" },
-  { value: 100, suffix: "%", label: "de los leads reciben respuesta y seguimiento" },
+  { value: 10000, suffix: "+", label: "conversaciones que han pasado por nuestros agentes" },
+  { value: 7, suffix: " días", label: "o menos para tener tu sistema andando" },
+  { value: 100, suffix: "%", label: "de los mensajes contestados. Nadie queda en visto" },
 ];
 
 export default function Results() {
@@ -70,7 +70,7 @@ export default function Results() {
         </div>
 
         <div data-reveal className="mt-14 flex justify-center">
-          <WhatsAppCta href={WA.demo}>Quiero esto en mi negocio</WhatsAppCta>
+          <WhatsAppCta href={WA.demo}>Quiero esto para mi negocio</WhatsAppCta>
         </div>
       </div>
     </section>
