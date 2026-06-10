@@ -15,7 +15,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skyment.vercel.app"),
+  metadataBase: new URL("https://skyment-landing.vercel.app"),
   title: "Skyment — Agentes de IA, desarrollo web y e-commerce",
   description:
     "Instalamos el sistema que atiende, agenda y vende por ti: agentes de IA en WhatsApp, páginas web que convierten y tiendas online listas para escalar. Agenda una demo gratuita.",
