@@ -40,9 +40,15 @@ export default function PlaneLoop() {
 
     const f = flightRef.current;
 
-    // Las letras caen al piso de la sección y se quedan ahí
+    // Las letras caen al piso de la sección y se quedan ahí.
+    // Se fija el ancho de cada letra para poder cambiarle el glifo después sin reflow.
     const drop = (targets: HTMLElement[]) => {
       const sec = section.getBoundingClientRect();
+      targets.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        el.style.width = `${r.width}px`;
+        el.style.textAlign = "center";
+      });
       gsap.to(targets, {
         y: (_i: number, el: Element) =>
           sec.bottom - el.getBoundingClientRect().bottom - 16 - Math.random() * 40,
@@ -54,33 +60,82 @@ export default function PlaneLoop() {
       });
     };
 
-    // Las letras nuevas suben desde el piso a formar la frase
-    const rise = (idx: number) => {
-      const el = layers[1 - active];
-      const next = buildText(el, TEXTS[idx]);
-      const sec = section.getBoundingClientRect();
-      gsap.fromTo(
-        next,
-        {
-          y: (_i: number, c: Element) =>
-            sec.bottom - c.getBoundingClientRect().bottom - 16,
-          x: () => gsap.utils.random(-150, 150),
-          rotation: () => gsap.utils.random(-80, 80),
-        },
-        {
-          y: 0,
-          x: 0,
-          rotation: 0,
-          duration: 1.2,
-          ease: "power2.out",
-          stagger: { each: 0.02, from: "random" },
-        }
-      );
-      return next;
-    };
+    // LAS MISMAS letras caídas se levantan del piso, vuelan a la posición de la
+    // frase nueva y cambian de glifo a mitad de vuelo (mientras rotan).
+    const riseInto = (idx: number, fallen: HTMLElement[]): HTMLElement[] => {
+      const targetLayer = layers[1 - active];
+      const newChars = buildText(targetLayer, TEXTS[idx]);
+      gsap.set(newChars, { opacity: 0 });
 
-    const fadeOld = (targets: HTMLElement[]) => {
-      gsap.to(targets, { opacity: 0, duration: 0.5, ease: "power1.out" });
+      const targets = newChars
+        .map((c) => {
+          const r = c.getBoundingClientRect();
+          return { el: c, cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
+        })
+        .sort((a, b) => a.cy - b.cy || a.cx - b.cx);
+
+      let floaters = fallen.map((el) => {
+        const r = el.getBoundingClientRect();
+        return { el, cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
+      });
+
+      // Si la frase nueva necesita más letras, se clonan del montón del piso
+      while (floaters.length < targets.length) {
+        const proto = floaters[Math.floor(Math.random() * floaters.length)].el;
+        const clone = proto.cloneNode(true) as HTMLElement;
+        proto.parentElement!.appendChild(clone);
+        gsap.set(clone, { x: `+=${gsap.utils.random(-90, 90)}` });
+        const r = clone.getBoundingClientRect();
+        floaters.push({ el: clone, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+      }
+      floaters = floaters.sort((a, b) => a.cx - b.cx);
+
+      const used = floaters.slice(0, targets.length);
+      const surplus = floaters.slice(targets.length);
+      const sec = section.getBoundingClientRect();
+
+      used.forEach((fl, i) => {
+        const t = targets[i];
+        const el = fl.el;
+        const glyph = t.el.textContent ?? "";
+        const curX = Number(gsap.getProperty(el, "x"));
+        const curY = Number(gsap.getProperty(el, "y"));
+        let swapped = false;
+        gsap.to(el, {
+          x: curX + (t.cx - fl.cx),
+          y: curY + (t.cy - fl.cy),
+          rotation: 0,
+          duration: 1.25,
+          delay: i * 0.016,
+          ease: "power2.inOut",
+          onUpdate() {
+            if (!swapped && this.progress() > 0.5) {
+              swapped = true;
+              el.textContent = glyph;
+            }
+          },
+        });
+      });
+
+      // Las letras que sobran salen volando por arriba
+      surplus.forEach((fl, i) => {
+        gsap.to(fl.el, {
+          y: `-=${sec.height}`,
+          rotation: "+=140",
+          opacity: 0,
+          duration: 1.0,
+          delay: i * 0.02,
+          ease: "power2.in",
+        });
+      });
+
+      // Al aterrizar todas: se muestran las letras reales y se limpia la capa vieja
+      gsap.delayedCall(1.3 + used.length * 0.016, () => {
+        gsap.set(newChars, { opacity: 1 });
+        layers[active].innerHTML = "";
+      });
+
+      return newChars;
     };
 
     const cycle = () => {
@@ -117,11 +172,10 @@ export default function PlaneLoop() {
       tl.to(f, { y: 0.8, duration: 1.35, ease: "sine.in" }, 1.25);
       tl.to(f, { y: 1.25, duration: 1.3, ease: "sine.out" }, 2.6);
 
-      // 3) Mientras vuelve, las letras suben del piso y arman la frase nueva
+      // 3) Mientras vuelve, las letras caídas se levantan y arman la frase nueva
       tl.add(() => {
-        nextChars = rise(nextStep);
+        nextChars = riseInto(nextStep, oldChars);
       }, 1.9);
-      tl.add(() => fadeOld(oldChars), 2.15);
 
       tl.set(f, { visible: false, flying: false }, 4.0);
       tl.to({}, { duration: 0.1 }, 4.0);
