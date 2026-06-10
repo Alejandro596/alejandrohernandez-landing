@@ -15,175 +15,204 @@ const TEXTS = [
 ];
 
 const HOLD = 2.4; // segundos de lectura antes de cada pasada
+const INK = "#10160f";
+const RUBBLE = "#b8c4b0";
+
+type Target = { glyph: string; x: number; y: number };
 
 export default function PlaneLoop() {
   const [canvasOn, setCanvasOn] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const h2ARef = useRef<HTMLHeadingElement>(null);
-  const h2BRef = useRef<HTMLHeadingElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const templateRef = useRef<HTMLHeadingElement>(null);
+  const poolBoxRef = useRef<HTMLDivElement>(null);
   const flightRef = useRef(createFlight());
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return; // frase estática, sin avión ni bucle
-
-    setCanvasOn(true);
-
     const section = sectionRef.current!;
-    const layers = [h2ARef.current!, h2BRef.current!];
-    let active = 0;
+    const stage = stageRef.current!;
+    const template = templateRef.current!;
+    const poolBox = poolBoxRef.current!;
+
+    let pool: HTMLElement[] = [];
     let step = 0;
-    let chars = buildText(layers[0], TEXTS[0]);
     let tl: gsap.core.Timeline | null = null;
     let delayed: gsap.core.Tween | null = null;
     let killed = false;
 
-    const f = flightRef.current;
-
-    // Las letras caen al piso de la sección y se quedan ahí.
-    // Se fija el ancho de cada letra para poder cambiarle el glifo después sin reflow.
-    const drop = (targets: HTMLElement[]) => {
-      const sec = section.getBoundingClientRect();
-      targets.forEach((el) => {
-        const r = el.getBoundingClientRect();
-        el.style.width = `${r.width}px`;
-        el.style.textAlign = "center";
+    // Mide dónde va cada letra de una frase (la plantilla está invisible pero ocupa layout)
+    const measure = (idx: number): Target[] => {
+      buildTemplate(template, TEXTS[idx]);
+      const sr = stage.getBoundingClientRect();
+      return Array.from(template.querySelectorAll<HTMLElement>(".tch")).map((c) => {
+        const r = c.getBoundingClientRect();
+        return { glyph: c.textContent ?? "", x: r.left - sr.left, y: r.top - sr.top };
       });
-      gsap.to(targets, {
-        y: (_i: number, el: Element) =>
-          sec.bottom - el.getBoundingClientRect().bottom - 18 - Math.random() * 26,
-        x: () => gsap.utils.random(-30, 150),
+    };
+
+    const spawn = (t: Target): HTMLElement => {
+      const s = document.createElement("span");
+      s.className = "absolute left-0 top-0 inline-block will-change-transform";
+      s.textContent = t.glyph;
+      s.style.color = INK;
+      poolBox.appendChild(s);
+      gsap.set(s, { x: t.x, y: t.y });
+      return s;
+    };
+
+    const init = () => {
+      if (killed) return;
+      const targets = measure(step);
+      pool = targets.map(spawn);
+      if (reduced) return; // frase estática, sin avión ni bucle
+      setCanvasOn(true);
+      delayed = gsap.delayedCall(HOLD + 0.8, cycle);
+      io.observe(section);
+    };
+
+    // Caen al piso del stage y se quedan ahí, atenuadas
+    const drop = () => {
+      const floorBase = stage.clientHeight;
+      gsap.to(pool, {
+        y: (_i: number, el: HTMLElement) =>
+          floorBase - el.offsetHeight - 10 - Math.random() * 34,
+        x: () => `+=${gsap.utils.random(-30, 150)}`,
         rotation: () => gsap.utils.random(-75, 85),
-        color: "#b8c4b0",
+        color: RUBBLE,
         duration: 1.35,
         ease: "bounce.out",
         stagger: { each: 0.013, from: "start" },
       });
     };
 
-    // LAS MISMAS letras caídas se levantan del piso, vuelan a la posición de la
-    // frase nueva y cambian de glifo a mitad de vuelo (mientras rotan).
-    const riseInto = (idx: number, fallen: HTMLElement[]): HTMLElement[] => {
-      const targetLayer = layers[1 - active];
-      const newChars = buildText(targetLayer, TEXTS[idx]);
-      gsap.set(newChars, { opacity: 0 });
+    // Las mismas letras del piso vuelan a la frase nueva; el glifo cambia a mitad de giro
+    const rise = (idx: number) => {
+      const targets = measure(idx);
+      const stageH = stage.clientHeight;
+      const stageW = stage.clientWidth;
 
-      const targets = newChars
-        .map((c) => {
-          const r = c.getBoundingClientRect();
-          return { el: c, cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
-        })
-        .sort((a, b) => a.cy - b.cy || a.cx - b.cx);
+      let floaters = [...pool].sort(
+        (a, b) => Number(gsap.getProperty(a, "x")) - Number(gsap.getProperty(b, "x"))
+      );
 
-      let floaters = fallen.map((el) => {
-        const r = el.getBoundingClientRect();
-        return { el, cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
-      });
-
-      // Si la frase nueva necesita más letras, se clonan del montón del piso
+      // Faltan letras: emergen desde abajo del borde, entre el montón
       while (floaters.length < targets.length) {
-        const proto = floaters[Math.floor(Math.random() * floaters.length)].el;
-        const clone = proto.cloneNode(true) as HTMLElement;
-        proto.parentElement!.appendChild(clone);
-        gsap.set(clone, { x: `+=${gsap.utils.random(-90, 90)}` });
-        const r = clone.getBoundingClientRect();
-        floaters.push({ el: clone, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+        const s = document.createElement("span");
+        s.className = "absolute left-0 top-0 inline-block will-change-transform";
+        s.textContent = "a";
+        s.style.color = RUBBLE;
+        poolBox.appendChild(s);
+        gsap.set(s, {
+          x: gsap.utils.random(stageW * 0.1, stageW * 0.85),
+          y: stageH + 40,
+          rotation: gsap.utils.random(-70, 70),
+        });
+        floaters.push(s);
       }
-      floaters = floaters.sort((a, b) => a.cx - b.cx);
+      floaters = floaters.sort(
+        (a, b) => Number(gsap.getProperty(a, "x")) - Number(gsap.getProperty(b, "x"))
+      );
 
       const used = floaters.slice(0, targets.length);
       const surplus = floaters.slice(targets.length);
-      const sec = section.getBoundingClientRect();
 
-      used.forEach((fl, i) => {
+      used.forEach((el, i) => {
         const t = targets[i];
-        const el = fl.el;
-        const glyph = t.el.textContent ?? "";
-        const curX = Number(gsap.getProperty(el, "x"));
-        const curY = Number(gsap.getProperty(el, "y"));
         let swapped = false;
         gsap.to(el, {
-          x: curX + (t.cx - fl.cx),
-          y: curY + (t.cy - fl.cy),
+          x: t.x,
+          y: t.y,
           rotation: 0,
-          color: "#10160f",
-          duration: 1.25,
-          delay: i * 0.016,
+          color: INK,
+          duration: 1.3,
+          delay: i * 0.014,
           ease: "power2.inOut",
           onUpdate() {
             if (!swapped && this.progress() > 0.5) {
               swapped = true;
-              el.textContent = glyph;
+              el.textContent = t.glyph;
             }
           },
         });
       });
 
-      // Las letras que sobran salen volando por arriba
-      surplus.forEach((fl, i) => {
-        gsap.to(fl.el, {
-          y: `-=${sec.height}`,
-          rotation: "+=140",
-          opacity: 0,
-          duration: 1.0,
+      // Sobran letras: salen volando por arriba, SIN desvanecerse
+      surplus.forEach((el, i) => {
+        gsap.to(el, {
+          y: -120 - Math.random() * 120,
+          x: `+=${gsap.utils.random(-40, 180)}`,
+          rotation: `+=${gsap.utils.random(60, 200)}`,
+          duration: 1.05,
           delay: i * 0.02,
           ease: "power2.in",
+          onComplete: () => el.remove(),
         });
       });
 
-      // Al aterrizar todas: se muestran las letras reales y se limpia la capa vieja
-      gsap.delayedCall(1.3 + used.length * 0.016, () => {
-        gsap.set(newChars, { opacity: 1 });
-        layers[active].innerHTML = "";
-      });
-
-      return newChars;
+      pool = used;
     };
 
     const cycle = () => {
       if (killed) return;
       const mobile = window.innerWidth < 640;
+      const m = mobile ? 0.45 : 1; // compresión horizontal de la curva en pantallas angostas
       const passScale = mobile ? 0.6 : 1.15;
       const turnScale = mobile ? 0.45 : 0.85;
       const nextStep = (step + 1) % TEXTS.length;
-      const oldChars = chars;
-      let nextChars: HTMLElement[] = [];
+      const f = flightRef.current;
 
       tl = gsap.timeline({
         onComplete: () => {
-          const oldLayer = layers[active];
-          active = 1 - active;
           step = nextStep;
-          chars = nextChars;
-          oldLayer.innerHTML = "";
           delayed = gsap.delayedCall(HOLD, cycle);
         },
       });
 
       // 1) Pasada frontal: cruza y tumba las letras
       tl.set(f, { x: -9.5, y: -0.15, z: 0.6, rotX: 0.05, rotY: 0, rotZ: -0.06, scale: passScale, visible: true, flying: true }, 0);
-      tl.to(f, { x: 9.5, duration: 1.05, ease: "power1.in" }, 0);
-      tl.to(f, { y: 0.22, rotZ: 0.1, duration: 1.05, ease: "sine.inOut" }, 0);
-      tl.add(() => drop(oldChars), 0.45);
+      tl.to(f, { x: mobile ? 2.4 : 5.2, duration: 1.05, ease: "power1.in" }, 0);
+      tl.to(f, { y: 0.15, duration: 1.05, ease: "sine.inOut" }, 0);
+      tl.add(drop, 0.45);
 
-      // 2) Regreso lento por el fondo, con tiempo para la reconstrucción
-      tl.set(f, { z: -4.2, x: 9.5, y: 1.4, rotY: Math.PI * 0.12, rotZ: 0.12, scale: turnScale }, 1.15);
-      tl.to(f, { rotY: Math.PI * 0.85, rotZ: 0.5, duration: 0.6, ease: "power2.out" }, 1.15);
-      tl.to(f, { rotY: Math.PI, rotZ: 0.18, duration: 0.6, ease: "sine.out" }, 1.75);
-      tl.to(f, { x: -14.5, duration: 2.95, ease: "sine.inOut" }, 1.25);
-      tl.to(f, { y: 0.8, duration: 1.35, ease: "sine.in" }, 1.25);
-      tl.to(f, { y: 1.25, duration: 1.3, ease: "sine.out" }, 2.6);
+      // 2) Curva en U continua y visible: trepa por la derecha, se ladea,
+      //    se hunde en profundidad girando y cruza el fondo ya volteado
+      tl.to(f, { x: 7.8 * m, duration: 0.55, ease: "sine.out" }, 1.05);
+      tl.to(f, { x: 6.2 * m, duration: 0.45, ease: "sine.in" }, 1.6);
+      tl.to(f, { y: 2.1, duration: 1.0, ease: "sine.out" }, 1.05);
+      tl.to(f, { z: -2.6, duration: 1.0, ease: "sine.inOut" }, 1.05);
+      tl.to(f, { rotY: Math.PI * 0.6, duration: 1.0, ease: "power1.inOut" }, 1.05);
+      tl.to(f, { rotZ: 0.6, duration: 0.8, ease: "sine.inOut" }, 1.1);
+      tl.to(f, { scale: turnScale, duration: 1.0, ease: "sine.inOut" }, 1.05);
 
-      // 3) Mientras vuelve, las letras caídas se levantan y arman la frase nueva
-      tl.add(() => {
-        nextChars = riseInto(nextStep, oldChars);
-      }, 1.9);
+      tl.to(f, { x: -15, duration: 2.65, ease: "sine.inOut" }, 2.05);
+      tl.to(f, { z: -4.4, duration: 1.2, ease: "sine.inOut" }, 2.05);
+      tl.to(f, { rotY: Math.PI, duration: 0.8, ease: "sine.out" }, 2.05);
+      tl.to(f, { rotZ: 0.14, duration: 1.0, ease: "sine.inOut" }, 2.3);
+      tl.to(f, { y: 1.0, duration: 1.6, ease: "sine.inOut" }, 2.05);
+      tl.to(f, { y: 1.3, duration: 1.0, ease: "sine.out" }, 3.65);
 
-      tl.set(f, { visible: false, flying: false }, 4.3);
-      tl.to({}, { duration: 0.1 }, 4.3);
+      // 3) Mientras vuelve por el fondo, las letras suben y se rearman
+      tl.add(() => rise(nextStep), 2.0);
+
+      tl.set(f, { visible: false, flying: false }, 4.75);
+      tl.to({}, { duration: 0.05 }, 4.75);
     };
 
-    delayed = gsap.delayedCall(HOLD + 0.8, cycle);
+    // Reacomodo instantáneo si cambia el tamaño entre ciclos
+    let resizeT: ReturnType<typeof setTimeout>;
+    const onResize = () => {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(() => {
+        if (killed || (tl && tl.isActive())) return;
+        const targets = measure(step);
+        pool.forEach((el, i) => {
+          const t = targets[i];
+          if (t) gsap.set(el, { x: t.x, y: t.y, rotation: 0 });
+        });
+      }, 250);
+    };
+    window.addEventListener("resize", onResize);
 
     // Pausar el bucle cuando la sección no está en pantalla
     const io = new IntersectionObserver(
@@ -198,18 +227,24 @@ export default function PlaneLoop() {
       },
       { threshold: 0.15 }
     );
-    io.observe(section);
+
+    // Medir solo cuando la fuente ya cargó (si no, las letras quedan corridas)
+    document.fonts.ready.then(init);
 
     return () => {
       killed = true;
+      clearTimeout(resizeT);
+      window.removeEventListener("resize", onResize);
       io.disconnect();
       tl?.kill();
       delayed?.kill();
+      poolBox.innerHTML = "";
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const h2Class =
-    "display absolute inset-0 z-10 flex items-center justify-center px-6 text-center text-4xl font-semibold leading-[1.06] sm:text-6xl md:text-7xl";
+  const typeClass =
+    "display text-4xl font-semibold leading-[1.06] sm:text-6xl md:text-7xl";
 
   return (
     <section
@@ -223,12 +258,21 @@ export default function PlaneLoop() {
         </div>
       )}
 
-      {/* Dos capas de texto: la activa cae, la otra sube con la frase nueva */}
-      <h2 ref={h2ARef} className={h2Class} suppressHydrationWarning />
+      <div ref={stageRef} className="absolute inset-0 z-10" aria-hidden>
+        {/* Plantilla invisible: define dónde va cada letra */}
+        <h2
+          ref={templateRef}
+          className={`invisible absolute inset-0 flex items-center justify-center px-6 text-center ${typeClass}`}
+        />
+        {/* Pool de letras permanentes: caen, suben y se transforman, nunca se borran */}
+        <div ref={poolBoxRef} className={`absolute inset-0 ${typeClass}`} />
+      </div>
+
       <noscript>
-        <p className={h2Class}>{TEXTS[0]}</p>
+        <p className={`absolute inset-0 z-10 flex items-center justify-center px-6 text-center ${typeClass}`}>
+          {TEXTS[0]}
+        </p>
       </noscript>
-      <h2 ref={h2BRef} className={h2Class} aria-hidden />
 
       {/* Texto pequeño fijo: el avión no lo toca */}
       <p className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-ink-muted sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
@@ -236,7 +280,7 @@ export default function PlaneLoop() {
       </p>
 
       <div className="absolute bottom-7 z-30 flex flex-col items-center gap-2 text-ink-muted" aria-hidden>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="animate-bounce" >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="animate-bounce">
           <path d="M12 4v16m-6-6 6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
@@ -244,9 +288,8 @@ export default function PlaneLoop() {
   );
 }
 
-function buildText(el: HTMLElement, text: string): HTMLElement[] {
+function buildTemplate(el: HTMLElement, text: string) {
   el.innerHTML = "";
-  // Un único contenedor: el h2 es flex y se comería los espacios entre items
   const wrap = document.createElement("span");
   wrap.className = "block";
   const words = text.split(" ");
@@ -255,7 +298,7 @@ function buildText(el: HTMLElement, text: string): HTMLElement[] {
     w.className = "inline-block whitespace-nowrap";
     for (const ch of word) {
       const c = document.createElement("span");
-      c.className = "ch inline-block will-change-transform";
+      c.className = "tch inline-block";
       c.textContent = ch;
       w.appendChild(c);
     }
@@ -263,5 +306,4 @@ function buildText(el: HTMLElement, text: string): HTMLElement[] {
     if (wi < words.length - 1) wrap.appendChild(document.createTextNode(" "));
   });
   el.appendChild(wrap);
-  return Array.from(el.querySelectorAll<HTMLElement>(".ch"));
 }
