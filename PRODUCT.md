@@ -10,11 +10,11 @@ Dueños y gerentes de negocios en Colombia (institutos, centros de bienestar, ma
 
 ## Product Purpose
 
-Landing comercial de Skyment (agentes de IA en WhatsApp, desarrollo web y e-commerce). Existe para convertir visitantes en demos agendadas por WhatsApp: cada CTA abre wa.me con la frase exacta que el router del bot de n8n reconoce por línea de negocio. Éxito = demos agendadas con clientes de alto valor.
+Landing comercial de la marca personal **Alejandro Hernández** (agentes de IA en WhatsApp, desarrollo web y e-commerce; antes operaba como Skyment). Existe para convertir visitantes en demos agendadas por WhatsApp: cada CTA abre wa.me con la frase exacta que el router del bot de n8n reconoce por línea de negocio. Éxito = demos agendadas con clientes de alto valor.
 
 ## Brand Personality
 
-Sobria y experta. Un estudio serio de tecnología que no necesita gritar: tipografía fuerte, mucho aire, el verde de marca (#8bc921) usado con precisión. Voz directa y colombiana, sin jerga corporativa ni hype de IA. Transmite "caro y confiable", cierra como vendedor que sabe lo que tiene.
+Sobria y experta, en primera persona: un experto que da la cara, no una agencia anónima. No necesita gritar: tipografía fuerte, mucho aire, el verde de marca (#8bc921) usado con precisión. Voz directa y colombiana, sin jerga corporativa ni hype de IA. Transmite "caro y confiable", cierra como vendedor que sabe lo que tiene.
 
 ## Anti-references
 

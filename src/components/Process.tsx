@@ -2,22 +2,22 @@ const STEPS = [
   {
     n: "01",
     title: "Hablamos 30 minutos",
-    body: "Una videollamada corta. Nos cuentas cómo vendes hoy y te mostramos un agente funcionando en vivo, con un caso parecido al tuyo.",
+    body: "Una videollamada corta. Me cuentas cómo vendes hoy y te muestro un agente funcionando en vivo, con un caso parecido al tuyo.",
   },
   {
     n: "02",
-    title: "Lo armamos a tu medida",
-    body: "Entrenamos el agente con tu información, tus precios y tu forma de hablar. Tú lo revisas y lo ajustamos hasta que suene a ti.",
+    title: "Lo armo a tu medida",
+    body: "Entreno el agente con tu información, tus precios y tu forma de hablar. Tú lo revisas y lo ajustamos hasta que suene a ti.",
   },
   {
     n: "03",
-    title: "Lo conectamos y arranca",
+    title: "Lo conecto y arranca",
     body: "Tu WhatsApp de siempre, tu calendario, tu página. En cuestión de días ya está atendiendo gente real.",
   },
   {
     n: "04",
-    title: "Lo seguimos puliendo",
-    body: "Leemos las conversaciones reales y vamos ajustando. Si el agente pierde una venta que pudo cerrar, lo corregimos.",
+    title: "Lo sigo puliendo",
+    body: "Leo las conversaciones reales y voy ajustando. Si el agente pierde una venta que pudo cerrar, lo corrijo.",
   },
 ];
 

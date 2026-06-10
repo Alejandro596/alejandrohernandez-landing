@@ -1,5 +1,5 @@
 export const SITE = {
-  name: "Skyment",
+  name: "Alejandro Hernández",
   tagline: "Agentes de IA, desarrollo web y e-commerce",
   email: "skymentmarketingdigital@gmail.com",
   whatsappNumber: "573244536348",
@@ -8,7 +8,7 @@ export const SITE = {
 // Los textos prellenados coinciden con las frases que el router del agente
 // de WhatsApp reconoce para enrutar cada línea de negocio (ia | web).
 export const WA = {
-  demo: waLink("Hola, quiero agendar una demo con Skyment"),
+  demo: waLink("Hola Alejandro, quiero agendar una demo"),
   ia: waLink("Hola, quiero información sobre el bot de WhatsApp"),
   web: waLink("Hola, quiero información sobre páginas web"),
   ecommerce: waLink("Hola! Me interesa una tienda online"),

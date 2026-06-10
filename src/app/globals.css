@@ -16,6 +16,7 @@
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-raised: var(--bg-raised);
+  --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-accent: var(--accent);
@@ -28,6 +29,7 @@
 
 html {
   background: var(--bg);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -54,26 +56,9 @@ h3 {
   text-wrap: balance;
 }
 
-/* ---------- film grain (fixed overlay, never on scroll containers) ---------- */
-.grain::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  pointer-events: none;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-}
-
-/* ---------- ambient orbs (desactivados: estética más sobria) ---------- */
-.orb {
-  display: none;
-}
-
 /* ---------- superficies planas ---------- */
 .glass {
-  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  background: var(--surface);
   border: 1px solid var(--hairline);
 }
 
@@ -81,15 +66,11 @@ h3 {
   background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: 1.25rem;
-  padding: 0;
 }
 
 .bezel-core {
   height: 100%;
-  background: transparent;
-  border: 0;
   border-radius: 1.25rem;
-  box-shadow: none;
 }
 
 /* ---------- typography helpers ---------- */
@@ -117,39 +98,46 @@ h3 {
   background: var(--accent);
 }
 
-/* antes era un degradado; ahora acento plano de marca */
 .text-gradient {
   color: var(--accent);
 }
 
-/* ---------- marquee ---------- */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 36s linear infinite;
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
-  }
-}
-
-/* ---------- reveal initial states (GSAP resolves them) ----------
+/* ---------- reveals con CSS puro (sin librerías) ----------
    Solo se ocultan si el JS arrancó (html.js); sin JS la página queda visible. */
 html.js [data-reveal],
 html.js [data-reveal-group] > * {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s var(--ease-premium),
+    transform 0.7s var(--ease-premium);
+}
+
+html.js [data-reveal].rv-in,
+html.js [data-reveal-group].rv-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+html.js [data-reveal-group].rv-in > :nth-child(2) { transition-delay: 0.07s; }
+html.js [data-reveal-group].rv-in > :nth-child(3) { transition-delay: 0.14s; }
+html.js [data-reveal-group].rv-in > :nth-child(4) { transition-delay: 0.21s; }
+html.js [data-reveal-group].rv-in > :nth-child(5) { transition-delay: 0.28s; }
+html.js [data-reveal-group].rv-in > :nth-child(6) { transition-delay: 0.35s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.js [data-reveal],
+  html.js [data-reveal-group] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* ---------- premium transition default ---------- */
 .t-premium {
-  transition: all 0.7s var(--ease-premium);
+  transition: all 0.5s var(--ease-premium);
 }

@@ -11,10 +11,6 @@ const CHAT_DEMO = [
 export default function Services() {
   return (
     <section id="servicios" className="relative px-4 py-28 md:py-36">
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div data-orb className="orb right-[-10%] top-[15%] h-[420px] w-[420px] bg-accent-deep/25" />
-      </div>
-
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <h2 data-reveal className="display text-3xl font-semibold leading-tight md:text-5xl">
