@@ -75,7 +75,7 @@ export default function Services() {
                 href={WA.web}
                 target="_blank"
                 rel="noopener"
-                className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent-bright t-premium hover:gap-3"
+                className="mt-4 inline-flex items-center gap-2 py-2 text-sm font-medium text-accent-bright t-premium hover:gap-3"
               >
                 Quiero mi página web
                 <Arrow />
@@ -96,7 +96,7 @@ export default function Services() {
                 href={WA.ecommerce}
                 target="_blank"
                 rel="noopener"
-                className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent-bright t-premium hover:gap-3"
+                className="mt-4 inline-flex items-center gap-2 py-2 text-sm font-medium text-accent-bright t-premium hover:gap-3"
               >
                 Quiero mi tienda online
                 <Arrow />

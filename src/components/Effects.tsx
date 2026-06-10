@@ -17,10 +17,14 @@ export default function Effects() {
         opacity: 1,
         y: 0,
       });
+      // Sin animación, los contadores muestran su valor final de una vez
+      document.querySelectorAll<HTMLElement>("[data-counter]").forEach((el) => {
+        el.textContent = parseFloat(el.dataset.counter ?? "0").toLocaleString("es-CO");
+      });
       return;
     }
 
-    const lenis = new Lenis({ lerp: 0.12 });
+    const lenis = new Lenis({ lerp: 0.12, anchors: true });
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -63,6 +67,7 @@ export default function Effects() {
       // Contadores de métricas
       gsap.utils.toArray<HTMLElement>("[data-counter]").forEach((el) => {
         const target = parseFloat(el.dataset.counter ?? "0");
+        el.textContent = "0";
         const obj = { v: 0 };
         gsap.to(obj, {
           v: target,

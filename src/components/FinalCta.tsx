@@ -29,7 +29,7 @@ export default function FinalCta() {
         <div data-reveal className="mt-10">
           <WhatsAppCta href={WA.demo}>Agendar mi demo gratis</WhatsAppCta>
         </div>
-        <p data-reveal className="mt-5 text-xs text-ink-muted/70">
+        <p data-reveal className="mt-5 text-xs text-ink-muted">
           Te va a responder nuestro propio agente en segundos. Para eso es, pruébalo.
         </p>
       </div>

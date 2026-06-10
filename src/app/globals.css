@@ -43,6 +43,17 @@ body {
   color: #fff;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
 /* ---------- film grain (fixed overlay, never on scroll containers) ---------- */
 .grain::after {
   content: "";
@@ -122,6 +133,12 @@ body {
   width: max-content;
   animation: marquee 36s linear infinite;
   will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }
 
 /* ---------- reveal initial states (GSAP resolves them) ----------

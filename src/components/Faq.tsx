@@ -50,6 +50,7 @@ export default function Faq() {
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${i}`}
                   className="flex w-full items-center justify-between gap-4 px-7 py-5 text-left"
                 >
                   <span className="display text-base font-medium md:text-lg">{f.q}</span>
@@ -69,6 +70,7 @@ export default function Faq() {
                   </span>
                 </button>
                 <div
+                  id={`faq-panel-${i}`}
                   className="grid t-premium"
                   style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
                 >

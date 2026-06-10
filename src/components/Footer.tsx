@@ -16,15 +16,15 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-6 text-sm text-ink-muted">
-          <a href={WA.demo} target="_blank" rel="noopener" className="t-premium hover:text-ink">
+          <a href={WA.demo} target="_blank" rel="noopener" className="py-2 t-premium hover:text-ink">
             WhatsApp
           </a>
-          <a href={`mailto:${SITE.email}`} className="t-premium hover:text-ink">
+          <a href={`mailto:${SITE.email}`} className="py-2 t-premium hover:text-ink">
             Correo
           </a>
         </div>
 
-        <p className="text-xs text-ink-muted/60">
+        <p className="text-xs text-ink-muted/80">
           © {new Date().getFullYear()} Skyment. Todos los derechos reservados.
         </p>
       </div>

@@ -18,7 +18,7 @@ export default function Nav() {
     <>
       <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4">
         <nav className="glass mt-5 flex w-full max-w-3xl items-center justify-between rounded-full py-2 pl-6 pr-2 backdrop-blur-2xl">
-          <a href="#" className="display flex items-center gap-2 text-[15px] tracking-tight font-semibold">
+          <a href="#" className="display flex items-center gap-2 py-2 text-[15px] tracking-tight font-semibold">
             <PlaneMark size={18} withTrail={false} />
             SKYMENT<span className="text-accent-bright">.</span>
           </a>
@@ -47,7 +47,7 @@ export default function Nav() {
             <button
               aria-label={open ? "Cerrar menú" : "Abrir menú"}
               onClick={() => setOpen(!open)}
-              className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/5 md:hidden"
+              className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/5 md:hidden"
             >
               <span
                 className={`absolute h-px w-4 bg-ink t-premium ${
@@ -76,7 +76,7 @@ export default function Nav() {
             href={l.href}
             onClick={() => setOpen(false)}
             style={{ transitionDelay: open ? `${100 + i * 60}ms` : "0ms" }}
-            className={`display text-3xl font-medium t-premium ${
+            className={`display py-2 text-3xl font-medium t-premium ${
               open ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >

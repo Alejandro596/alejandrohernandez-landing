@@ -51,7 +51,7 @@ export default function Results() {
           data-reveal
           className="display mt-16 max-w-3xl text-2xl font-semibold leading-snug md:text-3xl"
         >
-          Más de <span data-counter="10000" className="text-accent">0</span>
+          Más de <span data-counter="10000" className="text-accent">10.000</span>
           <span className="text-accent">+</span> conversaciones reales han pasado por
           nuestros agentes.{" "}
           <span className="text-ink-muted">Cada una contestada al momento.</span>
