@@ -27,9 +27,6 @@ export default function Process() {
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-xl">
-            <span data-reveal className="eyebrow mb-6">
-              Cómo trabajamos
-            </span>
             <h2 data-reveal className="display text-3xl font-semibold leading-tight md:text-5xl">
               De la primera llamada al sistema funcionando,{" "}
               <span className="text-ink-muted">sin enredos.</span>
@@ -41,34 +38,12 @@ export default function Process() {
           </p>
         </div>
 
-        <ol data-reveal-group className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-4">
-          {STEPS.map((s, i) => (
-            <li key={s.n} className="relative">
-              <div className="glass h-full rounded-3xl p-7">
-                <div className="flex items-center justify-between">
-                  <span className="display text-sm font-medium text-accent-bright">{s.n}</span>
-                  {i < STEPS.length - 1 && (
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="hidden text-ink-muted/40 md:block"
-                      aria-hidden
-                    >
-                      <path
-                        d="M5 12h14m-6-6 6 6-6 6"
-                        stroke="currentColor"
-                        strokeWidth="1.25"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <h3 className="display mt-5 text-lg font-semibold">{s.title}</h3>
-                <p className="mt-2.5 text-[13px] leading-relaxed text-ink-muted">{s.body}</p>
-              </div>
+        <ol data-reveal-group className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 md:grid-cols-4">
+          {STEPS.map((s) => (
+            <li key={s.n} className="border-t-2 border-accent/60 pt-5">
+              <span className="display text-sm font-medium text-accent">{s.n}</span>
+              <h3 className="display mt-3 text-lg font-semibold">{s.title}</h3>
+              <p className="mt-2.5 text-[13px] leading-relaxed text-ink-muted">{s.body}</p>
             </li>
           ))}
         </ol>

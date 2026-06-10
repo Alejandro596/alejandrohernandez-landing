@@ -32,9 +32,6 @@ export default function Faq() {
     <section id="faq" className="border-t border-hairline px-4 py-28 md:py-36">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
-          <span data-reveal className="eyebrow mb-6">
-            Preguntas frecuentes
-          </span>
           <h2 data-reveal className="display text-3xl font-semibold leading-tight md:text-4xl">
             Lo que todo el mundo pregunta{" "}
             <span className="text-ink-muted">antes de empezar.</span>

@@ -17,9 +17,6 @@ export default function Services() {
 
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
-          <span data-reveal className="eyebrow mb-6">
-            Lo que instalamos
-          </span>
           <h2 data-reveal className="display text-3xl font-semibold leading-tight md:text-5xl">
             Un solo sistema que se encarga{" "}
             <span className="text-gradient">de todo el embudo.</span>

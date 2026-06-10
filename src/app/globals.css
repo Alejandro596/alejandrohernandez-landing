@@ -22,8 +22,8 @@
   --color-accent-bright: var(--accent-bright);
   --color-accent-deep: var(--accent-deep);
   --color-hairline: var(--hairline);
-  --font-display: var(--font-space-grotesk);
-  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-archivo);
 }
 
 html {
@@ -33,7 +33,7 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-family: var(--font-archivo), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -83,8 +83,9 @@ body {
 
 /* ---------- typography helpers ---------- */
 .display {
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  letter-spacing: -0.03em;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-stretch: 115%;
+  letter-spacing: -0.02em;
 }
 
 .eyebrow {

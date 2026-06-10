@@ -12,9 +12,9 @@ export default function FinalCta() {
       </div>
 
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-        <span data-reveal className="eyebrow mb-7">
-          Demo gratuita · 30 minutos · sin compromiso
-        </span>
+        <p data-reveal className="mb-7 text-sm text-ink-muted">
+          Demo gratuita de 30 minutos, sin compromiso
+        </p>
         <h2
           data-reveal
           className="display text-4xl font-semibold leading-[1.05] md:text-6xl"

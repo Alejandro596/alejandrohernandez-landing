@@ -19,57 +19,45 @@ const SECTORS = [
   },
 ];
 
-const METRICS = [
-  { value: 10000, suffix: "+", label: "conversaciones que han pasado por nuestros agentes" },
-  { value: 7, suffix: " días", label: "o menos para tener tu sistema andando" },
-  { value: 100, suffix: "%", label: "de los mensajes contestados. Nadie queda en visto" },
-];
-
 export default function Results() {
   return (
     <section id="resultados" className="relative px-4 py-28 md:py-36">
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div data-orb className="orb left-[-12%] top-[30%] h-[400px] w-[400px] bg-accent/15" />
-      </div>
-
       <div className="mx-auto max-w-6xl">
-        <div className="max-w-2xl">
-          <span data-reveal className="eyebrow mb-6">
-            Resultados reales
-          </span>
-          <h2 data-reveal className="display text-3xl font-semibold leading-tight md:text-5xl">
-            Sistemas que ya están vendiendo{" "}
-            <span className="text-gradient">mientras sus dueños duermen.</span>
-          </h2>
-        </div>
+        <h2
+          data-reveal
+          className="display max-w-2xl text-3xl font-semibold leading-tight md:text-5xl"
+        >
+          Sistemas que ya están vendiendo{" "}
+          <span className="text-gradient">mientras sus dueños duermen.</span>
+        </h2>
 
-        <div data-reveal-group className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div data-reveal-group className="mt-14">
           {SECTORS.map((c) => (
-            <article key={c.sector} className="bezel">
-              <div className="bezel-core flex h-full flex-col p-8">
-                <span className="eyebrow">{c.sector}</span>
-                <p className="mt-5 text-sm leading-relaxed text-ink-muted">{c.result}</p>
-              </div>
+            <article
+              key={c.sector}
+              className="grid grid-cols-1 gap-3 border-t border-hairline py-8 md:grid-cols-12 md:gap-8 md:py-10"
+            >
+              <h3 className="display text-base font-semibold text-accent md:col-span-3">
+                {c.sector}
+              </h3>
+              <p className="max-w-2xl text-sm leading-relaxed text-ink-muted md:col-span-9 md:text-base">
+                {c.result}
+              </p>
             </article>
           ))}
         </div>
 
-        <div
+        <p
           data-reveal
-          className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline sm:grid-cols-3"
+          className="display mt-16 max-w-3xl text-2xl font-semibold leading-snug md:text-3xl"
         >
-          {METRICS.map((m) => (
-            <div key={m.label} className="flex flex-col gap-1.5 bg-bg-raised/80 px-8 py-8">
-              <span className="display text-4xl font-semibold text-ink">
-                <span data-counter={m.value}>0</span>
-                <span className="text-accent-bright">{m.suffix}</span>
-              </span>
-              <span className="text-xs leading-relaxed text-ink-muted">{m.label}</span>
-            </div>
-          ))}
-        </div>
+          Más de <span data-counter="10000" className="text-accent">0</span>
+          <span className="text-accent">+</span> conversaciones reales han pasado por
+          nuestros agentes.{" "}
+          <span className="text-ink-muted">Cada una contestada al momento.</span>
+        </p>
 
-        <div data-reveal className="mt-14 flex justify-center">
+        <div data-reveal className="mt-12">
           <WhatsAppCta href={WA.demo}>Quiero esto para mi negocio</WhatsAppCta>
         </div>
       </div>

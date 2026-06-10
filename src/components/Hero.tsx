@@ -1,10 +1,10 @@
 import WhatsAppCta from "./WhatsAppCta";
 import { WA } from "@/lib/site";
 
-const STATS = [
-  { value: "24/7", label: "tu WhatsApp contestando, incluso un domingo a medianoche" },
-  { value: "1 min", label: "o menos en responderle a cada persona que escribe" },
-  { value: "Días", label: "lo que tardamos en dejarlo funcionando, no meses" },
+const PROOFS = [
+  "Atiende 24/7, también festivos",
+  "Responde en menos de un minuto",
+  "Queda funcionando en días, no meses",
 ];
 
 export default function Hero() {
@@ -65,13 +65,12 @@ export default function Hero() {
 
       <div
         data-reveal
-        className="mt-20 grid w-full max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline sm:grid-cols-3"
+        className="mt-20 flex w-full max-w-3xl flex-col items-center justify-center gap-3 text-sm text-ink-muted sm:flex-row sm:gap-0 sm:divide-x sm:divide-white/15"
       >
-        {STATS.map((s) => (
-          <div key={s.label} className="flex flex-col items-center gap-1.5 bg-bg-raised/80 px-6 py-7">
-            <span className="display text-3xl font-semibold text-ink">{s.value}</span>
-            <span className="text-center text-xs leading-relaxed text-ink-muted">{s.label}</span>
-          </div>
+        {PROOFS.map((p) => (
+          <span key={p} className="px-6 text-center">
+            {p}
+          </span>
         ))}
       </div>
     </section>

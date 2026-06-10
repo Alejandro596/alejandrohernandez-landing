@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+// Una sola familia con contraste por peso y anchura: voz sobria, sin monocultura de IA
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  axes: ["wdth"],
 });
 
 export const metadata: Metadata = {
@@ -42,10 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="es"
-      className={`${spaceGrotesk.variable} ${jakarta.variable} h-full antialiased`}
-    >
+    <html lang="es" className={`${archivo.variable} h-full antialiased`}>
       <head>
         {/* Marca el arranque de JS antes del primer paint: sin JS nada queda oculto */}
         <script
