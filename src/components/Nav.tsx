@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { WA } from "@/lib/site";
+import PlaneMark from "./PlaneMark";
 
 const LINKS = [
   { href: "#servicios", label: "Servicios" },
@@ -17,7 +18,8 @@ export default function Nav() {
     <>
       <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4">
         <nav className="glass mt-5 flex w-full max-w-3xl items-center justify-between rounded-full py-2 pl-6 pr-2 backdrop-blur-2xl">
-          <a href="#" className="display text-[15px] font-700 tracking-tight font-semibold">
+          <a href="#" className="display flex items-center gap-2 text-[15px] tracking-tight font-semibold">
+            <PlaneMark size={18} withTrail={false} />
             SKYMENT<span className="text-accent-bright">.</span>
           </a>
 
@@ -38,7 +40,7 @@ export default function Nav() {
               href={WA.demo}
               target="_blank"
               rel="noopener"
-              className="hidden rounded-full bg-accent px-5 py-2.5 text-[13px] font-medium text-white t-premium hover:bg-accent-bright md:block"
+              className="hidden rounded-full bg-accent px-5 py-2.5 text-[13px] font-semibold text-[#0c1503] t-premium hover:bg-accent-bright md:block"
             >
               Agendar demo
             </a>
@@ -87,7 +89,7 @@ export default function Nav() {
           rel="noopener"
           onClick={() => setOpen(false)}
           style={{ transitionDelay: open ? "360ms" : "0ms" }}
-          className={`rounded-full bg-accent px-8 py-3.5 font-medium text-white t-premium ${
+          className={`rounded-full bg-accent px-8 py-3.5 font-semibold text-[#0c1503] t-premium ${
             open ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { PRELOADER_MS } from "./Preloader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,7 +27,7 @@ export default function Effects() {
     gsap.ticker.lagSmoothing(0);
 
     const ctx = gsap.context(() => {
-      // Hero entra en cascada al cargar
+      // Hero entra en cascada cuando el preloader levanta la cortina
       gsap.to("[data-hero] [data-reveal]", {
         opacity: 1,
         y: 0,
@@ -34,7 +35,7 @@ export default function Effects() {
         duration: 1.1,
         stagger: 0.12,
         ease: "power3.out",
-        delay: 0.15,
+        delay: (PRELOADER_MS - 500) / 1000,
       });
 
       // Reveals individuales al hacer scroll

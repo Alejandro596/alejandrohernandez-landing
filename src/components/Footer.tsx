@@ -1,11 +1,13 @@
 import { SITE, WA } from "@/lib/site";
+import PlaneMark from "./PlaneMark";
 
 export default function Footer() {
   return (
     <footer className="border-t border-hairline px-4 py-14">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-8 md:flex-row">
         <div className="flex flex-col items-center gap-2 md:items-start">
-          <span className="display text-lg font-semibold">
+          <span className="display flex items-center gap-2 text-lg font-semibold">
+            <PlaneMark size={20} withTrail={false} />
             SKYMENT<span className="text-accent-bright">.</span>
           </span>
           <p className="text-xs text-ink-muted">
