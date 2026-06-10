@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, Center } from "@react-three/drei";
+import { useGLTF, Center, Trail } from "@react-three/drei";
 import { useMemo, useRef } from "react";
 import type { Group } from "three";
 
@@ -16,11 +16,11 @@ export type Flight = {
   rotZ: number;
   scale: number;
   visible: boolean;
-  idle: boolean;
+  flying: boolean;
 };
 
 export function createFlight(): Flight {
-  return { x: -10, y: 0, z: 0.5, rotX: 0, rotY: 0, rotZ: 0, scale: 1, visible: false, idle: false };
+  return { x: -10, y: 0, z: 0.5, rotX: 0, rotY: 0, rotZ: 0, scale: 1, visible: false, flying: false };
 }
 
 function Plane({ flight }: { flight: Flight }) {
@@ -32,9 +32,12 @@ function Plane({ flight }: { flight: Flight }) {
     const g = group.current;
     if (!g) return;
     const t = clock.elapsedTime;
-    const bob = flight.idle ? Math.sin(t * 1.6) * 0.08 : 0;
-    g.position.set(flight.x, flight.y + bob, flight.z);
-    g.rotation.set(flight.rotX, flight.rotY, flight.rotZ + (flight.idle ? Math.sin(t * 1.1) * 0.05 : 0));
+    // Aleteo de papel: vibración sutil solo en vuelo
+    const flutterZ = flight.flying ? Math.sin(t * 16) * 0.035 + Math.sin(t * 7.3) * 0.02 : 0;
+    const flutterX = flight.flying ? Math.sin(t * 11) * 0.022 : 0;
+    const bobY = flight.flying ? Math.sin(t * 9) * 0.03 : 0;
+    g.position.set(flight.x, flight.y + bobY, flight.z);
+    g.rotation.set(flight.rotX + flutterX, flight.rotY, flight.rotZ + flutterZ);
     g.scale.setScalar(flight.scale);
     g.visible = flight.visible;
   });
@@ -49,6 +52,13 @@ function Plane({ flight }: { flight: Flight }) {
           </Center>
         </group>
       </group>
+      {/* Estela: cinta que sigue la cola del avión */}
+      <Trail width={1.1} length={5.5} decay={1.6} color="#86efac" attenuation={(w) => w * w}>
+        <mesh position={[-1.15, 0.04, 0]}>
+          <sphereGeometry args={[0.02, 4, 4]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+      </Trail>
     </group>
   );
 }
