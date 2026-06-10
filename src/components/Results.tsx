@@ -52,7 +52,7 @@ export default function Results() {
           className="display mt-16 max-w-3xl text-2xl font-semibold leading-snug md:text-3xl"
         >
           Más de <span className="text-accent">10.000</span> conversaciones reales han pasado por
-          mis agentes.{" "}
+          nuestros agentes.{" "}
           <span className="text-ink-muted">Cada una contestada al momento.</span>
         </p>
 

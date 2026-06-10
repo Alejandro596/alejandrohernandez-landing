@@ -30,9 +30,8 @@ export default function Hero() {
         data-reveal
         className="mt-7 max-w-xl text-center text-base leading-relaxed text-ink-muted md:text-lg"
       >
-        Soy Alejandro Hernández. Monto agentes de inteligencia artificial en tu WhatsApp,
-        páginas web y tiendas online. El sistema contesta, agenda y cierra; tú te dedicas a
-        manejar tu negocio.
+        Montamos agentes de inteligencia artificial en tu WhatsApp, páginas web y tiendas
+        online. El sistema contesta, agenda y cierra; tú te dedicas a manejar tu negocio.
       </p>
 
       <div data-reveal className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
@@ -41,7 +40,7 @@ export default function Hero() {
           href="#servicios"
           className="rounded-full px-6 py-3 text-sm text-ink-muted t-premium hover:text-ink"
         >
-          Primero quiero ver qué haces
+          Primero quiero ver qué hacen
         </a>
       </div>
 

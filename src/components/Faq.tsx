@@ -5,11 +5,11 @@ import { useState } from "react";
 const FAQS = [
   {
     q: "¿Necesito saber de tecnología?",
-    a: "Para nada. Yo monto todo y lo dejo andando. Tú solo me dices cómo quieres que hable el agente y revisas que te guste. Los clientes te llegan a tu WhatsApp y a tu calendario como siempre.",
+    a: "Para nada. Nosotros montamos todo y lo dejamos andando. Tú solo nos dices cómo quieres que hable el agente y revisas que te guste. Los clientes te llegan a tu WhatsApp y a tu calendario como siempre.",
   },
   {
     q: "¿El agente suena robótico?",
-    a: "Esa es la pregunta que más me hacen, y la respuesta corta es no. Lo entreno con tu forma de hablar y tus productos. De hecho, a la mayoría de los clientes nadie les ha preguntado si es un bot.",
+    a: "Esa es la pregunta que más nos hacen, y la respuesta corta es no. Lo entrenamos con tu forma de hablar y tus productos. De hecho, a la mayoría de los clientes nadie les ha preguntado si es un bot.",
   },
   {
     q: "¿En cuánto tiempo está funcionando?",
@@ -17,11 +17,11 @@ const FAQS = [
   },
   {
     q: "¿Y si le preguntan algo que no sabe?",
-    a: "No inventa. Si no sabe algo, lo dice, te pasa la conversación y te avisa al momento. Prefiero que conteste un humano a que el agente diga cualquier cosa.",
+    a: "No inventa. Si no sabe algo, lo dice, te pasa la conversación y te avisa al momento. Preferimos que conteste un humano a que el agente diga cualquier cosa.",
   },
   {
     q: "¿Cuánto cuesta?",
-    a: "Depende de lo que necesites, por eso no pongo un precio fijo aquí. En la demo reviso tu caso y te doy una propuesta concreta. Sin permanencias ni letra pequeña.",
+    a: "Depende de lo que necesites, por eso no ponemos un precio fijo aquí. En la demo revisamos tu caso y te damos una propuesta concreta. Sin permanencias ni letra pequeña.",
   },
 ];
 
@@ -37,8 +37,8 @@ export default function Faq() {
             <span className="text-ink-muted">antes de empezar.</span>
           </h2>
           <p data-reveal className="mt-5 max-w-sm text-sm leading-relaxed text-ink-muted">
-            ¿Tienes otra duda? Escríbeme por WhatsApp. Te responde mi propio agente y,
-            si hace falta, yo.
+            ¿Tienes otra duda? Escríbenos por WhatsApp. Te responde nuestro propio agente
+            y, si hace falta, una persona del equipo.
           </p>
         </div>
 

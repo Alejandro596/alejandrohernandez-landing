@@ -1,6 +1,6 @@
 # Landing Alejandro Hernández
 
-Landing page comercial de la marca personal **Alejandro Hernández** (agentes de IA en WhatsApp, desarrollo web y e-commerce), orientada a captar clientes de alto valor y cerrarlos vía demo agendada por WhatsApp.
+Landing page comercial de la marca **Alejandro Hernández** (agentes de IA en WhatsApp, desarrollo web y e-commerce), orientada a captar clientes de alto valor y cerrarlos vía demo agendada por WhatsApp.
 
 ## Stack
 

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://skyment-landing.vercel.app"),
   title: "Alejandro Hernández — Agentes de IA, desarrollo web y e-commerce",
   description:
-    "Monto el sistema que atiende, agenda y vende por ti: agentes de IA en WhatsApp, páginas web que convierten y tiendas online listas para escalar. Agenda una demo gratuita.",
+    "Montamos el sistema que atiende, agenda y vende por ti: agentes de IA en WhatsApp, páginas web que convierten y tiendas online listas para escalar. Agenda una demo gratuita.",
   keywords: [
     "agentes de IA",
     "bot de WhatsApp",
