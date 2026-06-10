@@ -15,7 +15,7 @@ export default function WhatsAppCta({
     "group inline-flex items-center gap-3 rounded-full font-medium t-premium active:scale-[0.98] select-none";
   const styles =
     variant === "primary"
-      ? "bg-accent text-[#0c1503] font-semibold pl-6 pr-2 py-2 shadow-[0_8px_40px_-8px_rgba(139,201,33,0.5)] hover:bg-accent-bright hover:shadow-[0_12px_48px_-8px_rgba(168,230,61,0.6)]"
+      ? "bg-accent text-[#0c1503] font-semibold pl-6 pr-2 py-2 hover:bg-accent-bright"
       : "glass text-ink pl-6 pr-2 py-2 hover:bg-white/8";
 
   return (

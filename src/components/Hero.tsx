@@ -21,7 +21,7 @@ export default function Hero() {
         />
         <div data-orb className="orb bottom-[-18%] left-[-8%] h-[380px] w-[380px] bg-accent/20" />
         <div
-          className="absolute inset-0 opacity-[0.22]"
+          className="absolute inset-0 opacity-[0.14]"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",

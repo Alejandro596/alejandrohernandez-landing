@@ -16,7 +16,6 @@ export default function Effects() {
       gsap.set("[data-reveal], [data-reveal-group] > *", {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
       });
       return;
     }
@@ -31,7 +30,6 @@ export default function Effects() {
       gsap.to("[data-hero] [data-reveal]", {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
         duration: 1.1,
         stagger: 0.12,
         ease: "power3.out",
@@ -44,7 +42,6 @@ export default function Effects() {
         gsap.to(el, {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
           duration: 1,
           ease: "power3.out",
           scrollTrigger: { trigger: el, start: "top 85%", once: true },
@@ -56,7 +53,6 @@ export default function Effects() {
         gsap.to(group.children, {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
           duration: 0.9,
           stagger: 0.1,
           ease: "power3.out",
