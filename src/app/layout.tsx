@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${archivo.variable} h-full antialiased`}>
+    <html lang="es" className={`${archivo.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* Marca el arranque de JS antes del primer paint: sin JS nada queda oculto */}
         <script

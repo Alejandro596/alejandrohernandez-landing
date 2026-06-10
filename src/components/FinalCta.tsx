@@ -13,7 +13,7 @@ export default function FinalCta() {
           className="display text-4xl font-semibold leading-[1.05] md:text-6xl"
         >
           Mira el sistema funcionando{" "}
-          <span className="text-gradient">antes de invertir un peso.</span>
+          <span className="text-accent">antes de invertir un peso.</span>
         </h2>
         <p data-reveal className="mt-6 max-w-lg text-base leading-relaxed text-ink-muted">
           En 30 minutos te mostramos un agente de IA atendiendo un negocio como el tuyo y
@@ -23,7 +23,7 @@ export default function FinalCta() {
           <WhatsAppCta href={WA.demo}>Agendar mi demo gratis</WhatsAppCta>
         </div>
         <p data-reveal className="mt-5 text-xs text-ink-muted">
-          Te va a responder nuestro propio agente en segundos. Para eso es, pruébalo.
+          Se abre tu WhatsApp y te responde nuestro propio agente en segundos. Para eso es, pruébalo.
         </p>
       </div>
     </section>

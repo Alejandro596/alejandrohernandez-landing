@@ -28,7 +28,7 @@ export default function Results() {
           className="display max-w-2xl text-3xl font-semibold leading-tight md:text-5xl"
         >
           Sistemas que ya están vendiendo{" "}
-          <span className="text-gradient">mientras sus dueños duermen.</span>
+          <span className="text-accent">mientras sus dueños duermen.</span>
         </h2>
 
         <div data-reveal-group className="mt-14">

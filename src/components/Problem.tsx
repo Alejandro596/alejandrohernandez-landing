@@ -1,3 +1,5 @@
+import { WA } from "@/lib/site";
+
 const PAINS = [
   {
     title: "Te escriben a las 9 de la noche y respondes al otro día",
@@ -44,6 +46,19 @@ export default function Problem() {
               </p>
             </article>
           ))}
+          <div className="border-t border-hairline pt-8 md:pt-10">
+            <a
+              href={WA.demo}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-2 py-2 text-sm font-medium text-accent t-premium hover:text-accent-bright"
+            >
+              ¿Te suena conocido? Hablemos por WhatsApp
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </section>

@@ -14,8 +14,8 @@ export default function Services() {
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <h2 data-reveal className="display text-3xl font-semibold leading-tight md:text-5xl">
-            Un solo sistema que se encarga{" "}
-            <span className="text-gradient">de todo el embudo.</span>
+            Un solo sistema que se encarga de todo:{" "}
+            <span className="text-accent">del primer mensaje a la venta.</span>
           </h2>
         </div>
 
@@ -114,7 +114,7 @@ export default function Services() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                {["Seguimiento 1h · 24h · 48h", "Recordatorios de cita", "CRM en tiempo real"].map(
+                {["Seguimiento 1h · 24h · 48h", "Recordatorios de cita", "Todo organizado en un panel"].map(
                   (t) => (
                     <span
                       key={t}

@@ -18,6 +18,9 @@ export default function Footer() {
           <a href={`mailto:${SITE.email}`} className="py-2 t-premium hover:text-ink">
             Correo
           </a>
+          <a href="/privacidad" className="py-2 t-premium hover:text-ink">
+            Privacidad
+          </a>
         </div>
 
         <p className="text-xs text-ink-muted/80">

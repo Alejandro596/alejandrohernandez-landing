@@ -23,7 +23,7 @@ export default function Hero() {
       >
         Tu negocio vendiendo
         <br />
-        <span className="text-gradient">en automático.</span>
+        <span className="text-accent">en automático.</span>
       </h1>
 
       <p
@@ -44,9 +44,13 @@ export default function Hero() {
         </a>
       </div>
 
+      <p data-reveal className="mt-4 text-xs text-ink-muted/90">
+        Se abre tu WhatsApp. Sin formularios ni correos de spam.
+      </p>
+
       <div
         data-reveal
-        className="mt-20 flex w-full max-w-3xl flex-col items-center justify-center gap-3 text-sm text-ink-muted sm:flex-row sm:gap-0 sm:divide-x sm:divide-white/15"
+        className="mt-16 flex w-full max-w-3xl flex-col items-center justify-center gap-3 text-sm text-ink-muted sm:flex-row sm:gap-0 sm:divide-x sm:divide-white/15"
       >
         {PROOFS.map((p) => (
           <span key={p} className="px-6 text-center">

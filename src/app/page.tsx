@@ -8,6 +8,7 @@ import Results from "@/components/Results";
 import Faq from "@/components/Faq";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
+import MobileWhatsApp from "@/components/MobileWhatsApp";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <Faq />
       <FinalCta />
       <Footer />
+      <MobileWhatsApp />
     </main>
   );
 }
