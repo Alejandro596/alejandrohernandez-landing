@@ -8,11 +8,11 @@ Oscuro grafito con tinte verde. No es negro OLED ni modo oscuro genérico: es la
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--bg` | `#171b12` | Fondo de página |
-| `--bg-raised` | `#1e2317` | Bandas de sección |
-| `--surface` | `#21271a` | Tarjetas y paneles |
-| `--ink` | `#f2f5ec` | Texto principal |
-| `--ink-muted` | `#a9b3a0` | Texto secundario |
+| `--bg` | `#272e1e` | Fondo de página (oliva grafito claro) |
+| `--bg-raised` | `#2e3624` | Bandas de sección |
+| `--surface` | `#333c28` | Tarjetas y paneles |
+| `--ink` | `#f4f7ee` | Texto principal |
+| `--ink-muted` | `#b6c0ab` | Texto secundario |
 | `--accent` | `#8bc921` | Verde de marca: CTAs, palabras clave, avión |
 | `--accent-bright` | `#a8e63d` | Hover de CTAs, detalles |
 | `--accent-deep` | `#5d8e13` | Pliegues del avión, sombras de acento |

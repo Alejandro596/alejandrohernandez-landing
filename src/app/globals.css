@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #171b12;
-  --bg-raised: #1e2317;
-  --surface: #21271a;
-  --ink: #f2f5ec;
-  --ink-muted: #a9b3a0;
+  --bg: #272e1e;
+  --bg-raised: #2e3624;
+  --surface: #333c28;
+  --ink: #f4f7ee;
+  --ink-muted: #b6c0ab;
   --accent: #8bc921;
   --accent-bright: #a8e63d;
   --accent-deep: #5d8e13;
-  --hairline: rgba(255, 255, 255, 0.1);
+  --hairline: rgba(255, 255, 255, 0.12);
   --ease-premium: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
