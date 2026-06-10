@@ -1,32 +1,22 @@
+import { LINK_SOFIA } from "@/lib/site";
+
 type Props = {
-  href: string;
-  children: React.ReactNode;
-  variant?: "primary" | "ghost";
+  children?: React.ReactNode;
   className?: string;
 };
 
-export default function WhatsAppCta({
-  href,
-  children,
-  variant = "primary",
-  className = "",
-}: Props) {
-  const base =
-    "group inline-flex items-center gap-3 rounded-full font-medium t-premium active:scale-[0.98] select-none";
-  const styles =
-    variant === "primary"
-      ? "bg-accent text-[#0c1503] font-semibold pl-6 pr-2 py-2 hover:bg-accent-bright"
-      : "glass text-ink pl-6 pr-2 py-2 hover:bg-white/8";
-
+// El único CTA de la página. Siempre el mismo destino: el chat de Sofía.
+export default function SofiaCta({ children = "Habla con Sofía ahora", className = "" }: Props) {
   return (
-    <a href={href} target="_blank" rel="noopener" className={`${base} ${styles} ${className}`}>
+    <a
+      href={LINK_SOFIA}
+      target="_blank"
+      rel="noopener"
+      className={`group inline-flex items-center gap-3 rounded-full bg-accent pl-7 pr-2.5 py-2.5 font-semibold text-on-accent t-premium hover:bg-accent-bright active:scale-[0.98] select-none ${className}`}
+    >
       <span>{children}</span>
-      <span
-        className={`flex h-9 w-9 items-center justify-center rounded-full t-premium group-hover:scale-105 ${
-          variant === "primary" ? "bg-black/15" : "bg-white/10"
-        }`}
-      >
-        <WhatsAppGlyph size={17} />
+      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black/10 t-premium group-hover:scale-105">
+        <WhatsAppGlyph size={19} />
       </span>
     </a>
   );

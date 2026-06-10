@@ -11,9 +11,9 @@ const archivo = Archivo({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://skyment-landing.vercel.app"),
-  title: "Alejandro Hernández — Agentes de IA, desarrollo web y e-commerce",
+  title: "Alejandro Hernández — Sistemas de ventas que no duermen",
   description:
-    "Montamos el sistema que atiende, agenda y vende por ti: agentes de IA en WhatsApp, páginas web que convierten y tiendas online listas para escalar. Agenda una demo gratuita.",
+    "Un sistema de IA que atiende, vende y agenda por WhatsApp las 24 horas, y te muestra cada conversación en tu CRM. Habla con Sofía y mira la demo en vivo.",
   keywords: [
     "agentes de IA",
     "bot de WhatsApp",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
     "Colombia",
   ],
   openGraph: {
-    title: "Alejandro Hernández — Tu negocio vendiendo en automático",
+    title: "Alejandro Hernández — Tus ventas no pueden seguir cerrando a las 5 PM",
     description:
-      "Agentes de IA en WhatsApp, páginas web y tiendas online que convierten conversaciones en clientes. Demo gratuita en vivo.",
+      "Un sistema que atiende, vende y agenda por WhatsApp las 24 horas. Habla con Sofía: demo en vivo.",
     locale: "es_CO",
     type: "website",
   },

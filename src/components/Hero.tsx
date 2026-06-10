@@ -1,62 +1,52 @@
-import WhatsAppCta from "./WhatsAppCta";
-import { WA } from "@/lib/site";
-
-const PROOFS = [
-  "Atiende 24/7, también festivos",
-  "Responde en menos de un minuto",
-  "Queda funcionando en días, no meses",
-];
+import SofiaCta from "./SofiaCta";
 
 export default function Hero() {
   return (
-    <section
-      data-hero
-      className="relative flex flex-col items-center justify-center px-4 pb-24 pt-28 md:min-h-[88vh] md:pb-28"
-    >
-      <span data-reveal className="eyebrow mb-7">
-        Agentes de IA · Web · E-commerce
-      </span>
-
-      <h1
-        data-reveal
-        className="display max-w-5xl text-center text-[2.5rem] font-semibold leading-[1.02] sm:text-5xl md:text-7xl"
-      >
-        Tu negocio vendiendo
-        <br />
-        <span className="text-accent">en automático.</span>
-      </h1>
-
-      <p
-        data-reveal
-        className="mt-7 max-w-xl text-center text-base leading-relaxed text-ink-muted md:text-lg"
-      >
-        Montamos agentes de inteligencia artificial en tu WhatsApp, páginas web y tiendas
-        online. El sistema contesta, agenda y cierra; tú te dedicas a manejar tu negocio.
-      </p>
-
-      <div data-reveal className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
-        <WhatsAppCta href={WA.demo}>Quiero ver una demo</WhatsAppCta>
-        <a
-          href="#servicios"
-          className="rounded-full px-6 py-3 text-sm text-ink-muted t-premium hover:text-ink"
-        >
-          Primero quiero ver qué hacen
-        </a>
-      </div>
-
-      <p data-reveal className="mt-4 text-xs text-ink-muted/90">
-        Se abre tu WhatsApp. Sin formularios ni correos de spam.
-      </p>
-
-      <div
-        data-reveal
-        className="mt-16 flex w-full max-w-3xl flex-col items-center justify-center gap-3 text-sm text-ink-muted sm:flex-row sm:gap-0 sm:divide-x sm:divide-white/15"
-      >
-        {PROOFS.map((p) => (
-          <span key={p} className="px-6 text-center">
-            {p}
+    <section data-hero className="relative px-4 pb-20 pt-16 md:pb-28 md:pt-24">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-10">
+        <div className="flex flex-col items-start">
+          <span data-reveal className="eyebrow mb-6">
+            Para empresas que venden por WhatsApp
           </span>
-        ))}
+
+          <h1
+            data-reveal
+            className="display text-[2.6rem] font-semibold leading-[1.04] sm:text-5xl md:text-6xl"
+          >
+            Tus ventas no pueden seguir cerrando{" "}
+            <span className="text-accent-deep">a las 5 PM.</span>
+          </h1>
+
+          <p data-reveal className="mt-6 max-w-lg text-base leading-relaxed text-ink-muted md:text-lg">
+            Mientras tu equipo descansa, tus clientes siguen escribiendo. Un sistema que
+            atiende, vende y agenda por WhatsApp las 24 horas, y te muestra cada
+            conversación.
+          </p>
+
+          <div data-reveal className="mt-9">
+            <SofiaCta />
+          </div>
+          <p data-reveal className="mt-4 text-sm text-ink-muted">
+            Es una demo en vivo. Ella misma te agenda la llamada.
+          </p>
+        </div>
+
+        {/* {EMBED_VSL}: reemplazar este bloque por el embed real (cargar muteado, lazy) */}
+        <div data-reveal className="card overflow-hidden">
+          <div className="relative flex aspect-video items-center justify-center bg-bg-raised">
+            <span className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-[11px] font-medium text-white">
+              Mira cómo funciona · 2 min
+            </span>
+            <button
+              aria-label="Reproducir video"
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-on-accent t-premium hover:scale-105"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M8 5.5v13l11-6.5-11-6.5Z" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #272e1e;
-  --bg-raised: #2e3624;
-  --surface: #333c28;
-  --ink: #f4f7ee;
-  --ink-muted: #b6c0ab;
-  --accent: #8bc921;
-  --accent-bright: #a8e63d;
-  --accent-deep: #5d8e13;
-  --hairline: rgba(255, 255, 255, 0.12);
+  --bg: #ffffff;
+  --bg-raised: #f4f8f5;
+  --surface: #ffffff;
+  --ink: #10160f;
+  --ink-muted: #5c6b5e;
+  --accent: #25d366;
+  --accent-bright: #3ce07a;
+  --accent-deep: #128c54;
+  --on-accent: #06301a;
+  --hairline: rgba(13, 26, 16, 0.1);
   --ease-premium: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
@@ -22,6 +23,7 @@
   --color-accent: var(--accent);
   --color-accent-bright: var(--accent-bright);
   --color-accent-deep: var(--accent-deep);
+  --color-on-accent: var(--on-accent);
   --color-hairline: var(--hairline);
   --font-display: var(--font-archivo);
   --font-sans: var(--font-archivo);
@@ -29,7 +31,6 @@
 
 html {
   background: var(--bg);
-  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
@@ -42,12 +43,11 @@ body {
 }
 
 ::selection {
-  background: rgba(139, 201, 33, 0.35);
-  color: #fff;
+  background: rgba(37, 211, 102, 0.3);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-deep);
   outline-offset: 3px;
 }
 
@@ -57,21 +57,12 @@ h3 {
   text-wrap: balance;
 }
 
-/* ---------- superficies planas ---------- */
-.glass {
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-}
-
-.bezel {
+/* ---------- superficies ---------- */
+.card {
   background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: 1.25rem;
-}
-
-.bezel-core {
-  height: 100%;
-  border-radius: 1.25rem;
+  box-shadow: 0 1px 2px rgba(13, 26, 16, 0.04), 0 8px 24px -12px rgba(13, 26, 16, 0.08);
 }
 
 /* ---------- typography helpers ---------- */
@@ -89,7 +80,7 @@ h3 {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-deep);
 }
 
 .eyebrow::before {
@@ -99,40 +90,12 @@ h3 {
   background: var(--accent);
 }
 
-
-/* ---------- reveals con CSS puro (sin librerías) ----------
+/* ---------- reveal initial states (GSAP los resuelve) ----------
    Solo se ocultan si el JS arrancó (html.js); sin JS la página queda visible. */
 html.js [data-reveal],
 html.js [data-reveal-group] > * {
   opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.7s var(--ease-premium),
-    transform 0.7s var(--ease-premium);
-}
-
-html.js [data-reveal].rv-in,
-html.js [data-reveal-group].rv-in > * {
-  opacity: 1;
-  transform: none;
-}
-
-html.js [data-reveal-group].rv-in > :nth-child(2) { transition-delay: 0.07s; }
-html.js [data-reveal-group].rv-in > :nth-child(3) { transition-delay: 0.14s; }
-html.js [data-reveal-group].rv-in > :nth-child(4) { transition-delay: 0.21s; }
-html.js [data-reveal-group].rv-in > :nth-child(5) { transition-delay: 0.28s; }
-html.js [data-reveal-group].rv-in > :nth-child(6) { transition-delay: 0.35s; }
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  html.js [data-reveal],
-  html.js [data-reveal-group] > * {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+  transform: translateY(24px);
 }
 
 /* ---------- premium transition default ---------- */

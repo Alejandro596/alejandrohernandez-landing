@@ -1,11 +1,4 @@
-import { WA } from "@/lib/site";
-
-const LINKS = [
-  { href: "#servicios", label: "Servicios" },
-  { href: "#proceso", label: "Proceso" },
-  { href: "#resultados", label: "Resultados" },
-  { href: "#faq", label: "Preguntas" },
-];
+import { LINK_SOFIA } from "@/lib/site";
 
 export default function Nav() {
   return (
@@ -14,26 +7,13 @@ export default function Nav() {
         <a href="#" className="display py-1 text-base font-semibold tracking-tight">
           Alejandro Hernández
         </a>
-
-        <div className="hidden items-center gap-8 md:flex">
-          {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="py-2 text-sm text-ink-muted t-premium hover:text-ink"
-            >
-              {l.label}
-            </a>
-          ))}
-        </div>
-
         <a
-          href={WA.demo}
+          href={LINK_SOFIA}
           target="_blank"
           rel="noopener"
-          className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-[#0c1503] t-premium hover:bg-accent-bright"
+          className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-on-accent t-premium hover:bg-accent-bright"
         >
-          Escríbenos
+          Habla con Sofía
         </a>
       </nav>
     </header>

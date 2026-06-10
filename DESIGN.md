@@ -2,48 +2,43 @@
 
 ## Theme
 
-Oscuro grafito con tinte verde. No es negro OLED ni modo oscuro genérico: es la versión digital del negro de las piezas publicitarias originales, aclarado para que las superficies tengan cuerpo. Una sola fuente de luz: el verde de marca.
+Claro, blanco, premium pero simple. Una sola idea por sección. Comunica "sistema serio que convierte", no showcase de diseño. El verde WhatsApp es el único color.
 
 ## Color Palette
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--bg` | `#272e1e` | Fondo de página (oliva grafito claro) |
-| `--bg-raised` | `#2e3624` | Bandas de sección |
-| `--surface` | `#333c28` | Tarjetas y paneles |
-| `--ink` | `#f4f7ee` | Texto principal |
-| `--ink-muted` | `#b6c0ab` | Texto secundario |
-| `--accent` | `#8bc921` | Verde de marca: CTAs, palabras clave, avión |
-| `--accent-bright` | `#a8e63d` | Hover de CTAs, detalles |
-| `--accent-deep` | `#5d8e13` | Pliegues del avión, sombras de acento |
-| `--hairline` | `rgba(255,255,255,0.1)` | Bordes |
-
-Texto sobre verde: siempre `#0c1503` (oscuro), nunca blanco. El verde acentúa; no tapiza secciones enteras.
+| `--bg` | `#ffffff` | Fondo de página |
+| `--bg-raised` | `#f4f8f5` | Bandas de sección alternas |
+| `--ink` | `#10160f` | Texto principal |
+| `--ink-muted` | `#5c6b5e` | Texto secundario |
+| `--accent` | `#25d366` | Verde WhatsApp: CTAs, acentos |
+| `--accent-deep` | `#128c54` | Palabras clave en titulares (contraste AA sobre blanco) |
+| `--on-accent` | `#06301a` | Texto sobre verde (nunca blanco: contraste) |
+| `--hairline` | `rgba(13,26,16,0.1)` | Bordes |
 
 ## Typography
 
-- **Display**: Space Grotesk (variable `--font-space-grotesk`), tracking -0.03em, pesos 500-700. Titulares grandes, wordmark del sitio.
-- **Texto**: Plus Jakarta Sans (variable `--font-jakarta`), pesos 400-600.
-- Jerarquía por tamaño y peso, no por color ni efectos. Sin texto degradado (prohibido).
+- **Archivo única familia** (variable `--font-archivo`), titulares `.display` con font-stretch 115%.
+- Jerarquía por tamaño/peso. Sin texto degradado.
 
 ## Components
 
-- **CTA primario** (`WhatsAppCta`): pill verde sólido, texto oscuro semibold, icono de flecha en círculo `bg-black/15` anidado a la derecha. Sin glow ni sombras de color.
-- **Tarjetas** (`.bezel`): panel plano `--surface`, borde 1px `--hairline`, radio 1.25rem. Sin doble bisel, sin glassmorphism, sin nesting.
-- **Nav**: barra sticky sólida con borde inferior; nombre a la izquierda, links, botón verde. Sin blur, sin pill flotante, sin hamburguesa.
+- **CTA único** (`SofiaCta`): pill verde WhatsApp con glifo de WhatsApp anidado; SIEMPRE el mismo destino `LINK_SOFIA` (chat de Sofía). No existen otros CTAs ni formularios.
+- **Tarjetas** (`.card`): blanco, borde hairline, sombra suave, radio 1.25rem.
+- **Mockup CRM** (`HowItWorks`): construido en CSS (pipeline + chat WhatsApp de Sofía). Reemplazable por captura real — marcador {MOCKUP_CRM}.
+- **VSL**: placeholder en Hero — marcador {EMBED_VSL}, cargar muteado y lazy cuando exista.
+- **Nav**: barra sticky blanca, nombre + botón "Habla con Sofía". Botón flotante de WhatsApp en móvil.
 
 ## Motion
 
-- Cero librerías de animación. Reveals con IntersectionObserver + transiciones CSS (fade + 20px), scroll nativo con `scroll-behavior: smooth`.
-- `prefers-reduced-motion`: todo visible de inmediato, scroll instantáneo.
-- Easing global: `cubic-bezier(0.32, 0.72, 0, 1)` en hovers.
+- Lenis (scroll suave) + GSAP fades sutiles al entrar (opacity + 24px). Nada más pesado: ni 3D, ni parallax, ni blur.
+- `prefers-reduced-motion`: todo visible, sin Lenis.
 
-## Layout
+## Estructura (brief 2026-06-10)
 
-- Contenedor `max-w-6xl`, secciones `py-28 md:py-36`.
-- Grillas asimétricas donde aporte (servicios); romper la monotonía de tarjetas idénticas.
-- Mobile-first colapsa a una columna con `px-4`; hero usa `min-h-[100dvh]`.
+Hero (+VSL) → Problema (3 stats) → Solución (3 bloques) → Cómo funciona (mockup + 3 pasos) → Comparación bot $30 vs sistema → CTA final → Footer mínimo.
 
-## Anti-patterns (prohibidos en este proyecto)
+## Anti-patterns prohibidos
 
-Orbes de neón, glassmorphism decorativo, texto degradado, eyebrow uppercase sobre cada sección, marcadores 01/02/03 como relleno, grillas de tarjetas clonadas, glow en botones, reveals con blur, sombras de color.
+Formularios, segundo camino de agendamiento, emojis por todos lados, imágenes stock de robots/call-center, degradados ruidosos, orbes, glassmorphism, eyebrows por sección, white-on-green (contraste).
