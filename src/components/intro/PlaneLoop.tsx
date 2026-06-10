@@ -51,9 +51,10 @@ export default function PlaneLoop() {
       });
       gsap.to(targets, {
         y: (_i: number, el: Element) =>
-          sec.bottom - el.getBoundingClientRect().bottom - 16 - Math.random() * 40,
-        x: () => gsap.utils.random(20, 240),
-        rotation: () => gsap.utils.random(-130, 150),
+          sec.bottom - el.getBoundingClientRect().bottom - 18 - Math.random() * 26,
+        x: () => gsap.utils.random(-30, 150),
+        rotation: () => gsap.utils.random(-75, 85),
+        color: "#b8c4b0",
         duration: 1.35,
         ease: "bounce.out",
         stagger: { each: 0.013, from: "start" },
@@ -105,6 +106,7 @@ export default function PlaneLoop() {
           x: curX + (t.cx - fl.cx),
           y: curY + (t.cy - fl.cy),
           rotation: 0,
+          color: "#10160f",
           duration: 1.25,
           delay: i * 0.016,
           ease: "power2.inOut",
@@ -159,8 +161,8 @@ export default function PlaneLoop() {
       });
 
       // 1) Pasada frontal: cruza y tumba las letras
-      tl.set(f, { x: -8, y: -0.15, z: 0.6, rotX: 0.05, rotY: 0, rotZ: -0.06, scale: passScale, visible: true, flying: true }, 0);
-      tl.to(f, { x: 8, duration: 1.05, ease: "power1.in" }, 0);
+      tl.set(f, { x: -9.5, y: -0.15, z: 0.6, rotX: 0.05, rotY: 0, rotZ: -0.06, scale: passScale, visible: true, flying: true }, 0);
+      tl.to(f, { x: 9.5, duration: 1.05, ease: "power1.in" }, 0);
       tl.to(f, { y: 0.22, rotZ: 0.1, duration: 1.05, ease: "sine.inOut" }, 0);
       tl.add(() => drop(oldChars), 0.45);
 
@@ -168,7 +170,7 @@ export default function PlaneLoop() {
       tl.set(f, { z: -4.2, x: 9.5, y: 1.4, rotY: Math.PI * 0.12, rotZ: 0.12, scale: turnScale }, 1.15);
       tl.to(f, { rotY: Math.PI * 0.85, rotZ: 0.5, duration: 0.6, ease: "power2.out" }, 1.15);
       tl.to(f, { rotY: Math.PI, rotZ: 0.18, duration: 0.6, ease: "sine.out" }, 1.75);
-      tl.to(f, { x: -9.5, duration: 2.7, ease: "sine.inOut" }, 1.25);
+      tl.to(f, { x: -14.5, duration: 2.95, ease: "sine.inOut" }, 1.25);
       tl.to(f, { y: 0.8, duration: 1.35, ease: "sine.in" }, 1.25);
       tl.to(f, { y: 1.25, duration: 1.3, ease: "sine.out" }, 2.6);
 
@@ -177,8 +179,8 @@ export default function PlaneLoop() {
         nextChars = riseInto(nextStep, oldChars);
       }, 1.9);
 
-      tl.set(f, { visible: false, flying: false }, 4.0);
-      tl.to({}, { duration: 0.1 }, 4.0);
+      tl.set(f, { visible: false, flying: false }, 4.3);
+      tl.to({}, { duration: 0.1 }, 4.3);
     };
 
     delayed = gsap.delayedCall(HOLD + 0.8, cycle);
@@ -227,6 +229,11 @@ export default function PlaneLoop() {
         <p className={h2Class}>{TEXTS[0]}</p>
       </noscript>
       <h2 ref={h2BRef} className={h2Class} aria-hidden />
+
+      {/* Texto pequeño fijo: el avión no lo toca */}
+      <p className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-ink-muted sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
+        Un sistema de IA que atiende, vende y agenda por WhatsApp, las 24 horas.
+      </p>
 
       <div className="absolute bottom-7 z-30 flex flex-col items-center gap-2 text-ink-muted" aria-hidden>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="animate-bounce" >

@@ -53,7 +53,7 @@ function Plane({ flight }: { flight: Flight }) {
         </group>
       </group>
       {/* Estela: cinta que sigue la cola del avión */}
-      <Trail width={1.1} length={5.5} decay={1.6} color="#86efac" attenuation={(w) => w * w}>
+      <Trail width={1.6} length={6.5} decay={1.4} color="#9bf0b8" attenuation={(w) => w * w}>
         <mesh position={[-1.15, 0.04, 0]}>
           <sphereGeometry args={[0.02, 4, 4]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
