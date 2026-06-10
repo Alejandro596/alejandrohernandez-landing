@@ -1,4 +1,5 @@
 import Effects from "@/components/Effects";
+import ScrollIntro from "@/components/intro/ScrollIntro";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
@@ -12,6 +13,7 @@ import MobileWhatsApp from "@/components/MobileWhatsApp";
 export default function Home() {
   return (
     <main className="flex-1">
+      <ScrollIntro />
       <Effects />
       <Nav />
       <Hero />
