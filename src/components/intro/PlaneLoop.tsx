@@ -143,9 +143,8 @@ export default function PlaneLoop() {
       io.observe(section);
     };
 
-    // Chispas que saltan del punto de impacto de cada letra (solo desktop)
+    // Chispas que saltan del punto de impacto de cada letra
     const sparks = (x: number, y: number) => {
-      if (window.innerWidth < 768) return;
       for (let i = 0; i < 3; i++) {
         const s = document.createElement("span");
         const c = i === 0 ? "#ff7a3c" : "#8ce427";
@@ -165,9 +164,8 @@ export default function PlaneLoop() {
       }
     };
 
-    // Onda expansiva en el primer contacto del avión con la frase (solo desktop)
+    // Onda expansiva en el primer contacto del avión con la frase
     const shockwave = (px: number) => {
-      if (window.innerWidth < 768) return;
       const ring = document.createElement("span");
       ring.className = "pointer-events-none absolute rounded-full border-2";
       ring.style.borderColor = "rgba(140,228,39,0.8)";
@@ -564,11 +562,10 @@ export default function PlaneLoop() {
           backgroundSize: "150px 150px",
         }}
       />
-      {/* Piso de grilla futurista: perspectiva tron (solo desktop; en móvil la
-          sección es secundaria y va liviana de efectos) */}
+      {/* Piso de grilla futurista: perspectiva tron con avance hacia el fondo */}
       <div
         aria-hidden
-        className="anim-grid-floor pointer-events-none absolute inset-x-[-20%] bottom-0 z-0 hidden h-[34%] origin-bottom opacity-[0.22] [transform:perspective(620px)_rotateX(56deg)] md:block"
+        className="anim-grid-floor pointer-events-none absolute inset-x-[-20%] bottom-0 z-0 h-[34%] origin-bottom opacity-[0.22] [transform:perspective(620px)_rotateX(56deg)]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(140,228,39,0.75) 1px, transparent 1px), linear-gradient(90deg, rgba(140,228,39,0.75) 1px, transparent 1px)",
