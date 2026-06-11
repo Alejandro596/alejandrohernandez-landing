@@ -8,12 +8,29 @@ import SofiaCta from "@/components/SofiaCta";
 
 const PlaneScene = dynamic(() => import("./PlaneScene"), { ssr: false });
 
-// Cada pasada: el avión tumba la frase mala y las letras se rearman en la buena
+// Cada pasada: el avión tumba la frase mala y las letras se rearman en la buena.
+// `sub` aparece debajo de la buena y se va con ella (nunca queda flotando).
 const PAIRS = [
-  { bad: "Vender solo hasta las 5 PM", good: "Vendes 24/7" },
-  { bad: "Pagar 5 asesoras", good: "Vendes sin contratar a nadie" },
-  { bad: "Dejar leads sin contestar", good: "Respondes en segundos" },
-  { bad: "No saber qué pasó con tus leads", good: "Lo ves todo en tu CRM" },
+  {
+    bad: "Vender solo hasta las 5 PM",
+    good: "Vendes 24/7",
+    sub: "Atiende cada mensaje en segundos, también de noche y fines de semana.",
+  },
+  {
+    bad: "Pagar 5 asesoras",
+    good: "Vendes sin contratar a nadie",
+    sub: "Hace el trabajo de varias asesoras, sin sumar nómina.",
+  },
+  {
+    bad: "Dejar leads sin contestar",
+    good: "Respondes en segundos",
+    sub: "Nadie se queda esperando, nadie se va con la competencia.",
+  },
+  {
+    bad: "No saber qué pasó con tus leads",
+    good: "Lo ves todo en tu CRM",
+    sub: "Cada lead, cada etapa, cada conversación, en un solo lugar.",
+  },
 ];
 // Tras el último par, la frase queda fija y aparece el CTA
 const CLOSER = "Tu Sistema de Ventas Autónomo";
@@ -36,6 +53,7 @@ export default function PlaneLoop() {
   const stageRef = useRef<HTMLDivElement>(null);
   const templateRef = useRef<HTMLHeadingElement>(null);
   const poolBoxRef = useRef<HTMLDivElement>(null);
+  const fixedSubRef = useRef<HTMLParagraphElement>(null);
   const flightRef = useRef(createFlight());
 
   useEffect(() => {
@@ -51,15 +69,58 @@ export default function PlaneLoop() {
     let tl: gsap.core.Timeline | null = null;
     let delayed: gsap.core.Tween | null = null;
     let killed = false;
+    let sub: HTMLElement | null = null; // línea de apoyo bajo la frase buena
+    let measuredBottom = 0; // borde inferior de la última frase medida
 
     // Mide dónde va cada letra de una frase (la plantilla está invisible pero ocupa layout)
     const measure = (text: string): Target[] => {
       buildTemplate(template, text);
       const sr = stage.getBoundingClientRect();
+      measuredBottom = 0;
       return Array.from(template.querySelectorAll<HTMLElement>(".tch")).map((c) => {
         const r = c.getBoundingClientRect();
+        measuredBottom = Math.max(measuredBottom, r.bottom - sr.top);
         return { glyph: c.textContent ?? "", x: r.left - sr.left, y: r.top - sr.top };
       });
+    };
+
+    const fixedSub = fixedSubRef.current!;
+
+    // La línea de apoyo vive DENTRO de poolBox: cuando la frase se desliza en
+    // bloque, ella se va montada. El subtexto fijo genérico se aparta mientras.
+    const showSub = (text: string) => {
+      sub?.remove();
+      const p = document.createElement("p");
+      p.className =
+        "absolute inset-x-0 mx-auto max-w-md px-6 text-center text-sm font-normal tracking-normal leading-relaxed [font-stretch:100%] md:max-w-lg md:text-base";
+      p.style.color = "#b9cba9";
+      p.style.top = `${measuredBottom + 16}px`;
+      p.textContent = text;
+      poolBox.appendChild(p);
+      sub = p;
+      gsap.fromTo(
+        p,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 1.1 }
+      );
+      gsap.to(fixedSub, { opacity: 0, duration: 0.4 });
+    };
+
+    // "Tumbar" la línea de apoyo: cae y se desvanece (para el cierre)
+    const dropSub = () => {
+      const el = sub;
+      sub = null;
+      if (el) {
+        gsap.to(el, {
+          y: "+=70",
+          opacity: 0,
+          rotation: 2.5,
+          duration: 0.6,
+          ease: "power1.in",
+          onComplete: () => el.remove(),
+        });
+      }
+      gsap.to(fixedSub, { opacity: 1, duration: 0.6, delay: 0.4 });
     };
 
     const spawn = (t: Target, color: string): HTMLElement => {
@@ -128,9 +189,10 @@ export default function PlaneLoop() {
     };
 
     // Las mismas letras vuelan a la frase nueva; el glifo cambia a mitad de giro
-    const morph = (text: string, color: string) => {
+    const morph = (text: string, color: string, subText?: string) => {
       currentText = text;
       const targets = measure(text);
+      if (subText) showSub(subText);
       const stageH = stage.clientHeight;
       const stageW = stage.clientWidth;
 
@@ -204,11 +266,15 @@ export default function PlaneLoop() {
     const slideOut = (onDone?: () => void) => {
       const stageW = stage.clientWidth;
       const old = pool;
+      const oldSub = sub;
       pool = [];
+      sub = null;
+      if (oldSub) gsap.to(fixedSub, { opacity: 1, duration: 0.6, delay: 0.7 });
       gsap
         .timeline({
           onComplete: () => {
             old.forEach((el) => el.remove());
+            oldSub?.remove();
             gsap.set(poolBox, { x: 0, filter: "none" });
             if (!killed) onDone?.();
           },
@@ -234,6 +300,7 @@ export default function PlaneLoop() {
     // Cierre del round: la frase final respira y el bucle reinicia
     const finish = () => {
       if (killed) return;
+      dropSub(); // la línea de apoyo se tumba antes del cierre
       morph(CLOSER, INK);
       delayed = gsap.delayedCall(HOLD * 2 + 2, () => {
         if (killed) return;
@@ -366,7 +433,7 @@ export default function PlaneLoop() {
       tl.to(f, { rotX: -0.38, duration: 1.4, ease: "sine.inOut" }, 1.0);
 
       // Mientras vuelve por el fondo, las letras suben y se rearman en lo bueno
-      tl.add(() => morph(pair.good, GOOD), 2.2);
+      tl.add(() => morph(pair.good, GOOD, pair.sub), 2.2);
 
       tl.set(f, { visible: false, flying: false }, FLIGHT);
       tl.to({}, { duration: 0.05 }, FLIGHT);
@@ -474,8 +541,8 @@ export default function PlaneLoop() {
         </p>
       </noscript>
 
-      {/* Texto pequeño fijo: el avión no lo toca */}
-      <p className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-[#cdd9c4] sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
+      {/* Texto pequeño fijo: se aparta cuando la frase buena trae su propia línea */}
+      <p ref={fixedSubRef} className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-[#cdd9c4] sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
         Un sistema de IA que atiende, vende y agenda por WhatsApp, las 24 horas.
       </p>
 
