@@ -604,12 +604,16 @@ export default function PlaneLoop() {
         </p>
       </noscript>
 
-      {/* Marca + gancho en el espacio superior */}
-      <div className="absolute inset-x-0 top-8 z-10 flex flex-col items-center gap-1.5 px-4 text-center">
+      {/* Marca + badge de la pauta (la burbujita con el punto en línea) */}
+      <div className="absolute inset-x-0 top-8 z-10 flex flex-col items-center gap-2.5 px-4 text-center">
         <span className="display text-sm font-semibold uppercase tracking-[0.32em] text-ink sm:text-base">
           Alejandro Hernández
         </span>
-        <span className="display glow-green text-lg font-semibold sm:text-xl">
+        <span className="flex items-center gap-2.5 rounded-full border border-hairline bg-[#0b0f09]/85 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#cfe9b8] shadow-[0_0_22px_rgba(140,228,39,0.18)] sm:text-[11px]">
+          <span className="relative flex h-2 w-2" aria-hidden>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-bright opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-bright" />
+          </span>
           <span className="sm:hidden">Automatización de WhatsApp</span>
           <span className="hidden sm:inline">Especialistas en automatización de WhatsApp</span>
         </span>
