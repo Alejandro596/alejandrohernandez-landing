@@ -71,19 +71,47 @@ export default function PlaneLoop() {
       io.observe(section);
     };
 
-    // Caen al piso del stage y se quedan ahí, atenuadas
+    // El impacto primero las lanza (golpe seco), luego caen con física
     const drop = () => {
       const floorBase = stage.clientHeight;
-      gsap.to(pool, {
-        y: (_i: number, el: HTMLElement) =>
-          floorBase - el.offsetHeight - 10 - Math.random() * 34,
-        x: () => `+=${gsap.utils.random(-30, 150)}`,
-        rotation: () => gsap.utils.random(-75, 85),
+      const tlD = gsap.timeline();
+      tlD.to(pool, {
+        y: () => `-=${gsap.utils.random(16, 60)}`,
+        x: () => `+=${gsap.utils.random(12, 70)}`,
+        rotation: () => gsap.utils.random(-35, 40),
         color: RUBBLE,
-        duration: 1.35,
-        ease: "bounce.out",
+        duration: 0.18,
+        ease: "power2.out",
         stagger: { each: 0.013, from: "start" },
       });
+      tlD.to(
+        pool,
+        {
+          y: (_i: number, el: HTMLElement) =>
+            floorBase - el.offsetHeight - 10 - Math.random() * 34,
+          x: () => `+=${gsap.utils.random(-25, 100)}`,
+          rotation: () => gsap.utils.random(-75, 85),
+          duration: 1.25,
+          ease: "bounce.out",
+          stagger: { each: 0.013, from: "start" },
+        },
+        0.17
+      );
+    };
+
+    // Sacudida de toda la sección en el choque
+    const shake = () => {
+      const amp = window.innerWidth < 640 ? 5 : 9;
+      const tlS = gsap.timeline();
+      for (let i = 0; i < 6; i++) {
+        const d = amp * (1 - i / 6);
+        tlS.to(section, {
+          x: gsap.utils.random(-d, d),
+          y: gsap.utils.random(-d / 2, d / 2),
+          duration: 0.045,
+        });
+      }
+      tlS.to(section, { x: 0, y: 0, duration: 0.08 });
     };
 
     // Las mismas letras del piso vuelan a la frase nueva; el glifo cambia a mitad de giro
@@ -173,24 +201,30 @@ export default function PlaneLoop() {
       tl.set(f, { x: -9.5, y: -0.15, z: 0.6, rotX: 0.05, rotY: 0, rotZ: -0.06, scale: passScale, visible: true, flying: true }, 0);
       tl.to(f, { x: mobile ? 2.4 : 5.2, duration: 1.05, ease: "power1.in" }, 0);
       tl.to(f, { y: 0.15, duration: 1.05, ease: "sine.inOut" }, 0);
-      tl.add(drop, 0.45);
+      tl.add(() => {
+        drop();
+        shake();
+      }, 0.45);
+      // El avión también acusa el golpe
+      tl.to(f, { rotZ: 0.24, y: "+=0.12", duration: 0.12, ease: "power2.out" }, 0.45);
+      tl.to(f, { rotZ: 0.04, duration: 0.35, ease: "sine.out" }, 0.58);
 
       // 2) Curva en U continua y visible: trepa por la derecha, se ladea,
       //    se hunde en profundidad girando y cruza el fondo ya volteado
       tl.to(f, { x: 7.8 * m, duration: 0.55, ease: "sine.out" }, 1.05);
       tl.to(f, { x: 6.2 * m, duration: 0.45, ease: "sine.in" }, 1.6);
       tl.to(f, { y: 2.1, duration: 1.0, ease: "sine.out" }, 1.05);
-      tl.to(f, { z: -2.6, duration: 1.0, ease: "sine.inOut" }, 1.05);
+      tl.to(f, { z: -3.4, duration: 1.0, ease: "sine.inOut" }, 1.05);
       tl.to(f, { rotY: Math.PI * 0.6, duration: 1.0, ease: "power1.inOut" }, 1.05);
       tl.to(f, { rotZ: 0.6, duration: 0.8, ease: "sine.inOut" }, 1.1);
       tl.to(f, { scale: turnScale, duration: 1.0, ease: "sine.inOut" }, 1.05);
 
       tl.to(f, { x: -15, duration: 2.65, ease: "sine.inOut" }, 2.05);
-      tl.to(f, { z: -4.4, duration: 1.2, ease: "sine.inOut" }, 2.05);
+      tl.to(f, { z: -7.6, duration: 1.3, ease: "sine.inOut" }, 2.05);
       tl.to(f, { rotY: Math.PI, duration: 0.8, ease: "sine.out" }, 2.05);
       tl.to(f, { rotZ: 0.14, duration: 1.0, ease: "sine.inOut" }, 2.3);
-      tl.to(f, { y: 1.0, duration: 1.6, ease: "sine.inOut" }, 2.05);
-      tl.to(f, { y: 1.3, duration: 1.0, ease: "sine.out" }, 3.65);
+      tl.to(f, { y: 1.5, duration: 1.6, ease: "sine.inOut" }, 2.05);
+      tl.to(f, { y: 1.8, duration: 1.0, ease: "sine.out" }, 3.65);
 
       // 3) Mientras vuelve por el fondo, las letras suben y se rearman
       tl.add(() => rise(nextStep), 2.0);
