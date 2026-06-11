@@ -12,16 +12,16 @@ Codificación narrativa: ROJO = el problema / lo malo · VERDE = la solución / 
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--bg` | `#070b08` | Fondo de página (casi negro, tinte verde) |
+| `--bg` | `#000000` | Fondo de página (negro puro, como la pauta) |
 | `--bg-raised` | `#0c130d` | Bandas de sección alternas |
 | `--surface` | `#0e150f` | Tarjetas |
 | `--ink` | `#f2f7f2` | Texto principal (blanco) |
 | `--ink-muted` | `#a3b8a6` | Texto secundario |
-| `--accent` | `#25d366` | Verde WhatsApp: CTAs |
-| `--accent-bright` | `#3ce07a` | Verde neón: glow, hovers |
-| `--accent-deep` | `#35d96e` | Verde luminoso para texto sobre fondos oscuros |
+| `--accent` | `#6ec817` | Verde LIMA de la pauta: CTAs (gradiente #9bec33→#52b50d) |
+| `--accent-bright` | `#8ce427` | Verde neón: glow, hovers |
+| `--accent-deep` | `#48a808` | Verde luminoso para texto sobre fondos oscuros |
 | `--on-accent` | `#06301a` | Texto sobre verde (nunca blanco) |
-| `--bad` | `#ff5a4a` | Rojo del problema: stats, columna del bot genérico |
+| `--bad` | `#e81000` (bright #ff2d12) | Rojo del problema: stats, columna del bot genérico |
 | `--hairline` | `rgba(141,235,170,0.16)` | Bordes (verdosos) |
 
 ## Typography

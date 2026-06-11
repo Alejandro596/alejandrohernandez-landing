@@ -64,7 +64,7 @@ function Plane({ flight }: { flight: Flight }) {
     const c = document.createElement("canvas");
     c.width = c.height = 256;
     const ctx = c.getContext("2d")!;
-    ctx.fillStyle = "#23cd62";
+    ctx.fillStyle = "#58b80f"; // verde LIMA de la pauta
     ctx.fillRect(0, 0, 256, 256);
     ctx.strokeStyle = "rgba(255,255,255,0.14)";
     ctx.lineWidth = 1;
@@ -175,7 +175,7 @@ function Plane({ flight }: { flight: Flight }) {
         </group>
       </group>
       {/* Estela: cinta que sigue la cola del avión */}
-      <Trail width={1.8} length={7} decay={1.3} color="#6fe39c" attenuation={(w) => w * w}>
+      <Trail width={1.8} length={7} decay={1.3} color="#a4ef4a" attenuation={(w) => w * w}>
         <mesh position={[-1.15, 0.04, 0]}>
           <sphereGeometry args={[0.02, 4, 4]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />

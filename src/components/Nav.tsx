@@ -11,7 +11,7 @@ export default function Nav() {
           href={LINK_SOFIA}
           target="_blank"
           rel="noopener"
-          className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-on-accent shadow-[0_0_18px_rgba(37,211,102,0.35)] t-premium hover:bg-accent-bright hover:shadow-[0_0_26px_rgba(62,224,122,0.5)]"
+          className="rounded-full bg-gradient-to-b from-[#9bec33] to-[#52b50d] px-5 py-2.5 text-sm font-semibold text-on-accent shadow-[0_0_18px_rgba(140,228,39,0.4)] t-premium hover:shadow-[0_0_30px_rgba(140,228,39,0.6)] hover:brightness-110"
         >
           Habla con Sofía
         </a>

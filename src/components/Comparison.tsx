@@ -31,7 +31,7 @@ export default function Comparison() {
             </ul>
           </div>
 
-          <div className="card border-2 border-accent p-7 shadow-[0_0_48px_-14px_rgba(37,211,102,0.45)] md:p-8">
+          <div className="card border-2 border-accent p-7 shadow-[0_0_52px_-14px_rgba(140,228,39,0.5)] md:p-8">
             <h3 className="display text-lg font-semibold">Tu Sistema de Ventas</h3>
             <ul className="mt-5 flex flex-col gap-4">
               {ROWS.map((r) => (

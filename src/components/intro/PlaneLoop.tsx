@@ -21,12 +21,12 @@ const CLOSER = "Tu Sistema de Ventas Autónomo";
 const HOLD = 2.4; // segundos de lectura entre fases
 const FLIGHT = 5.4; // duración del recorrido completo (una sola curva)
 const INK = "#f6fbf7"; // cierre
-const BAD = "#ff6b5b"; // lo malo, en rojo
-const GOOD = "#3ee07a"; // lo bueno, en verde neón
-const RUBBLE = "#8e4a40"; // escombros: rojo apagado en el piso
-// Glow de la pauta: las frases buenas y el cierre brillan
-const GLOW_GOOD = "0 0 14px rgba(62,224,122,0.55), 0 0 44px rgba(62,224,122,0.25)";
-const GLOW_INK = "0 0 22px rgba(246,251,247,0.3)";
+const BAD = "#ff2d12"; // lo malo: el rojo de la pauta sobre negro
+const GOOD = "#8ce427"; // lo bueno: el verde LIMA de la pauta
+const RUBBLE = "#8a2417"; // escombros: rojo apagado en el piso
+// Glow GOTY: las frases buenas y el cierre brillan como en la pauta
+const GLOW_GOOD = "0 0 14px rgba(140,228,39,0.6), 0 0 46px rgba(140,228,39,0.3)";
+const GLOW_INK = "0 0 24px rgba(246,251,247,0.35)";
 
 type Target = { glyph: string; x: number; y: number };
 
@@ -422,7 +422,7 @@ export default function PlaneLoop() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#081109]"
+      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#020402]"
       aria-label={`${CLOSER}: ${PAIRS.map((p) => p.good).join(", ")}`}
     >
       {/* Textura del escenario: luz de foco arriba, viñeta abajo y grano sutil */}
@@ -431,7 +431,7 @@ export default function PlaneLoop() {
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(115% 80% at 50% 35%, rgba(220,255,233,0.08), rgba(0,0,0,0) 58%), radial-gradient(150% 110% at 50% 115%, rgba(0,0,0,0.38), rgba(0,0,0,0) 62%)",
+            "radial-gradient(115% 80% at 50% 35%, rgba(170,240,90,0.09), rgba(0,0,0,0) 58%), radial-gradient(150% 110% at 50% 115%, rgba(0,0,0,0.45), rgba(0,0,0,0) 62%)",
         }}
       />
       {/* Monograma de marca (referencia aprobada: swatch sobre negro del board
@@ -440,7 +440,7 @@ export default function PlaneLoop() {
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0 opacity-[0.09]"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cg fill='%23cfe9d8'%3E%3Ctext x='37' y='48' font-family='Times New Roman,Georgia,serif' font-size='26' text-anchor='middle'%3EA%3C/text%3E%3Ctext x='112' y='123' font-family='Times New Roman,Georgia,serif' font-size='26' text-anchor='middle'%3EA%3C/text%3E%3Ccircle cx='112' cy='40' r='1.6'/%3E%3Ccircle cx='37' cy='115' r='1.6'/%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cg fill='%23cdf59a'%3E%3Ctext x='37' y='48' font-family='Times New Roman,Georgia,serif' font-size='26' text-anchor='middle'%3EA%3C/text%3E%3Ctext x='112' y='123' font-family='Times New Roman,Georgia,serif' font-size='26' text-anchor='middle'%3EA%3C/text%3E%3Ccircle cx='112' cy='40' r='1.6'/%3E%3Ccircle cx='37' cy='115' r='1.6'/%3E%3C/g%3E%3C/svg%3E")`,
           backgroundSize: "150px 150px",
         }}
       />
@@ -475,7 +475,7 @@ export default function PlaneLoop() {
       </noscript>
 
       {/* Texto pequeño fijo: el avión no lo toca */}
-      <p className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-[#cfe5d6] sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
+      <p className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-[#cdd9c4] sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
         Un sistema de IA que atiende, vende y agenda por WhatsApp, las 24 horas.
       </p>
 
@@ -484,7 +484,7 @@ export default function PlaneLoop() {
         <SofiaCta />
       </div>
 
-      <div className="absolute bottom-7 z-30 flex flex-col items-center gap-2 text-[#9fc7ad]" aria-hidden>
+      <div className="absolute bottom-7 z-30 flex flex-col items-center gap-2 text-[#9fc783]" aria-hidden>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="animate-bounce">
           <path d="M12 4v16m-6-6 6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>

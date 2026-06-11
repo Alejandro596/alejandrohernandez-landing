@@ -1,17 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #070b08;
-  --bg-raised: #0c130d;
-  --surface: #0e150f;
-  --ink: #f2f7f2;
-  --ink-muted: #a3b8a6;
-  --accent: #25d366;
-  --accent-bright: #3ce07a;
-  --accent-deep: #35d96e; /* en dark theme el "deep" es el verde luminoso de texto */
-  --on-accent: #06301a;
-  --bad: #ff5a4a;
-  --hairline: rgba(141, 235, 170, 0.16);
+  /* Paleta muestreada PIXEL A PIXEL de las piezas de pauta (test1-4.png):
+     verde LIMA #70c818/#78d000/#48a808, rojo #e81000, fondo negro puro */
+  --bg: #000000;
+  --bg-raised: #070906;
+  --surface: #0b0f09;
+  --ink: #f4f7f1;
+  --ink-muted: #9aa896;
+  --accent: #6ec817;
+  --accent-bright: #8ce427;
+  --accent-deep: #48a808;
+  --on-accent: #0b2202;
+  --bad: #e81000;
+  --bad-bright: #ff2d12;
+  --hairline: rgba(140, 228, 39, 0.16);
   --ease-premium: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
@@ -26,6 +29,7 @@
   --color-accent-deep: var(--accent-deep);
   --color-on-accent: var(--on-accent);
   --color-bad: var(--bad);
+  --color-bad-bright: var(--bad-bright);
   --color-hairline: var(--hairline);
   --font-display: var(--font-archivo);
   --font-sans: var(--font-archivo);
@@ -45,7 +49,7 @@ body {
 }
 
 ::selection {
-  background: rgba(62, 224, 122, 0.35);
+  background: rgba(140, 228, 39, 0.35);
 }
 
 :focus-visible {
@@ -94,25 +98,61 @@ p {
   width: 18px;
   height: 2px;
   background: var(--accent);
-  box-shadow: 0 0 8px rgba(62, 224, 122, 0.6);
+  box-shadow: 0 0 8px rgba(140, 228, 39, 0.7);
 }
 
-/* ---------- glow (estética de las piezas de pauta) ---------- */
+/* ---------- glow GOTY (referencia: josehuila.com, en la paleta de la pauta) ----------
+   Degradado luminoso vertical + doble bloom + pulso lento de resplandor. */
 .glow-green {
-  color: var(--accent-bright);
-  text-shadow: 0 0 14px rgba(62, 224, 122, 0.5), 0 0 44px rgba(62, 224, 122, 0.22);
+  background: linear-gradient(180deg, #d3fc7e 0%, #8ce427 46%, #4fae0c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 34px rgba(140, 228, 39, 0.3));
+  animation: glow-pulse-green 3.2s ease-in-out infinite;
 }
 
 .glow-red {
-  color: var(--bad);
-  text-shadow: 0 0 14px rgba(255, 90, 74, 0.42), 0 0 38px rgba(255, 90, 74, 0.18);
+  background: linear-gradient(180deg, #ff8c5e 0%, #ff2d12 48%, #c90d00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgba(255, 45, 18, 0.45)) drop-shadow(0 0 30px rgba(255, 45, 18, 0.22));
+  animation: glow-pulse-red 3.2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse-green {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 10px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 34px rgba(140, 228, 39, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(140, 228, 39, 0.75)) drop-shadow(0 0 52px rgba(140, 228, 39, 0.45));
+  }
+}
+
+@keyframes glow-pulse-red {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 10px rgba(255, 45, 18, 0.45)) drop-shadow(0 0 30px rgba(255, 45, 18, 0.22));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(255, 45, 18, 0.65)) drop-shadow(0 0 46px rgba(255, 45, 18, 0.35));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-green,
+  .glow-red {
+    animation: none;
+  }
 }
 
 /* aura ambiental suave detrás de secciones clave */
 .ambient-green {
   background:
-    radial-gradient(58% 46% at 72% 12%, rgba(37, 211, 102, 0.1), transparent 64%),
-    radial-gradient(45% 38% at 12% 78%, rgba(37, 211, 102, 0.05), transparent 60%);
+    radial-gradient(58% 46% at 72% 12%, rgba(110, 200, 23, 0.12), transparent 64%),
+    radial-gradient(45% 38% at 12% 78%, rgba(110, 200, 23, 0.06), transparent 60%);
 }
 
 /* ---------- reveal initial states (GSAP los resuelve) ----------
