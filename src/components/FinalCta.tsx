@@ -11,6 +11,10 @@ export default function FinalCta() {
           Escríbele a Sofía. Te resuelve las dudas y te agenda la llamada, sin que un
           humano mueva un dedo. Así de bien funciona.
         </p>
+        <p data-reveal className="mt-5 max-w-lg text-sm font-medium leading-relaxed text-ink md:text-base">
+          Y mientras lo piensas, esta noche van a volver a entrar mensajes que nadie va a
+          responder.
+        </p>
         <div data-reveal className="mt-10 flex flex-col items-center gap-3">
           <SofiaCta />
           <p className="text-xs text-ink-muted">

@@ -18,9 +18,9 @@ export default function Hero() {
           </h1>
 
           <p data-reveal className="mt-6 max-w-lg text-base leading-relaxed text-ink-muted md:text-lg">
-            Mientras tu equipo descansa, tus clientes siguen escribiendo. Un sistema que
-            atiende, vende y agenda por WhatsApp las 24 horas, y te muestra cada
-            conversación.
+            Mientras tu equipo descansa, tus clientes siguen escribiendo —y le terminan
+            comprando a quien sí les responde. Instalamos un sistema que atiende, vende y
+            agenda por WhatsApp las 24 horas, y te muestra cada conversación en tu CRM.
           </p>
 
           <div data-reveal className="mt-9">

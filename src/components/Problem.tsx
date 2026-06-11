@@ -5,7 +5,7 @@ const STATS = [
   },
   {
     big: "Los pagaste con pauta.",
-    text: "La mayoría no espera: le escribe al siguiente.",
+    text: "La mayoría no espera: le compra a quien le responda primero.",
   },
   {
     big: "Y hoy ni siquiera sabes",

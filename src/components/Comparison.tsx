@@ -48,6 +48,9 @@ export default function Comparison() {
           Es la diferencia entre alquilar un taladro…{" "}
           <span className="glow-green">y contratar al maestro que te construye la casa.</span>
         </p>
+        <p data-reveal className="mt-4 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg">
+          No, no es lo más barato del mercado. Es lo único que de verdad te va a vender.
+        </p>
       </div>
     </section>
   );
