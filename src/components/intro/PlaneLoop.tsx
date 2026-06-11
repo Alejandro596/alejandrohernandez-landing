@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { createFlight } from "./PlaneScene";
+
+gsap.registerPlugin(MotionPathPlugin);
 
 const PlaneScene = dynamic(() => import("./PlaneScene"), { ssr: false });
 
@@ -185,8 +188,7 @@ export default function PlaneLoop() {
       if (killed) return;
       const mobile = window.innerWidth < 640;
       const m = mobile ? 0.45 : 1; // compresión horizontal de la curva en pantallas angostas
-      const passScale = mobile ? 0.6 : 1.15;
-      const turnScale = mobile ? 0.45 : 0.85;
+      const passScale = mobile ? 0.6 : 1.05;
       const nextStep = (step + 1) % TEXTS.length;
       const f = flightRef.current;
 
@@ -197,38 +199,44 @@ export default function PlaneLoop() {
         },
       });
 
-      // 1) Pasada frontal: cruza y tumba las letras
-      tl.set(f, { x: -9.5, y: -0.15, z: 0.6, rotX: 0.05, rotY: 0, rotZ: -0.06, scale: passScale, visible: true, flying: true }, 0);
-      tl.to(f, { x: mobile ? 2.4 : 5.2, duration: 1.05, ease: "power1.in" }, 0);
-      tl.to(f, { y: 0.15, duration: 1.05, ease: "sine.inOut" }, 0);
-      tl.add(() => {
-        drop();
-        shake();
-      }, 0.45);
-      // El avión también acusa el golpe
-      tl.to(f, { rotZ: 0.24, y: "+=0.12", duration: 0.12, ease: "power2.out" }, 0.45);
-      tl.to(f, { rotZ: 0.04, duration: 0.35, ease: "sine.out" }, 0.58);
+      // UNA SOLA trayectoria continua (catmull-rom, velocidad constante):
+      // pasada frontal → curva en U trepando a la derecha → cruce lejano → salida
+      const path = [
+        { x: -6, y: -0.1, z: 0.6 },
+        { x: 0, y: 0.02, z: 0.58 },
+        { x: 4.2 * m, y: 0.25, z: 0.45 },
+        { x: 7.6 * m, y: 1.0, z: -0.9 },
+        { x: 9.6 * m, y: 1.9, z: -4.5 },
+        { x: 5.5 * m, y: 2.2, z: -8.5 },
+        { x: 0, y: 2.0, z: -10 },
+        { x: -7, y: 1.8, z: -10 },
+        { x: -16, y: 1.7, z: -9.5 },
+      ];
 
-      // 2) Curva en U continua y visible: trepa por la derecha, se ladea,
-      //    se hunde en profundidad girando y cruza el fondo ya volteado
-      tl.to(f, { x: 7.8 * m, duration: 0.55, ease: "sine.out" }, 1.05);
-      tl.to(f, { x: 6.2 * m, duration: 0.45, ease: "sine.in" }, 1.6);
-      tl.to(f, { y: 2.1, duration: 1.0, ease: "sine.out" }, 1.05);
-      tl.to(f, { z: -3.4, duration: 1.0, ease: "sine.inOut" }, 1.05);
-      tl.to(f, { rotZ: 0.6, duration: 0.8, ease: "sine.inOut" }, 1.1);
-      tl.to(f, { scale: turnScale, duration: 1.0, ease: "sine.inOut" }, 1.05);
+      let dropped = false;
+      tl.set(f, { x: -11, y: -0.15, z: 0.6, rotX: 0, rotY: 0, rotZ: 0, scale: passScale, visible: true, flying: true }, 0);
+      tl.to(f, {
+        motionPath: { path, curviness: 1.1 },
+        duration: 4.6,
+        ease: "none",
+        onUpdate: () => {
+          // El choque se dispara cuando la nariz LLEGA a las letras
+          if (!dropped && f.z > 0 && f.x > -3.4) {
+            dropped = true;
+            drop();
+            shake();
+            // El avión acusa el golpe: cabeceo + pulso de tamaño (sin tocar la trayectoria)
+            gsap.to(f, { rotZ: 0.22, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1 });
+            gsap.fromTo(f, { scale: passScale }, { scale: passScale * 1.07, duration: 0.1, yoyo: true, repeat: 1 });
+          }
+        },
+      }, 0);
 
-      tl.to(f, { x: -15, duration: 2.65, ease: "sine.inOut" }, 2.05);
-      tl.to(f, { z: -10, duration: 1.4, ease: "sine.inOut" }, 2.05);
-      tl.to(f, { rotZ: 0.14, duration: 1.0, ease: "sine.inOut" }, 2.3);
-      tl.to(f, { y: 1.7, duration: 1.6, ease: "sine.inOut" }, 2.05);
-      tl.to(f, { y: 2.1, duration: 1.0, ease: "sine.out" }, 3.65);
-
-      // 3) Mientras vuelve por el fondo, las letras suben y se rearman
+      // Mientras vuelve por el fondo, las letras suben y se rearman
       tl.add(() => rise(nextStep), 2.0);
 
-      tl.set(f, { visible: false, flying: false }, 4.75);
-      tl.to({}, { duration: 0.05 }, 4.75);
+      tl.set(f, { visible: false, flying: false }, 4.62);
+      tl.to({}, { duration: 0.05 }, 4.62);
     };
 
     // Reacomodo instantáneo si cambia el tamaño entre ciclos

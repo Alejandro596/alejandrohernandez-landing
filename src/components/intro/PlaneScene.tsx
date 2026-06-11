@@ -52,6 +52,7 @@ function Plane({ flight }: { flight: Flight }) {
   const prev = useRef({ x: flight.x, y: flight.y, z: flight.z });
   const heading = useRef(0);
   const pitch = useRef(0);
+  const bank = useRef(0);
 
   useFrame(({ clock }) => {
     const g = group.current;
@@ -65,14 +66,22 @@ function Plane({ flight }: { flight: Flight }) {
     const dz = flight.z - pr.z;
     prev.current = { x: flight.x, y: flight.y, z: flight.z };
     const horiz = Math.hypot(dx, dz);
+    const before = heading.current;
     if (horiz > 1.5) {
       // teletransporte (inicio de ciclo): rumbo instantáneo, sin barrido visible
       heading.current = Math.atan2(-dz, dx);
       pitch.current = 0;
+      bank.current = 0;
     } else if (horiz > 0.0008) {
       heading.current = lerpAngle(heading.current, Math.atan2(-dz, dx), 0.16);
       const targetPitch = Math.max(-0.55, Math.min(0.55, Math.atan2(dy, horiz) * 0.55));
       pitch.current += (targetPitch - pitch.current) * 0.12;
+      // Banking físico: proporcional a la tasa de giro (solo se ladea si la curva lo exige)
+      const rate = lerpAngle(0, heading.current - before, 1);
+      const targetBank = Math.max(-0.85, Math.min(0.85, rate * 16));
+      bank.current += (targetBank - bank.current) * 0.09;
+    } else {
+      bank.current += (0 - bank.current) * 0.06;
     }
 
     // Aleteo de papel: vibración sutil solo en vuelo
@@ -81,8 +90,10 @@ function Plane({ flight }: { flight: Flight }) {
     const bobY = flight.flying ? Math.sin(t * 9) * 0.03 : 0;
 
     g.position.set(flight.x, flight.y + bobY, flight.z);
+    // yaw (Y) -> pitch (Z, eje de las alas) -> roll (X, eje de la nariz)
+    g.rotation.order = "YZX";
     g.rotation.set(
-      flight.rotX + flutterX,
+      flight.rotX + flutterX + bank.current,
       heading.current + flight.rotY,
       flight.rotZ + pitch.current + flutterZ
     );
