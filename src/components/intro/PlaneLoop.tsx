@@ -286,7 +286,7 @@ export default function PlaneLoop() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[linear-gradient(180deg,#e4f4e9_0%,#f3faf5_55%,#ffffff_100%)]"
+      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#edf1ea]"
       aria-label={TEXTS.join(" ")}
     >
       {canvasOn && (
