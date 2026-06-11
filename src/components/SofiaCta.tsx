@@ -12,7 +12,7 @@ export default function SofiaCta({ children = "Habla con Sofía ahora", classNam
       href={LINK_SOFIA}
       target="_blank"
       rel="noopener"
-      className={`group inline-flex items-center gap-3 rounded-full bg-gradient-to-b from-[#9bec33] to-[#52b50d] pl-7 pr-2.5 py-2.5 font-semibold text-on-accent shadow-[0_0_26px_rgba(140,228,39,0.45)] t-premium hover:-translate-y-0.5 hover:shadow-[0_0_44px_rgba(140,228,39,0.65)] hover:brightness-110 active:translate-y-0 active:scale-[0.98] select-none ${className}`}
+      className={`group btn-shine inline-flex items-center gap-3 rounded-full bg-gradient-to-b from-[#9bec33] to-[#52b50d] pl-7 pr-2.5 py-2.5 font-semibold text-on-accent shadow-[0_0_26px_rgba(140,228,39,0.45)] t-premium hover:-translate-y-0.5 hover:shadow-[0_0_44px_rgba(140,228,39,0.65)] hover:brightness-110 active:translate-y-0 active:scale-[0.98] select-none ${className}`}
     >
       <span>{children}</span>
       <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black/10 t-premium group-hover:scale-105">

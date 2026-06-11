@@ -53,7 +53,6 @@ export default function PlaneLoop() {
   const stageRef = useRef<HTMLDivElement>(null);
   const templateRef = useRef<HTMLHeadingElement>(null);
   const poolBoxRef = useRef<HTMLDivElement>(null);
-  const fixedSubRef = useRef<HTMLParagraphElement>(null);
   const flightRef = useRef(createFlight());
 
   useEffect(() => {
@@ -84,10 +83,8 @@ export default function PlaneLoop() {
       });
     };
 
-    const fixedSub = fixedSubRef.current!;
-
     // La línea de apoyo vive DENTRO de poolBox: cuando la frase se desliza en
-    // bloque, ella se va montada. El subtexto fijo genérico se aparta mientras.
+    // bloque, ella se va montada.
     const showSub = (text: string) => {
       sub?.remove();
       const p = document.createElement("p");
@@ -103,7 +100,6 @@ export default function PlaneLoop() {
         { opacity: 0, y: 14 },
         { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 1.1 }
       );
-      gsap.to(fixedSub, { opacity: 0, duration: 0.4 });
     };
 
     // "Tumbar" la línea de apoyo: cae y se desvanece (para el cierre)
@@ -120,7 +116,6 @@ export default function PlaneLoop() {
           onComplete: () => el.remove(),
         });
       }
-      gsap.to(fixedSub, { opacity: 1, duration: 0.6, delay: 0.4 });
     };
 
     const spawn = (t: Target, color: string): HTMLElement => {
@@ -148,18 +143,66 @@ export default function PlaneLoop() {
       io.observe(section);
     };
 
-    // Golpe a UNA letra: la nariz la lanza en el sentido del vuelo y cae con física
+    // Chispas que saltan del punto de impacto de cada letra
+    const sparks = (x: number, y: number) => {
+      for (let i = 0; i < 3; i++) {
+        const s = document.createElement("span");
+        const c = i === 0 ? "#ff7a3c" : "#8ce427";
+        s.className = "absolute left-0 top-0 h-[3px] w-[3px] rounded-full";
+        s.style.background = c;
+        s.style.boxShadow = `0 0 10px ${c}`;
+        poolBox.appendChild(s);
+        gsap.set(s, { x: x + 12, y: y + 14 });
+        gsap.to(s, {
+          x: `+=${gsap.utils.random(-60, 110)}`,
+          y: `+=${gsap.utils.random(-80, 50)}`,
+          opacity: 0,
+          duration: gsap.utils.random(0.35, 0.65),
+          ease: "power2.out",
+          onComplete: () => s.remove(),
+        });
+      }
+    };
+
+    // Onda expansiva en el primer contacto del avión con la frase
+    const shockwave = (px: number) => {
+      const ring = document.createElement("span");
+      ring.className = "pointer-events-none absolute rounded-full border-2";
+      ring.style.borderColor = "rgba(140,228,39,0.8)";
+      ring.style.boxShadow = "0 0 28px rgba(140,228,39,0.5), inset 0 0 18px rgba(140,228,39,0.3)";
+      const cy = stage.clientHeight / 2;
+      ring.style.left = `${px - 24}px`;
+      ring.style.top = `${cy - 24}px`;
+      ring.style.width = "48px";
+      ring.style.height = "48px";
+      stage.appendChild(ring);
+      gsap.fromTo(
+        ring,
+        { scale: 0.25, opacity: 0.95 },
+        { scale: 6, opacity: 0, duration: 0.8, ease: "power2.out", onComplete: () => ring.remove() }
+      );
+    };
+
+    // Golpe a UNA letra: flash blanco-rojo, pop de escala, chispas y caída con física
     const knock = (el: HTMLElement) => {
       const floorBase = stage.clientHeight;
+      sparks(Number(gsap.getProperty(el, "x")), Number(gsap.getProperty(el, "y")));
       const tlK = gsap.timeline();
+      tlK.set(el, {
+        color: "#ffffff",
+        scale: 1.3,
+        textShadow: "0 0 16px rgba(255,140,80,0.95), 0 0 44px rgba(255,45,18,0.55)",
+      });
       tlK.to(el, {
         y: `-=${gsap.utils.random(20, 70)}`,
         x: `+=${gsap.utils.random(30, 110)}`,
         rotation: gsap.utils.random(-50, 60),
         color: RUBBLE,
+        scale: 1,
         duration: 0.16,
         ease: "power2.out",
       });
+      tlK.to(el, { textShadow: "0 0 0px rgba(255,45,18,0)", duration: 0.45 }, 0.12);
       tlK.to(
         el,
         {
@@ -269,7 +312,6 @@ export default function PlaneLoop() {
       const oldSub = sub;
       pool = [];
       sub = null;
-      if (oldSub) gsap.to(fixedSub, { opacity: 1, duration: 0.6, delay: 0.7 });
       gsap
         .timeline({
           onComplete: () => {
@@ -397,6 +439,7 @@ export default function PlaneLoop() {
             if (!shaken) {
               shaken = true;
               shake();
+              shockwave(nosePx);
             }
             knocked.add(el);
             knock(el);
@@ -511,6 +554,18 @@ export default function PlaneLoop() {
           backgroundSize: "150px 150px",
         }}
       />
+      {/* Piso de grilla futurista: perspectiva tron con avance lento hacia el fondo */}
+      <div
+        aria-hidden
+        className="anim-grid-floor pointer-events-none absolute inset-x-[-20%] bottom-0 z-0 h-[34%] origin-bottom opacity-[0.22] [transform:perspective(620px)_rotateX(56deg)]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(140,228,39,0.75) 1px, transparent 1px), linear-gradient(90deg, rgba(140,228,39,0.75) 1px, transparent 1px)",
+          backgroundSize: "46px 46px",
+          maskImage: "linear-gradient(to top, rgba(0,0,0,0.9) 30%, transparent)",
+          WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.9) 30%, transparent)",
+        }}
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0 opacity-[0.22] mix-blend-soft-light"
@@ -540,11 +595,6 @@ export default function PlaneLoop() {
           {CLOSER}
         </p>
       </noscript>
-
-      {/* Texto pequeño fijo: se aparta cuando la frase buena trae su propia línea */}
-      <p ref={fixedSubRef} className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-[#cdd9c4] sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
-        Un sistema de IA que atiende, vende y agenda por WhatsApp, las 24 horas.
-      </p>
 
       {/* CTA fijo: siempre visible en la sección */}
       <div className="absolute inset-x-0 bottom-[76px] z-30 flex justify-center sm:bottom-20">

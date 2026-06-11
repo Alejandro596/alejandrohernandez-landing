@@ -14,7 +14,11 @@ export default function Effects() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reduced) {
-      gsap.set("[data-reveal], [data-reveal-group] > *, [data-chat] > *", { opacity: 1, y: 0 });
+      gsap.set("[data-reveal], [data-reveal-group] > *, [data-chat] > *", {
+        opacity: 1,
+        y: 0,
+        filter: "none",
+      });
       return;
     }
 
@@ -25,13 +29,16 @@ export default function Effects() {
     gsap.ticker.lagSmoothing(0);
 
     const ctx = gsap.context(() => {
+      // Las entradas cristalizan: desenfoque -> nítido mientras suben
       gsap.to("[data-hero] [data-reveal]", {
         opacity: 1,
         y: 0,
+        filter: "blur(0px)",
         duration: 1.0,
         stagger: 0.09,
         ease: "expo.out",
         delay: 0.1,
+        clearProps: "filter",
       });
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
@@ -39,8 +46,10 @@ export default function Effects() {
         gsap.to(el, {
           opacity: 1,
           y: 0,
+          filter: "blur(0px)",
           duration: 0.9,
           ease: "expo.out",
+          clearProps: "filter",
           scrollTrigger: { trigger: el, start: "top 85%", once: true },
         });
       });
@@ -49,9 +58,11 @@ export default function Effects() {
         gsap.to(group.children, {
           opacity: 1,
           y: 0,
+          filter: "blur(0px)",
           duration: 0.8,
           stagger: 0.09,
           ease: "expo.out",
+          clearProps: "filter",
           scrollTrigger: { trigger: group, start: "top 82%", once: true },
         });
       });
@@ -61,9 +72,11 @@ export default function Effects() {
         gsap.to(chat.children, {
           opacity: 1,
           y: 0,
+          filter: "blur(0px)",
           duration: 0.5,
           stagger: 0.45,
           ease: "power2.out",
+          clearProps: "filter",
           scrollTrigger: { trigger: chat, start: "top 78%", once: true },
         });
       });

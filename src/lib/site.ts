@@ -2,7 +2,7 @@ export const SITE = {
   name: "Alejandro Hernández",
   tagline: "Sistemas de ventas que no duermen",
   email: "skymentmarketingdigital@gmail.com",
-  whatsappNumber: "573244536348",
+  whatsappNumber: "573015355027",
 } as const;
 
 // CTA único de toda la página: el chat de Sofía (agente IA en WhatsApp).
