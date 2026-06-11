@@ -174,8 +174,14 @@ function Plane({ flight }: { flight: Flight }) {
           </Center>
         </group>
       </group>
-      {/* Estela: cinta que sigue la cola del avión */}
-      <Trail width={1.8} length={7} decay={1.3} color="#a4ef4a" attenuation={(w) => w * w}>
+      {/* Estela: cinta que sigue la cola del avión (más corta en móvil) */}
+      <Trail
+        width={typeof window !== "undefined" && window.innerWidth < 768 ? 1.2 : 1.8}
+        length={typeof window !== "undefined" && window.innerWidth < 768 ? 4 : 7}
+        decay={1.3}
+        color="#a4ef4a"
+        attenuation={(w) => w * w}
+      >
         <mesh position={[-1.15, 0.04, 0]}>
           <sphereGeometry args={[0.02, 4, 4]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />

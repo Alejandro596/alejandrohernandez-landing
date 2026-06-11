@@ -194,7 +194,10 @@ export default function PlaneLoop() {
       const lite = window.innerWidth < 768;
       sparks(Number(gsap.getProperty(el, "x")), Number(gsap.getProperty(el, "y")));
       const tlK = gsap.timeline();
-      if (!lite) {
+      if (lite) {
+        // móvil: color de una (sin tween de pintura) y solo transforms
+        gsap.set(el, { color: RUBBLE });
+      } else {
         tlK.set(el, {
           color: "#ffffff",
           scale: 1.3,
@@ -205,10 +208,9 @@ export default function PlaneLoop() {
         y: `-=${gsap.utils.random(20, 70)}`,
         x: `+=${gsap.utils.random(30, 110)}`,
         rotation: gsap.utils.random(-50, 60),
-        color: RUBBLE,
-        scale: 1,
         duration: 0.16,
         ease: "power2.out",
+        ...(lite ? {} : { color: RUBBLE, scale: 1 }),
       });
       if (!lite) {
         tlK.to(el, { textShadow: "0 0 0px rgba(255,45,18,0)", duration: 0.45 }, 0.12);
@@ -226,11 +228,13 @@ export default function PlaneLoop() {
       );
     };
 
-    // Sacudida de toda la sección en el choque (menos pulsos en móvil)
+    // Sacudida de toda la sección en el choque. SOLO desktop: mover la sección
+    // (que contiene el canvas + la capa con mix-blend-mode del grano) obliga a
+    // re-mezclar todo por frame — eso era el "gran lag" de la explosión en móvil.
     const shake = () => {
-      const mobile = window.innerWidth < 768;
-      const amp = mobile ? 5 : 9;
-      const pulses = mobile ? 3 : 6;
+      if (window.innerWidth < 768) return;
+      const amp = 9;
+      const pulses = 6;
       const tlS = gsap.timeline();
       for (let i = 0; i < pulses; i++) {
         const d = amp * (1 - i / pulses);
@@ -588,7 +592,7 @@ export default function PlaneLoop() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 opacity-[0.22] mix-blend-soft-light"
+        className="pointer-events-none absolute inset-0 z-0 hidden opacity-[0.22] mix-blend-soft-light md:block"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")`,
         }}
