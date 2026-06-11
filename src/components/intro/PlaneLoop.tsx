@@ -215,16 +215,14 @@ export default function PlaneLoop() {
       tl.to(f, { x: 6.2 * m, duration: 0.45, ease: "sine.in" }, 1.6);
       tl.to(f, { y: 2.1, duration: 1.0, ease: "sine.out" }, 1.05);
       tl.to(f, { z: -3.4, duration: 1.0, ease: "sine.inOut" }, 1.05);
-      tl.to(f, { rotY: Math.PI * 0.6, duration: 1.0, ease: "power1.inOut" }, 1.05);
       tl.to(f, { rotZ: 0.6, duration: 0.8, ease: "sine.inOut" }, 1.1);
       tl.to(f, { scale: turnScale, duration: 1.0, ease: "sine.inOut" }, 1.05);
 
       tl.to(f, { x: -15, duration: 2.65, ease: "sine.inOut" }, 2.05);
-      tl.to(f, { z: -7.6, duration: 1.3, ease: "sine.inOut" }, 2.05);
-      tl.to(f, { rotY: Math.PI, duration: 0.8, ease: "sine.out" }, 2.05);
+      tl.to(f, { z: -10, duration: 1.4, ease: "sine.inOut" }, 2.05);
       tl.to(f, { rotZ: 0.14, duration: 1.0, ease: "sine.inOut" }, 2.3);
-      tl.to(f, { y: 1.5, duration: 1.6, ease: "sine.inOut" }, 2.05);
-      tl.to(f, { y: 1.8, duration: 1.0, ease: "sine.out" }, 3.65);
+      tl.to(f, { y: 1.7, duration: 1.6, ease: "sine.inOut" }, 2.05);
+      tl.to(f, { y: 2.1, duration: 1.0, ease: "sine.out" }, 3.65);
 
       // 3) Mientras vuelve por el fondo, las letras suben y se rearman
       tl.add(() => rise(nextStep), 2.0);
