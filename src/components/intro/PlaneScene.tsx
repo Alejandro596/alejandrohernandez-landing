@@ -1,7 +1,8 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, Center, Trail } from "@react-three/drei";
+import { useGLTF, Center, Trail, Environment } from "@react-three/drei";
+import { Suspense } from "react";
 import { useMemo, useRef } from "react";
 import { Group, Mesh, MeshStandardMaterial } from "three";
 
@@ -41,8 +42,9 @@ function Plane({ flight }: { flight: Flight }) {
       if ((o as Mesh).isMesh) {
         const mat = (o as Mesh).material as MeshStandardMaterial;
         mat.flatShading = true;
-        mat.roughness = 0.42;
-        mat.metalness = 0.05;
+        mat.roughness = 0.38;
+        mat.metalness = 0.08;
+        mat.envMapIntensity = 0.9;
         mat.needsUpdate = true;
       }
     });
@@ -50,6 +52,7 @@ function Plane({ flight }: { flight: Flight }) {
   }, [scene]);
 
   const prev = useRef({ x: flight.x, y: flight.y, z: flight.z });
+  const vel = useRef({ x: 0, y: 0, z: 0 }); // velocidad promediada: mata el ruido frame a frame
   const heading = useRef(0);
   const pitch = useRef(0);
   const bank = useRef(0);
@@ -112,7 +115,7 @@ function Plane({ flight }: { flight: Flight }) {
         </group>
       </group>
       {/* Estela: cinta que sigue la cola del avión */}
-      <Trail width={1.6} length={6.5} decay={1.4} color="#9bf0b8" attenuation={(w) => w * w}>
+      <Trail width={1.8} length={7} decay={1.3} color="#6fe39c" attenuation={(w) => w * w}>
         <mesh position={[-1.15, 0.04, 0]}>
           <sphereGeometry args={[0.02, 4, 4]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
@@ -132,11 +135,14 @@ export default function PlaneScene({ flight }: { flight: Flight }) {
       dpr={[1, 2]}
       className="pointer-events-none"
     >
-      {/* Tres luces: clave cálida arriba-derecha, relleno frío, contraluz para los bordes */}
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[5, 7, 4]} intensity={2.1} color="#fffef0" />
-      <directionalLight position={[-6, -3, 3]} intensity={0.5} color="#dff5e4" />
-      <directionalLight position={[0, 2, -6]} intensity={1.1} color="#ffffff" />
+      {/* Luces + entorno HDR: reflejos reales sobre el papel */}
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 7, 4]} intensity={1.9} color="#fffef0" />
+      <directionalLight position={[-6, -3, 3]} intensity={0.45} color="#dff5e4" />
+      <directionalLight position={[0, 2, -6]} intensity={1.3} color="#ffffff" />
+      <Suspense fallback={null}>
+        <Environment preset="city" />
+      </Suspense>
       <Plane flight={flight} />
     </Canvas>
   );

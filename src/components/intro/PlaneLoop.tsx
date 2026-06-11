@@ -18,8 +18,8 @@ const TEXTS = [
 ];
 
 const HOLD = 2.4; // segundos de lectura antes de cada pasada
-const INK = "#10160f";
-const RUBBLE = "#8fa088";
+const INK = "#f6fbf7";
+const RUBBLE = "#5d8a6c";
 
 type Target = { glyph: string; x: number; y: number };
 
@@ -201,6 +201,7 @@ export default function PlaneLoop() {
 
       // 1) Pasada frontal (la de siempre): cruza rápido y tumba las letras
       tl.set(f, { x: -9.5, y: -0.15, z: 0.6, rotX: 0.05, rotY: 0, rotZ: -0.06, scale: passScale, visible: true, flying: true }, 0);
+      tl.to(f, { rotX: -0.38, duration: 1.4, ease: "sine.inOut" }, 1.3);
       tl.to(f, { x: mobile ? 2.4 : 5.2, duration: 1.05, ease: "power1.in" }, 0);
       tl.to(f, { y: 0.15, duration: 1.05, ease: "sine.inOut" }, 0);
       tl.add(() => {
@@ -286,7 +287,7 @@ export default function PlaneLoop() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#dce5d6]"
+      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#0b4a2c]"
       aria-label={TEXTS.join(" ")}
     >
       {canvasOn && (
@@ -306,17 +307,17 @@ export default function PlaneLoop() {
       </div>
 
       <noscript>
-        <p className={`absolute inset-0 z-10 flex items-center justify-center px-6 text-center ${typeClass}`}>
+        <p className={`absolute inset-0 z-10 flex items-center justify-center px-6 text-center text-[#f6fbf7] ${typeClass}`}>
           {TEXTS[0]}
         </p>
       </noscript>
 
       {/* Texto pequeño fijo: el avión no lo toca */}
-      <p className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-ink-muted sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
+      <p className="absolute inset-x-0 top-[calc(50%+92px)] z-10 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-[#cfe5d6] sm:top-[calc(50%+128px)] md:top-[calc(50%+150px)] md:text-base">
         Un sistema de IA que atiende, vende y agenda por WhatsApp, las 24 horas.
       </p>
 
-      <div className="absolute bottom-7 z-30 flex flex-col items-center gap-2 text-ink-muted" aria-hidden>
+      <div className="absolute bottom-7 z-30 flex flex-col items-center gap-2 text-[#9fc7ad]" aria-hidden>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="animate-bounce">
           <path d="M12 4v16m-6-6 6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
