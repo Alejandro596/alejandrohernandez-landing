@@ -201,7 +201,7 @@ export default function PlaneScene({ flight }: { flight: Flight }) {
     <Canvas
       camera={{ position: [0, 0, 8], fov: 42 }}
       gl={{ antialias: !mobile, alpha: true }}
-      dpr={mobile ? [1, 1.3] : [1, 2]}
+      dpr={mobile ? 1 : [1, 2]}
       className="pointer-events-none"
     >
       {/* Luces + entorno HDR: papel blanco con volumen sobre fondo oscuro */}

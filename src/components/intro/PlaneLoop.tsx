@@ -192,29 +192,37 @@ export default function PlaneLoop() {
     const knock = (el: HTMLElement) => {
       const floorBase = stage.clientHeight;
       const lite = window.innerWidth < 768;
+      if (lite) {
+        // Versión SUAVE para móvil (misma idea, mínimo costo): la letra se
+        // desploma directo al piso en UN solo tween de transforms, sin
+        // lanzamiento, sin rebote, sin flashes — un tween por letra y ya.
+        gsap.set(el, { color: RUBBLE });
+        gsap.to(el, {
+          y: floorBase - el.offsetHeight - 12 - Math.random() * 22,
+          x: `+=${gsap.utils.random(8, 36)}`,
+          rotation: gsap.utils.random(-32, 32),
+          duration: 0.55,
+          ease: "power2.in",
+        });
+        return;
+      }
       sparks(Number(gsap.getProperty(el, "x")), Number(gsap.getProperty(el, "y")));
       const tlK = gsap.timeline();
-      if (lite) {
-        // móvil: color de una (sin tween de pintura) y solo transforms
-        gsap.set(el, { color: RUBBLE });
-      } else {
-        tlK.set(el, {
-          color: "#ffffff",
-          scale: 1.3,
-          textShadow: "0 0 16px rgba(255,140,80,0.95), 0 0 44px rgba(255,45,18,0.55)",
-        });
-      }
+      tlK.set(el, {
+        color: "#ffffff",
+        scale: 1.3,
+        textShadow: "0 0 16px rgba(255,140,80,0.95), 0 0 44px rgba(255,45,18,0.55)",
+      });
       tlK.to(el, {
         y: `-=${gsap.utils.random(20, 70)}`,
         x: `+=${gsap.utils.random(30, 110)}`,
         rotation: gsap.utils.random(-50, 60),
+        color: RUBBLE,
+        scale: 1,
         duration: 0.16,
         ease: "power2.out",
-        ...(lite ? {} : { color: RUBBLE, scale: 1 }),
       });
-      if (!lite) {
-        tlK.to(el, { textShadow: "0 0 0px rgba(255,45,18,0)", duration: 0.45 }, 0.12);
-      }
+      tlK.to(el, { textShadow: "0 0 0px rgba(255,45,18,0)", duration: 0.45 }, 0.12);
       tlK.to(
         el,
         {
