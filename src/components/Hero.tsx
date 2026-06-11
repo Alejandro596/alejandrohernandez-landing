@@ -1,8 +1,9 @@
 import SofiaCta from "./SofiaCta";
+import VslCard from "./VslCard";
 
 export default function Hero() {
   return (
-    <section data-hero className="ambient-green relative px-4 pb-20 pt-16 md:pb-28 md:pt-24">
+    <section data-hero className="ambient-green relative order-2 px-4 pb-14 pt-14 md:order-none md:pb-28 md:pt-24">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-10">
         <div className="flex flex-col items-start">
           <span data-reveal className="eyebrow mb-6">
@@ -31,22 +32,9 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* {EMBED_VSL}: reemplazar este bloque por el embed real (cargar muteado, lazy) */}
-        <div data-reveal className="card overflow-hidden">
-          <div className="relative flex aspect-video items-center justify-center bg-bg-raised">
-            <span className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-[11px] font-medium text-white">
-              Mira cómo funciona · 2 min
-            </span>
-            {/* Decorativo hasta que exista el VSL real: no es un control, no engaña al teclado */}
-            <span
-              aria-hidden
-              className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-on-accent"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M8 5.5v13l11-6.5-11-6.5Z" />
-              </svg>
-            </span>
-          </div>
+        {/* En móvil el video vive en su propia sección justo después del copy */}
+        <div data-reveal className="hidden md:block">
+          <VslCard />
         </div>
       </div>
     </section>

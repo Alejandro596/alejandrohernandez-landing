@@ -38,7 +38,7 @@ const BLOCKS = [
 
 export default function Solution() {
   return (
-    <section className="px-4 py-24 md:py-32">
+    <section className="order-6 px-4 py-24 md:order-none md:py-32">
       <div className="mx-auto max-w-6xl">
         <h2
           data-reveal
