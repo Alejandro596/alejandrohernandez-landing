@@ -222,13 +222,11 @@ html.js [data-reveal],
 html.js [data-reveal-group] > * {
   opacity: 0;
   transform: translateY(24px);
-  filter: blur(10px);
 }
 
 html.js [data-chat] > * {
   opacity: 0;
   transform: translateY(10px);
-  filter: blur(5px);
 }
 
 /* ---------- premium transition default ---------- */
