@@ -53,7 +53,7 @@ const CHAT = [
 
 export default function HowItWorks() {
   return (
-    <section className="order-11 bg-bg-raised px-4 py-24 md:order-none md:py-32">
+    <section className="order-12 bg-bg-raised px-4 py-24 md:order-none md:py-32">
       <div className="mx-auto max-w-6xl">
         <h2
           data-reveal
