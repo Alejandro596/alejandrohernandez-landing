@@ -74,20 +74,20 @@ function Plane({ flight }: { flight: Flight }) {
       bank.current = 0;
     } else if (horiz > 0.0008) {
       heading.current = lerpAngle(heading.current, Math.atan2(-dz, dx), 0.12);
-      const targetPitch = Math.max(-0.35, Math.min(0.35, Math.atan2(dy, horiz) * 0.35));
-      pitch.current += (targetPitch - pitch.current) * 0.12;
+      const targetPitch = Math.max(-0.2, Math.min(0.2, Math.atan2(dy, horiz) * 0.2));
+      pitch.current += (targetPitch - pitch.current) * 0.08;
       // Banking físico: proporcional a la tasa de giro (solo se ladea si la curva lo exige)
       const rate = lerpAngle(0, heading.current - before, 1);
-      const targetBank = Math.max(-0.55, Math.min(0.55, rate * 10));
-      bank.current += (targetBank - bank.current) * 0.07;
+      const targetBank = Math.max(-0.45, Math.min(0.45, rate * 8));
+      bank.current += (targetBank - bank.current) * 0.06;
     } else {
       bank.current += (0 - bank.current) * 0.06;
     }
 
-    // Aleteo de papel: vibración sutil solo en vuelo
-    const flutterZ = flight.flying ? Math.sin(t * 16) * 0.016 + Math.sin(t * 7.3) * 0.01 : 0;
-    const flutterX = flight.flying ? Math.sin(t * 11) * 0.011 : 0;
-    const bobY = flight.flying ? Math.sin(t * 9) * 0.015 : 0;
+    // Vuelo firme: sin aleteo ni bamboleo
+    const flutterZ = 0;
+    const flutterX = 0;
+    const bobY = 0;
 
     g.position.set(flight.x, flight.y + bobY, flight.z);
     // yaw (Y) -> pitch (Z, eje de las alas) -> roll (X, eje de la nariz)
