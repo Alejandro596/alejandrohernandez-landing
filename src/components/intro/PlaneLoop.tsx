@@ -143,8 +143,10 @@ export default function PlaneLoop() {
       io.observe(section);
     };
 
-    // Chispas que saltan del punto de impacto de cada letra
+    // Chispas que saltan del punto de impacto de cada letra (solo desktop:
+    // los teléfonos no aguantan tanto efecto)
     const sparks = (x: number, y: number) => {
+      if (window.innerWidth < 768) return;
       for (let i = 0; i < 3; i++) {
         const s = document.createElement("span");
         const c = i === 0 ? "#ff7a3c" : "#8ce427";
@@ -164,8 +166,9 @@ export default function PlaneLoop() {
       }
     };
 
-    // Onda expansiva en el primer contacto del avión con la frase
+    // Onda expansiva en el primer contacto del avión con la frase (solo desktop)
     const shockwave = (px: number) => {
+      if (window.innerWidth < 768) return;
       const ring = document.createElement("span");
       ring.className = "pointer-events-none absolute rounded-full border-2";
       ring.style.borderColor = "rgba(140,228,39,0.8)";
@@ -540,7 +543,7 @@ export default function PlaneLoop() {
   return (
     <section
       ref={sectionRef}
-      className="relative order-4 flex h-[58svh] min-h-[440px] items-center justify-center overflow-hidden bg-[#020402] md:order-none md:h-[88svh] md:min-h-[540px]"
+      className="relative order-5 flex h-[58svh] min-h-[440px] items-center justify-center overflow-hidden bg-[#020402] md:order-none md:h-[88svh] md:min-h-[540px]"
       aria-label={`${CLOSER}: ${PAIRS.map((p) => p.good).join(", ")}`}
     >
       {/* Textura del escenario: luz de foco arriba, viñeta abajo y grano sutil */}
@@ -562,10 +565,10 @@ export default function PlaneLoop() {
           backgroundSize: "150px 150px",
         }}
       />
-      {/* Piso de grilla futurista: perspectiva tron con avance hacia el fondo */}
+      {/* Piso de grilla futurista: perspectiva tron (solo desktop) */}
       <div
         aria-hidden
-        className="anim-grid-floor pointer-events-none absolute inset-x-[-20%] bottom-0 z-0 h-[34%] origin-bottom opacity-[0.22] [transform:perspective(620px)_rotateX(56deg)]"
+        className="anim-grid-floor pointer-events-none absolute inset-x-[-20%] bottom-0 z-0 hidden h-[34%] origin-bottom opacity-[0.22] [transform:perspective(620px)_rotateX(56deg)] md:block"
         style={{
           backgroundImage:
             "linear-gradient(rgba(140,228,39,0.75) 1px, transparent 1px), linear-gradient(90deg, rgba(140,228,39,0.75) 1px, transparent 1px)",

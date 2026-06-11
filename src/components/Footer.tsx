@@ -2,7 +2,7 @@ import { SITE } from "@/lib/site";
 
 export default function Footer() {
   return (
-    <footer className="order-10 px-4 py-12 md:order-none">
+    <footer className="order-[17] px-4 py-12 md:order-none">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
         <div className="flex flex-col items-center gap-1 md:items-start">
           <span className="display text-lg font-semibold">Alejandro Hernández</span>

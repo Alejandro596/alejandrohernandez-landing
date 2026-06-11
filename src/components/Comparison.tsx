@@ -8,7 +8,7 @@ const ROWS = [
 
 export default function Comparison() {
   return (
-    <section className="order-8 px-4 py-24 md:order-none md:py-32">
+    <section className="order-[13] px-4 py-24 md:order-none md:py-32">
       <div className="mx-auto max-w-5xl">
         <h2
           data-reveal
