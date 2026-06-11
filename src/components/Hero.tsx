@@ -2,7 +2,7 @@ import SofiaCta from "./SofiaCta";
 
 export default function Hero() {
   return (
-    <section data-hero className="relative px-4 pb-20 pt-16 md:pb-28 md:pt-24">
+    <section data-hero className="ambient-green relative px-4 pb-20 pt-16 md:pb-28 md:pt-24">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-10">
         <div className="flex flex-col items-start">
           <span data-reveal className="eyebrow mb-6">
@@ -14,7 +14,7 @@ export default function Hero() {
             className="display text-[2.6rem] font-semibold leading-[1.04] sm:text-5xl md:text-6xl"
           >
             Tus ventas no pueden seguir cerrando{" "}
-            <span className="text-accent-deep">a las 5 PM.</span>
+            <span className="glow-green">a las 5 PM.</span>
           </h1>
 
           <p data-reveal className="mt-6 max-w-lg text-base leading-relaxed text-ink-muted md:text-lg">

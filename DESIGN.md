@@ -2,43 +2,61 @@
 
 ## Theme
 
-Claro, blanco, premium pero simple. Una sola idea por sección. Comunica "sistema serio que convierte", no showcase de diseño. El verde WhatsApp es el único color.
+Dark-tech de pauta (rediseño 2026-06-11, referencias test1-4.png del usuario): fondo casi
+negro con tinte verde, verde neón protagonista, glow en textos clave. Comunica "sistema
+serio que convierte" con la misma estética de las piezas de publicidad de Meta Ads.
+Codificación narrativa: ROJO = el problema / lo malo · VERDE = la solución / lo bueno
+(igual que la animación del avión).
 
 ## Color Palette
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--bg` | `#ffffff` | Fondo de página |
-| `--bg-raised` | `#f4f8f5` | Bandas de sección alternas |
-| `--ink` | `#10160f` | Texto principal |
-| `--ink-muted` | `#5c6b5e` | Texto secundario |
-| `--accent` | `#25d366` | Verde WhatsApp: CTAs, acentos |
-| `--accent-deep` | `#128c54` | Palabras clave en titulares (contraste AA sobre blanco) |
-| `--on-accent` | `#06301a` | Texto sobre verde (nunca blanco: contraste) |
-| `--hairline` | `rgba(13,26,16,0.1)` | Bordes |
+| `--bg` | `#070b08` | Fondo de página (casi negro, tinte verde) |
+| `--bg-raised` | `#0c130d` | Bandas de sección alternas |
+| `--surface` | `#0e150f` | Tarjetas |
+| `--ink` | `#f2f7f2` | Texto principal (blanco) |
+| `--ink-muted` | `#a3b8a6` | Texto secundario |
+| `--accent` | `#25d366` | Verde WhatsApp: CTAs |
+| `--accent-bright` | `#3ce07a` | Verde neón: glow, hovers |
+| `--accent-deep` | `#35d96e` | Verde luminoso para texto sobre fondos oscuros |
+| `--on-accent` | `#06301a` | Texto sobre verde (nunca blanco) |
+| `--bad` | `#ff5a4a` | Rojo del problema: stats, columna del bot genérico |
+| `--hairline` | `rgba(141,235,170,0.16)` | Bordes (verdosos) |
 
 ## Typography
 
 - **Archivo única familia** (variable `--font-archivo`), titulares `.display` con font-stretch 115%.
-- Jerarquía por tamaño/peso. Sin texto degradado.
+- Palabras clave de titulares: `.glow-green` (verde neón + text-shadow doble capa) o
+  `.glow-red` para el dolor. El glow ES parte del sistema (pedido explícito del usuario,
+  reemplaza al viejo veto de efectos).
 
 ## Components
 
-- **CTA único** (`SofiaCta`): pill verde WhatsApp con glifo de WhatsApp anidado; SIEMPRE el mismo destino `LINK_SOFIA` (chat de Sofía). No existen otros CTAs ni formularios.
-- **Tarjetas** (`.card`): blanco, borde hairline, sombra suave, radio 1.25rem.
-- **Mockup CRM** (`HowItWorks`): construido en CSS (pipeline + chat WhatsApp de Sofía). Reemplazable por captura real — marcador {MOCKUP_CRM}.
-- **VSL**: placeholder en Hero — marcador {EMBED_VSL}, cargar muteado y lazy cuando exista.
-- **Nav**: barra sticky blanca, nombre + botón "Habla con Sofía". Botón flotante de WhatsApp en móvil.
+- **CTA único** (`SofiaCta`): pill verde con glow exterior verde + lift al hover; glifo de
+  WhatsApp anidado. SIEMPRE a `LINK_SOFIA`.
+- **Tarjetas** (`.card`): superficie #0e150f, borde hairline verdoso, sombra negra profunda.
+- **Mockup CRM** (`HowItWorks`): ventana dark; chat de WhatsApp en DARK MODE (burbujas
+  #1d2a20 recibidas / #005c4b enviadas, texto blanco).
+- **Comparación**: panel malo con borde `--bad`/25 y cruces rojas; panel bueno con borde
+  accent + aura de glow verde.
+- **Nav**: barra dark sticky (bg/95) con hairline; botón verde con glow.
+- **Auras**: `.ambient-green` (radiales suaves de verde) en Hero y CTA final.
 
 ## Motion
 
-- Lenis (scroll suave) + GSAP fades sutiles al entrar (opacity + 24px). Nada más pesado: ni 3D, ni parallax, ni blur.
+- Lenis + GSAP reveals (expo.out); chat del mockup burbuja a burbuja ([data-chat]).
+- Sección del avión: ver memoria/PlaneLoop (curva 3D, destrucción por contacto, glow en
+  frases buenas y cierre).
 - `prefers-reduced-motion`: todo visible, sin Lenis.
 
 ## Estructura (brief 2026-06-10)
 
-Hero (+VSL) → Problema (3 stats) → Solución (3 bloques) → Cómo funciona (mockup + 3 pasos) → Comparación bot $30 vs sistema → CTA final → Footer mínimo.
+Avión (bucle) → Hero (+VSL) → Problema (rojo) → Solución → Cómo funciona (mockup) →
+Comparación → CTA final → Footer mínimo.
 
 ## Anti-patterns prohibidos
 
-Formularios, segundo camino de agendamiento, emojis por todos lados, imágenes stock de robots/call-center, degradados ruidosos, orbes, glassmorphism, eyebrows por sección, white-on-green (contraste).
+Formularios, segundo camino de agendamiento, emojis fuera del chat simulado, stock de
+robots, eyebrows por sección, white-on-green en CTAs. (El glow y las auras verdes están
+PERMITIDOS desde el rediseño 2026-06-11 — son el lenguaje de la pauta.)

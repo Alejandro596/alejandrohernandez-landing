@@ -27,7 +27,7 @@ export default function Problem() {
 
         <div data-reveal-group className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
           {STATS.map((s) => (
-            <div key={s.big} className="border-t-2 border-accent pt-5">
+            <div key={s.big} className="border-t-2 border-bad/70 pt-5">
               <p className="display text-2xl font-semibold leading-snug md:text-3xl">{s.big}</p>
               <p className="mt-2 text-base leading-relaxed text-ink-muted">{s.text}</p>
             </div>
@@ -36,7 +36,7 @@ export default function Problem() {
 
         <p data-reveal className="display mt-16 max-w-2xl text-xl font-semibold md:text-2xl">
           Eso no es un gasto de marketing.{" "}
-          <span className="text-accent-deep">Es plata quemada todos los días.</span>
+          <span className="glow-red">Es plata quemada todos los días.</span>
         </p>
       </div>
     </section>

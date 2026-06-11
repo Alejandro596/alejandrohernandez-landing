@@ -45,7 +45,7 @@ export default function Solution() {
           className="display max-w-3xl text-3xl font-semibold leading-tight md:text-5xl"
         >
           No es un chatbot.{" "}
-          <span className="text-accent-deep">Es un Sistema de Ventas Autónomo.</span>
+          <span className="glow-green">Es un Sistema de Ventas Autónomo.</span>
         </h2>
 
         <div data-reveal-group className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">

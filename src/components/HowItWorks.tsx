@@ -60,7 +60,7 @@ export default function HowItWorks() {
           className="display max-w-3xl text-3xl font-semibold leading-tight md:text-5xl"
         >
           Mira tu operación funcionando,{" "}
-          <span className="text-accent-deep">incluso a las 2 de la mañana.</span>
+          <span className="glow-green">incluso a las 2 de la mañana.</span>
         </h2>
 
         {/* {MOCKUP_CRM}: mockup construido en CSS — reemplazable por captura real del CRM */}
@@ -97,9 +97,9 @@ export default function HowItWorks() {
               ))}
             </div>
 
-            {/* Chat de WhatsApp con Sofía vendiendo */}
-            <div className="flex flex-col bg-[#e9f5ec] lg:col-span-2">
-              <div className="flex items-center gap-2.5 border-b border-black/5 bg-bg px-4 py-3">
+            {/* Chat de WhatsApp con Sofía vendiendo (dark mode, como la pauta) */}
+            <div className="flex flex-col bg-[#091009] lg:col-span-2">
+              <div className="flex items-center gap-2.5 border-b border-hairline bg-bg px-4 py-3">
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-xs font-bold text-on-accent">
                   S
                 </span>
@@ -114,12 +114,12 @@ export default function HowItWorks() {
                     key={i}
                     className={`max-w-[88%] rounded-xl px-3 py-2 text-[12px] leading-relaxed shadow-sm ${
                       m.from === "sofia"
-                        ? "self-start rounded-bl-sm bg-white text-ink"
-                        : "self-end rounded-br-sm bg-[#d9fdd3] text-ink"
+                        ? "self-start rounded-bl-sm bg-[#1d2a20] text-ink"
+                        : "self-end rounded-br-sm bg-[#005c4b] text-ink"
                     }`}
                   >
                     {m.text}
-                    <span className="ml-2 align-bottom text-[9px] text-ink-muted">{m.time}</span>
+                    <span className="ml-2 align-bottom text-[9px] text-ink/50">{m.time}</span>
                   </div>
                 ))}
               </div>

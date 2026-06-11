@@ -19,7 +19,7 @@ export default function Comparison() {
         </h2>
 
         <div data-reveal-group className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
-          <div className="rounded-[1.25rem] border border-hairline bg-bg-raised p-7 md:p-8">
+          <div className="rounded-[1.25rem] border border-bad/25 bg-bg-raised p-7 md:p-8">
             <h3 className="display text-lg font-semibold text-ink-muted">Bot genérico de $30</h3>
             <ul className="mt-5 flex flex-col gap-4">
               {ROWS.map((r) => (
@@ -31,7 +31,7 @@ export default function Comparison() {
             </ul>
           </div>
 
-          <div className="card border-2 border-accent p-7 md:p-8">
+          <div className="card border-2 border-accent p-7 shadow-[0_0_48px_-14px_rgba(37,211,102,0.45)] md:p-8">
             <h3 className="display text-lg font-semibold">Tu Sistema de Ventas</h3>
             <ul className="mt-5 flex flex-col gap-4">
               {ROWS.map((r) => (
@@ -46,7 +46,7 @@ export default function Comparison() {
 
         <p data-reveal className="display mt-14 max-w-2xl text-xl font-semibold md:text-2xl">
           Es la diferencia entre alquilar un taladro…{" "}
-          <span className="text-accent-deep">y contratar al maestro que te construye la casa.</span>
+          <span className="glow-green">y contratar al maestro que te construye la casa.</span>
         </p>
       </div>
     </section>
@@ -64,7 +64,7 @@ function Check() {
 
 function Cross() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0 text-ink-muted/60" aria-hidden>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0 text-bad/80" aria-hidden>
       <path d="m8 8 8 8m0-8-8 8" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
     </svg>
   );

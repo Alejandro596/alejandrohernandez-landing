@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #ffffff;
-  --bg-raised: #f4f8f5;
-  --surface: #ffffff;
-  --ink: #10160f;
-  --ink-muted: #5c6b5e;
+  --bg: #070b08;
+  --bg-raised: #0c130d;
+  --surface: #0e150f;
+  --ink: #f2f7f2;
+  --ink-muted: #a3b8a6;
   --accent: #25d366;
   --accent-bright: #3ce07a;
-  --accent-deep: #128c54;
+  --accent-deep: #35d96e; /* en dark theme el "deep" es el verde luminoso de texto */
   --on-accent: #06301a;
-  --hairline: rgba(13, 26, 16, 0.1);
+  --bad: #ff5a4a;
+  --hairline: rgba(141, 235, 170, 0.16);
   --ease-premium: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
@@ -24,6 +25,7 @@
   --color-accent-bright: var(--accent-bright);
   --color-accent-deep: var(--accent-deep);
   --color-on-accent: var(--on-accent);
+  --color-bad: var(--bad);
   --color-hairline: var(--hairline);
   --font-display: var(--font-archivo);
   --font-sans: var(--font-archivo);
@@ -43,11 +45,11 @@ body {
 }
 
 ::selection {
-  background: rgba(37, 211, 102, 0.3);
+  background: rgba(62, 224, 122, 0.35);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent-deep);
+  outline: 2px solid var(--accent-bright);
   outline-offset: 3px;
 }
 
@@ -57,12 +59,16 @@ h3 {
   text-wrap: balance;
 }
 
+p {
+  text-wrap: pretty;
+}
+
 /* ---------- superficies ---------- */
 .card {
   background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: 1.25rem;
-  box-shadow: 0 1px 2px rgba(13, 26, 16, 0.04), 0 8px 24px -12px rgba(13, 26, 16, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
 }
 
 /* ---------- typography helpers ---------- */
@@ -80,7 +86,7 @@ h3 {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent-deep);
+  color: var(--accent-bright);
 }
 
 .eyebrow::before {
@@ -88,6 +94,25 @@ h3 {
   width: 18px;
   height: 2px;
   background: var(--accent);
+  box-shadow: 0 0 8px rgba(62, 224, 122, 0.6);
+}
+
+/* ---------- glow (estética de las piezas de pauta) ---------- */
+.glow-green {
+  color: var(--accent-bright);
+  text-shadow: 0 0 14px rgba(62, 224, 122, 0.5), 0 0 44px rgba(62, 224, 122, 0.22);
+}
+
+.glow-red {
+  color: var(--bad);
+  text-shadow: 0 0 14px rgba(255, 90, 74, 0.42), 0 0 38px rgba(255, 90, 74, 0.18);
+}
+
+/* aura ambiental suave detrás de secciones clave */
+.ambient-green {
+  background:
+    radial-gradient(58% 46% at 72% 12%, rgba(37, 211, 102, 0.1), transparent 64%),
+    radial-gradient(45% 38% at 12% 78%, rgba(37, 211, 102, 0.05), transparent 60%);
 }
 
 /* ---------- reveal initial states (GSAP los resuelve) ----------
@@ -101,10 +126,6 @@ html.js [data-reveal-group] > * {
 html.js [data-chat] > * {
   opacity: 0;
   transform: translateY(10px);
-}
-
-p {
-  text-wrap: pretty;
 }
 
 /* ---------- premium transition default ---------- */

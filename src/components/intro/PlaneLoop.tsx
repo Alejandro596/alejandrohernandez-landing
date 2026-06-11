@@ -22,8 +22,11 @@ const HOLD = 2.4; // segundos de lectura entre fases
 const FLIGHT = 5.4; // duración del recorrido completo (una sola curva)
 const INK = "#f6fbf7"; // cierre
 const BAD = "#ff6b5b"; // lo malo, en rojo
-const GOOD = "#25d366"; // lo bueno, en el verde de la marca
+const GOOD = "#3ee07a"; // lo bueno, en verde neón
 const RUBBLE = "#8e4a40"; // escombros: rojo apagado en el piso
+// Glow de la pauta: las frases buenas y el cierre brillan
+const GLOW_GOOD = "0 0 14px rgba(62,224,122,0.55), 0 0 44px rgba(62,224,122,0.25)";
+const GLOW_INK = "0 0 22px rgba(246,251,247,0.3)";
 
 type Target = { glyph: string; x: number; y: number };
 
@@ -64,6 +67,8 @@ export default function PlaneLoop() {
       s.className = "absolute left-0 top-0 inline-block will-change-transform";
       s.textContent = t.glyph;
       s.style.color = color;
+      if (color === GOOD) s.style.textShadow = GLOW_GOOD;
+      if (color === INK) s.style.textShadow = GLOW_INK;
       poolBox.appendChild(s);
       gsap.set(s, { x: t.x, y: t.y });
       return s;
@@ -169,6 +174,8 @@ export default function PlaneLoop() {
             if (!swapped && this.progress() > 0.5) {
               swapped = true;
               el.textContent = t.glyph;
+              el.style.textShadow =
+                color === GOOD ? GLOW_GOOD : color === INK ? GLOW_INK : "none";
             }
           },
         });
@@ -415,7 +422,7 @@ export default function PlaneLoop() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#0b4a2c]"
+      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#081109]"
       aria-label={`${CLOSER}: ${PAIRS.map((p) => p.good).join(", ")}`}
     >
       {/* Textura del escenario: luz de foco arriba, viñeta abajo y grano sutil */}
