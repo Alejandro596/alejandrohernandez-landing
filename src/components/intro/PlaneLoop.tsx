@@ -216,14 +216,14 @@ export default function PlaneLoop() {
       tl.to(f, {
         motionPath: {
           path: [
-            { x: 8.6 * m, y: 1.1, z: -1.2 },
-            { x: 10.2 * m, y: 1.9, z: -4.5 },
-            { x: 5.5, y: 2.2, z: -8.6 },
-            { x: 0, y: 2.0, z: -10 },
-            { x: -7, y: 1.8, z: -10 },
-            { x: -16, y: 1.7, z: -9.5 },
+            { x: 8.6 * m, y: 1.2, z: -1.6 },
+            { x: 10.5 * m, y: 2.0, z: -5.5 },
+            { x: 5.5, y: 2.3, z: -10 },
+            { x: 0, y: 2.15, z: -11.5 },
+            { x: -7, y: 2.0, z: -12 },
+            { x: -17, y: 1.9, z: -12 },
           ],
-          curviness: 1.1,
+          curviness: 0.9,
         },
         duration: 3.5,
         ease: "none",
