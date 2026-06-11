@@ -19,7 +19,7 @@ const TEXTS = [
 
 const HOLD = 2.4; // segundos de lectura antes de cada pasada
 const INK = "#10160f";
-const RUBBLE = "#b8c4b0";
+const RUBBLE = "#8fa088";
 
 type Target = { glyph: string; x: number; y: number };
 
@@ -286,7 +286,7 @@ export default function PlaneLoop() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#edf1ea]"
+      className="relative flex h-[88svh] min-h-[540px] items-center justify-center overflow-hidden border-b border-hairline bg-[#dce5d6]"
       aria-label={TEXTS.join(" ")}
     >
       {canvasOn && (
