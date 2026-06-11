@@ -610,7 +610,8 @@ export default function PlaneLoop() {
           Alejandro Hernández
         </span>
         <span className="display glow-green text-lg font-semibold sm:text-xl">
-          Sistemas de ventas que no duermen
+          <span className="sm:hidden">Automatización de WhatsApp</span>
+          <span className="hidden sm:inline">Especialistas en automatización de WhatsApp</span>
         </span>
       </div>
 
