@@ -24,7 +24,12 @@ export default function Hero() {
             agenda por WhatsApp las 24 horas, y te muestra cada conversación en tu CRM.
           </p>
 
-          <div data-reveal className="mt-9">
+          {/* En móvil el video vive aquí: entre el copy y el CTA */}
+          <div data-reveal className="mt-8 w-full md:hidden">
+            <VslCard />
+          </div>
+
+          <div data-reveal className="mt-8 md:mt-9">
             <SofiaCta />
           </div>
           <p data-reveal className="mt-4 text-sm text-ink-muted">
