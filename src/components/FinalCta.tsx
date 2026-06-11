@@ -11,8 +11,11 @@ export default function FinalCta() {
           Escríbele a Sofía. Te resuelve las dudas y te agenda la llamada, sin que un
           humano mueva un dedo. Así de bien funciona.
         </p>
-        <div data-reveal className="mt-10">
+        <div data-reveal className="mt-10 flex flex-col items-center gap-3">
           <SofiaCta />
+          <p className="text-xs text-ink-muted">
+            Se abre tu WhatsApp · te responde en segundos
+          </p>
         </div>
       </div>
     </section>

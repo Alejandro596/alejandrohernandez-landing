@@ -14,7 +14,7 @@ export default function Effects() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reduced) {
-      gsap.set("[data-reveal], [data-reveal-group] > *", { opacity: 1, y: 0 });
+      gsap.set("[data-reveal], [data-reveal-group] > *, [data-chat] > *", { opacity: 1, y: 0 });
       return;
     }
 
@@ -28,9 +28,9 @@ export default function Effects() {
       gsap.to("[data-hero] [data-reveal]", {
         opacity: 1,
         y: 0,
-        duration: 0.9,
-        stagger: 0.1,
-        ease: "power3.out",
+        duration: 1.0,
+        stagger: 0.09,
+        ease: "expo.out",
         delay: 0.1,
       });
 
@@ -40,7 +40,7 @@ export default function Effects() {
           opacity: 1,
           y: 0,
           duration: 0.9,
-          ease: "power3.out",
+          ease: "expo.out",
           scrollTrigger: { trigger: el, start: "top 85%", once: true },
         });
       });
@@ -51,8 +51,20 @@ export default function Effects() {
           y: 0,
           duration: 0.8,
           stagger: 0.09,
-          ease: "power3.out",
+          ease: "expo.out",
           scrollTrigger: { trigger: group, start: "top 82%", once: true },
+        });
+      });
+
+      // El chat del mockup llega como una conversación real: burbuja a burbuja
+      gsap.utils.toArray<HTMLElement>("[data-chat]").forEach((chat) => {
+        gsap.to(chat.children, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.45,
+          ease: "power2.out",
+          scrollTrigger: { trigger: chat, start: "top 78%", once: true },
         });
       });
 

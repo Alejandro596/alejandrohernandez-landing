@@ -98,6 +98,15 @@ html.js [data-reveal-group] > * {
   transform: translateY(24px);
 }
 
+html.js [data-chat] > * {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+p {
+  text-wrap: pretty;
+}
+
 /* ---------- premium transition default ---------- */
 .t-premium {
   transition: all 0.5s var(--ease-premium);

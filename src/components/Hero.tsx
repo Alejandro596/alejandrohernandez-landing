@@ -37,14 +37,15 @@ export default function Hero() {
             <span className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-[11px] font-medium text-white">
               Mira cómo funciona · 2 min
             </span>
-            <button
-              aria-label="Reproducir video"
-              className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-on-accent t-premium hover:scale-105"
+            {/* Decorativo hasta que exista el VSL real: no es un control, no engaña al teclado */}
+            <span
+              aria-hidden
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-on-accent"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M8 5.5v13l11-6.5-11-6.5Z" />
               </svg>
-            </button>
+            </span>
           </div>
         </div>
       </div>

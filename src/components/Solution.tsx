@@ -51,11 +51,11 @@ export default function Solution() {
         <div data-reveal-group className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">
           {BLOCKS.map((b) => (
             <article key={b.title} className="card p-8">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/12 text-accent-deep">
-                {b.icon}
-              </span>
-              <h3 className="display mt-6 text-xl font-semibold">{b.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-muted md:text-base">{b.body}</p>
+              <div className="flex items-center gap-3">
+                <span className="shrink-0 text-accent-deep">{b.icon}</span>
+                <h3 className="display text-xl font-semibold">{b.title}</h3>
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-ink-muted md:text-base">{b.body}</p>
             </article>
           ))}
         </div>

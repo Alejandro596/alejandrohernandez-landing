@@ -108,7 +108,7 @@ export default function HowItWorks() {
                   <p className="text-[10px] text-accent-deep">en línea</p>
                 </div>
               </div>
-              <div className="flex flex-1 flex-col justify-end gap-2 p-4">
+              <div data-chat className="flex flex-1 flex-col justify-end gap-2 p-4">
                 {CHAT.map((m, i) => (
                   <div
                     key={i}
