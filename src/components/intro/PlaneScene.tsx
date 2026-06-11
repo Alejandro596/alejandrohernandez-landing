@@ -188,11 +188,14 @@ function Plane({ flight }: { flight: Flight }) {
 useGLTF.preload("/models/paper-plane/scene.gltf");
 
 export default function PlaneScene({ flight }: { flight: Flight }) {
+  // En móvil el canvas baja de resolución y suelta el antialias: el WebGL a
+  // dpr 2x + AA era gran parte del 1 fps durante la colisión
+  const mobile = typeof window !== "undefined" && window.innerWidth < 768;
   return (
     <Canvas
       camera={{ position: [0, 0, 8], fov: 42 }}
-      gl={{ antialias: true, alpha: true }}
-      dpr={[1, 2]}
+      gl={{ antialias: !mobile, alpha: true }}
+      dpr={mobile ? [1, 1.3] : [1, 2]}
       className="pointer-events-none"
     >
       {/* Luces + entorno HDR: papel blanco con volumen sobre fondo oscuro */}

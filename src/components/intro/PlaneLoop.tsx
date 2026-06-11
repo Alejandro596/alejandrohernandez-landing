@@ -186,16 +186,21 @@ export default function PlaneLoop() {
       );
     };
 
-    // Golpe a UNA letra: flash blanco-rojo, pop de escala, chispas y caída con física
+    // Golpe a UNA letra: flash blanco-rojo, pop de escala, chispas y caída con
+    // física. En móvil el flash de textShadow se omite: animar sombras de
+    // texto en 20+ letras a la vez repinta todo por frame y tumba los FPS.
     const knock = (el: HTMLElement) => {
       const floorBase = stage.clientHeight;
+      const lite = window.innerWidth < 768;
       sparks(Number(gsap.getProperty(el, "x")), Number(gsap.getProperty(el, "y")));
       const tlK = gsap.timeline();
-      tlK.set(el, {
-        color: "#ffffff",
-        scale: 1.3,
-        textShadow: "0 0 16px rgba(255,140,80,0.95), 0 0 44px rgba(255,45,18,0.55)",
-      });
+      if (!lite) {
+        tlK.set(el, {
+          color: "#ffffff",
+          scale: 1.3,
+          textShadow: "0 0 16px rgba(255,140,80,0.95), 0 0 44px rgba(255,45,18,0.55)",
+        });
+      }
       tlK.to(el, {
         y: `-=${gsap.utils.random(20, 70)}`,
         x: `+=${gsap.utils.random(30, 110)}`,
@@ -205,7 +210,9 @@ export default function PlaneLoop() {
         duration: 0.16,
         ease: "power2.out",
       });
-      tlK.to(el, { textShadow: "0 0 0px rgba(255,45,18,0)", duration: 0.45 }, 0.12);
+      if (!lite) {
+        tlK.to(el, { textShadow: "0 0 0px rgba(255,45,18,0)", duration: 0.45 }, 0.12);
+      }
       tlK.to(
         el,
         {
@@ -219,12 +226,14 @@ export default function PlaneLoop() {
       );
     };
 
-    // Sacudida de toda la sección en el choque
+    // Sacudida de toda la sección en el choque (menos pulsos en móvil)
     const shake = () => {
-      const amp = window.innerWidth < 640 ? 5 : 9;
+      const mobile = window.innerWidth < 768;
+      const amp = mobile ? 5 : 9;
+      const pulses = mobile ? 3 : 6;
       const tlS = gsap.timeline();
-      for (let i = 0; i < 6; i++) {
-        const d = amp * (1 - i / 6);
+      for (let i = 0; i < pulses; i++) {
+        const d = amp * (1 - i / pulses);
         tlS.to(section, {
           x: gsap.utils.random(-d, d),
           y: gsap.utils.random(-d / 2, d / 2),
