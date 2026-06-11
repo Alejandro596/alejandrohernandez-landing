@@ -286,16 +286,24 @@ export default function PlaneLoop() {
         });
       });
 
-      // Sobran letras: los escombros se hunden por DEBAJO del borde, sin
-      // cruzar la zona visible (salir por arriba se notaba y se veía mal)
+      // Sobran letras: los escombros sobrantes se CONSUMEN en el piso con un
+      // destello y chispas (moverlos en otra dirección mientras el resto sube
+      // se leía como un fallo)
       surplus.forEach((el, i) => {
-        gsap.to(el, {
-          y: stageH + 80,
-          x: `+=${gsap.utils.random(30, 140)}`,
-          rotation: `+=${gsap.utils.random(-40, 80)}`,
-          duration: 0.9,
-          delay: i * 0.02,
-          ease: "power1.in",
+        sparks(Number(gsap.getProperty(el, "x")), Number(gsap.getProperty(el, "y")));
+        const tlB = gsap.timeline({ delay: i * 0.035 });
+        tlB.to(el, {
+          color: "#ffb277",
+          textShadow: "0 0 14px rgba(255,150,80,0.85)",
+          duration: 0.12,
+        });
+        tlB.to(el, {
+          opacity: 0,
+          scale: 0.3,
+          y: "+=8",
+          textShadow: "0 0 0px rgba(255,150,80,0)",
+          duration: 0.38,
+          ease: "power2.in",
           onComplete: () => el.remove(),
         });
       });
