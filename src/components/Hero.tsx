@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section data-hero className="ambient-green relative order-2 px-4 pb-14 pt-14 md:order-none md:pb-28 md:pt-24">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-10">
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-center text-center md:items-start md:text-left">
           <span data-reveal className="eyebrow mb-6">
             Para empresas que venden por WhatsApp
           </span>

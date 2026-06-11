@@ -42,7 +42,7 @@ export default function Solution() {
       <div className="mx-auto max-w-6xl">
         <h2
           data-reveal
-          className="display max-w-3xl text-3xl font-semibold leading-tight md:text-5xl"
+          className="display mx-auto max-w-3xl text-center text-3xl font-semibold leading-tight md:mx-0 md:text-left md:text-5xl"
         >
           No es un chatbot.{" "}
           <span className="glow-green">Es un Sistema de Ventas Autónomo.</span>
@@ -50,8 +50,8 @@ export default function Solution() {
 
         <div data-reveal-group className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">
           {BLOCKS.map((b) => (
-            <article key={b.title} className="card p-8">
-              <div className="flex items-center gap-3">
+            <article key={b.title} className="card p-8 text-center md:text-left">
+              <div className="flex items-center justify-center gap-3 md:justify-start">
                 <span className="shrink-0 text-accent-deep">{b.icon}</span>
                 <h3 className="display text-xl font-semibold">{b.title}</h3>
               </div>

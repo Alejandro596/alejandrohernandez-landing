@@ -542,7 +542,7 @@ export default function PlaneLoop() {
   return (
     <section
       ref={sectionRef}
-      className="relative order-4 flex h-[58svh] min-h-[440px] items-center justify-center overflow-hidden border-y border-hairline bg-[#020402] md:order-none md:h-[88svh] md:min-h-[540px] md:border-t-0"
+      className="relative order-4 flex h-[58svh] min-h-[440px] items-center justify-center overflow-hidden bg-[#020402] md:order-none md:h-[88svh] md:min-h-[540px]"
       aria-label={`${CLOSER}: ${PAIRS.map((p) => p.good).join(", ")}`}
     >
       {/* Textura del escenario: luz de foco arriba, viñeta abajo y grano sutil */}

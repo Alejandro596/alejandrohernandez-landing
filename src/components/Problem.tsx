@@ -15,11 +15,11 @@ const STATS = [
 
 export default function Problem() {
   return (
-    <section className="order-5 border-y border-hairline bg-bg-raised px-4 py-24 md:order-none md:py-32">
+    <section className="order-5 bg-bg-raised px-4 py-24 md:order-none md:py-32">
       <div className="mx-auto max-w-6xl">
         <h2
           data-reveal
-          className="display max-w-2xl text-3xl font-semibold leading-tight md:text-5xl"
+          className="display mx-auto max-w-2xl text-center text-3xl font-semibold leading-tight md:mx-0 md:text-left md:text-5xl"
         >
           Pagas por cada lead.{" "}
           <span className="text-ink-muted">Pero no estás ahí para todos.</span>
@@ -27,14 +27,14 @@ export default function Problem() {
 
         <div data-reveal-group className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
           {STATS.map((s) => (
-            <div key={s.big} className="border-t-2 border-bad/70 pt-5">
+            <div key={s.big} className="border-t-2 border-bad/70 pt-5 text-center md:text-left">
               <p className="display text-2xl font-semibold leading-snug md:text-3xl">{s.big}</p>
               <p className="mt-2 text-base leading-relaxed text-ink-muted">{s.text}</p>
             </div>
           ))}
         </div>
 
-        <p data-reveal className="display mt-16 max-w-2xl text-xl font-semibold md:text-2xl">
+        <p data-reveal className="display mx-auto mt-16 max-w-2xl text-center text-xl font-semibold md:mx-0 md:text-left md:text-2xl">
           Eso no es un gasto de marketing.{" "}
           <span className="glow-red">Es plata quemada todos los días.</span>
         </p>

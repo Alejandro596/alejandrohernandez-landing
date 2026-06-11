@@ -12,7 +12,7 @@ export default function Comparison() {
       <div className="mx-auto max-w-5xl">
         <h2
           data-reveal
-          className="display max-w-3xl text-3xl font-semibold leading-tight md:text-5xl"
+          className="display mx-auto max-w-3xl text-center text-3xl font-semibold leading-tight md:mx-0 md:text-left md:text-5xl"
         >
           Ya viste los &ldquo;agentes de IA&rdquo; de 30 dólares.{" "}
           <span className="text-ink-muted">Por eso desconfías.</span>
@@ -44,11 +44,11 @@ export default function Comparison() {
           </div>
         </div>
 
-        <p data-reveal className="display mt-14 max-w-2xl text-xl font-semibold md:text-2xl">
+        <p data-reveal className="display mx-auto mt-14 max-w-2xl text-center text-xl font-semibold md:mx-0 md:text-left md:text-2xl">
           Es la diferencia entre alquilar un taladro…{" "}
           <span className="glow-green">y contratar al maestro que te construye la casa.</span>
         </p>
-        <p data-reveal className="mt-4 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg">
+        <p data-reveal className="mx-auto mt-4 max-w-2xl text-center text-base leading-relaxed text-ink-muted md:mx-0 md:text-left md:text-lg">
           No, no es lo más barato del mercado. Es lo único que de verdad te va a vender.
         </p>
       </div>

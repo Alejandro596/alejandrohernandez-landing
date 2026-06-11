@@ -53,11 +53,11 @@ const CHAT = [
 
 export default function HowItWorks() {
   return (
-    <section className="order-7 border-y border-hairline bg-bg-raised px-4 py-24 md:order-none md:py-32">
+    <section className="order-7 bg-bg-raised px-4 py-24 md:order-none md:py-32">
       <div className="mx-auto max-w-6xl">
         <h2
           data-reveal
-          className="display max-w-3xl text-3xl font-semibold leading-tight md:text-5xl"
+          className="display mx-auto max-w-3xl text-center text-3xl font-semibold leading-tight md:mx-0 md:text-left md:text-5xl"
         >
           Mira tu operación funcionando,{" "}
           <span className="glow-green">incluso a las 2 de la mañana.</span>
