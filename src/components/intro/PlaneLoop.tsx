@@ -19,7 +19,7 @@ const PAIRS = [
 const CLOSER = "Tu Sistema de Ventas Autónomo";
 
 const HOLD = 2.4; // segundos de lectura entre fases
-const FLIGHT = 5.8; // duración del recorrido completo (una sola curva)
+const FLIGHT = 5.4; // duración del recorrido completo (una sola curva)
 const INK = "#f6fbf7"; // cierre
 const BAD = "#ff6b5b"; // lo malo, en rojo
 const GOOD = "#25d366"; // lo bueno, en el verde de la marca
@@ -33,7 +33,6 @@ export default function PlaneLoop() {
   const stageRef = useRef<HTMLDivElement>(null);
   const templateRef = useRef<HTMLHeadingElement>(null);
   const poolBoxRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
   const flightRef = useRef(createFlight());
 
   useEffect(() => {
@@ -42,7 +41,6 @@ export default function PlaneLoop() {
     const stage = stageRef.current!;
     const template = templateRef.current!;
     const poolBox = poolBoxRef.current!;
-    const cta = ctaRef.current!;
 
     let pool: HTMLElement[] = [];
     let pairIdx = 0;
@@ -73,11 +71,9 @@ export default function PlaneLoop() {
 
     const init = () => {
       if (killed) return;
-      gsap.set(cta, { autoAlpha: 0, y: 16 });
       if (reduced) {
-        // Sin animación: directo al cierre con su CTA
+        // Sin animación: directo al cierre
         pool = measure(CLOSER).map((t) => spawn(t, INK));
-        gsap.set(cta, { autoAlpha: 1, y: 0 });
         return;
       }
       pool = measure(currentText).map((t) => spawn(t, BAD));
@@ -195,49 +191,49 @@ export default function PlaneLoop() {
       pool = used;
     };
 
-    // La frase buena NO se destruye: sale completa por la derecha
-    const slideOut = () => {
+    // La frase sale ENTERA por la derecha como un solo bloque (se mueve el
+    // contenedor, no cada letra — letras sueltas se "apachurraban") con un
+    // desenfoque suave de movimiento
+    const slideOut = (onDone?: () => void) => {
       const stageW = stage.clientWidth;
       const old = pool;
       pool = [];
-      old.forEach((el, i) => {
-        gsap.to(el, {
-          x: `+=${stageW * 1.15 + Math.random() * 120}`,
-          duration: 0.9,
-          delay: i * 0.014,
-          ease: "power2.in",
-          onComplete: () => el.remove(),
-        });
-      });
+      gsap
+        .timeline({
+          onComplete: () => {
+            old.forEach((el) => el.remove());
+            gsap.set(poolBox, { x: 0, filter: "none" });
+            if (!killed) onDone?.();
+          },
+        })
+        .to(poolBox, { x: stageW * 1.1, duration: 0.8, ease: "power2.in" }, 0)
+        .to(poolBox, { filter: "blur(10px)", duration: 0.5, ease: "power1.in" }, 0.15);
     };
 
-    // La frase mala siguiente entra por la izquierda, lista para el avión
-    const slideIn = (text: string) => {
+    // La frase mala siguiente entra por la izquierda, también como bloque
+    const slideIn = (text: string, color = BAD) => {
       currentText = text;
       const targets = measure(text);
+      pool = targets.map((t) => spawn(t, color));
       const stageW = stage.clientWidth;
-      pool = targets.map((t, i) => {
-        const s = spawn(t, BAD);
-        gsap.set(s, { x: t.x - stageW * 1.15 - Math.random() * 120, y: t.y });
-        gsap.to(s, { x: t.x, duration: 1.0, delay: i * 0.014, ease: "power2.out" });
-        return s;
-      });
+      gsap.set(poolBox, { x: -stageW * 1.1, filter: "blur(10px)" });
+      gsap
+        .timeline()
+        .to(poolBox, { x: 0, duration: 0.9, ease: "power2.out" }, 0)
+        .to(poolBox, { filter: "blur(0px)", duration: 0.55, ease: "power1.out" }, 0.25)
+        .set(poolBox, { filter: "none" });
     };
 
-    // Cierre del round: la frase final respira con su CTA y el bucle reinicia
+    // Cierre del round: la frase final respira y el bucle reinicia
     const finish = () => {
       if (killed) return;
       morph(CLOSER, INK);
-      gsap.to(cta, { autoAlpha: 1, y: 0, duration: 0.9, ease: "power2.out", delay: 1.4 });
       delayed = gsap.delayedCall(HOLD * 2 + 2, () => {
         if (killed) return;
-        gsap.to(cta, { autoAlpha: 0, y: 16, duration: 0.5, ease: "power1.in" });
         pairIdx = 0;
-        slideOut();
-        delayed = gsap.delayedCall(0.45, () => {
-          if (killed) return;
+        slideOut(() => {
           slideIn(PAIRS[0].bad);
-          delayed = gsap.delayedCall(HOLD + 1.1, cycle);
+          delayed = gsap.delayedCall(HOLD + 1.0, cycle);
         });
       });
     };
@@ -254,19 +250,19 @@ export default function PlaneLoop() {
       // amplio por la derecha y regresa por el fondo hasta salir. GSAP solo
       // empuja `progress`; la orientación la da la tangente de la curva.
       // z monótona tras el cruce: el avión nunca regresa hacia la cámara.
-      // La cola llega a x=-26 para que la desaceleración del ease ocurra
-      // FUERA de pantalla incluso en monitores ultrawide.
+      // El regreso va BIEN al fondo (z -14..-16) y la cola llega a x=-28
+      // para que la desaceleración ocurra fuera de pantalla en ultrawide.
       const pts: FlightPathPoint[] = [
         { x: -9.5, y: -0.15, z: 0.6 },
         { x: -4.0, y: -0.06, z: 0.55 },
         { x: 1.6, y: 0.12, z: 0.45 },
         { x: mobile ? 3.4 : 6.4, y: 0.6, z: -0.4 },
-        { x: 8.6 * m, y: 1.3, z: -1.6 },
-        { x: 10.5 * m, y: 2.0, z: -5.5 },
-        { x: 5.5, y: 2.1, z: -10 },
-        { x: 0, y: 2.1, z: -11.5 },
-        { x: -8, y: 2.1, z: -12 },
-        { x: -26, y: 2.1, z: -12.2 },
+        { x: 8.6 * m, y: 1.3, z: -1.8 },
+        { x: 10.5 * m, y: 2.2, z: -7 },
+        { x: 5.5, y: 2.6, z: -14 },
+        { x: 0, y: 2.6, z: -15.5 },
+        { x: -8, y: 2.6, z: -16 },
+        { x: -28, y: 2.6, z: -16.2 },
       ];
       f.path = pts;
       f.pathVersion += 1;
@@ -343,11 +339,10 @@ export default function PlaneLoop() {
             delayed = gsap.delayedCall(HOLD, () => {
               if (killed) return;
               pairIdx += 1;
-              slideOut(); // lo bueno se va entero por la derecha
-              delayed = gsap.delayedCall(0.45, () => {
-                if (killed) return;
-                slideIn(PAIRS[pairIdx].bad); // lo malo nuevo entra por la izquierda
-                delayed = gsap.delayedCall(HOLD + 1.1, cycle);
+              // lo bueno se va entero por la derecha y al terminar entra lo malo
+              slideOut(() => {
+                slideIn(PAIRS[pairIdx].bad);
+                delayed = gsap.delayedCall(HOLD + 1.0, cycle);
               });
             });
           }
@@ -355,13 +350,16 @@ export default function PlaneLoop() {
       });
 
       tl.set(f, { rotX: 0.05, rotY: 0, rotZ: -0.06, scale: passScale, visible: true, flying: true, progress: 0 }, 0);
-      tl.to(f, { progress: 1, duration: FLIGHT, ease: "power1.inOut", onUpdate: sweep }, 0);
+      // power2.out: el avión ENTRA a máxima velocidad (impulso tomado desde
+      // antes de entrar al cuadro), revienta las letras en ~medio segundo y
+      // va soltando velocidad en el giro y el regreso por el fondo
+      tl.to(f, { progress: 1, duration: FLIGHT, ease: "power2.out", onUpdate: sweep }, 0);
 
       // Cara superior hacia la cámara durante el regreso (se lee como objeto 3D)
-      tl.to(f, { rotX: -0.38, duration: 1.6, ease: "sine.inOut" }, 2.3);
+      tl.to(f, { rotX: -0.38, duration: 1.4, ease: "sine.inOut" }, 1.0);
 
       // Mientras vuelve por el fondo, las letras suben y se rearman en lo bueno
-      tl.add(() => morph(pair.good, GOOD), 3.4);
+      tl.add(() => morph(pair.good, GOOD), 2.2);
 
       tl.set(f, { visible: false, flying: false }, FLIGHT);
       tl.to({}, { duration: 0.05 }, FLIGHT);
@@ -474,8 +472,8 @@ export default function PlaneLoop() {
         Un sistema de IA que atiende, vende y agenda por WhatsApp, las 24 horas.
       </p>
 
-      {/* CTA del cierre: aparece cuando la frase final queda fija */}
-      <div ref={ctaRef} className="invisible absolute inset-x-0 bottom-[76px] z-30 flex justify-center opacity-0 sm:bottom-20">
+      {/* CTA fijo: siempre visible en la sección */}
+      <div className="absolute inset-x-0 bottom-[76px] z-30 flex justify-center sm:bottom-20">
         <SofiaCta />
       </div>
 
