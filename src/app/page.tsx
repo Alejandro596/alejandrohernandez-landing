@@ -6,6 +6,7 @@ import Problem from "@/components/Problem";
 import Solution from "@/components/Solution";
 import HowItWorks from "@/components/HowItWorks";
 import Comparison from "@/components/Comparison";
+import Faq from "@/components/Faq";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import MobileWhatsApp from "@/components/MobileWhatsApp";
@@ -31,6 +32,9 @@ export default function Home() {
       <HowItWorks />
       <div className="divider-glow order-[13] md:order-none" aria-hidden />
       <Comparison />
+      <div className="divider-glow order-[15] md:order-none" aria-hidden />
+      {/* FAQ y su divisor comparten order-[15]: a igual orden manda el DOM */}
+      <Faq />
       <div className="divider-glow order-[15] md:order-none" aria-hidden />
       <FinalCta />
       <div className="divider-glow order-[17] md:order-none" aria-hidden />

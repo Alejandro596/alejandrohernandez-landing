@@ -1,3 +1,5 @@
+import LiveClock from "./LiveClock";
+
 const STEPS = [
   {
     n: "1",
@@ -126,6 +128,8 @@ export default function HowItWorks() {
             </div>
           </div>
         </div>
+
+        <LiveClock />
 
         <ol data-reveal-group className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
           {STEPS.map((s) => (
