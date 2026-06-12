@@ -10,7 +10,7 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skyment-landing.vercel.app"),
+  metadataBase: new URL("https://alejandroohernandez.com"),
   title: "Alejandro Hernández — Sistemas de ventas que no duermen",
   description:
     "Tus ventas no pueden cerrar a las 5 PM. Instalamos un sistema de IA que atiende, vende y agenda por WhatsApp las 24 horas, y te muestra cada conversación en tu CRM. Habla con Sofía y mira la demo en vivo.",
