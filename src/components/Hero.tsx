@@ -1,3 +1,4 @@
+import HeroStats from "./HeroStats";
 import SofiaCta from "./SofiaCta";
 import VslCard from "./VslCard";
 
@@ -35,6 +36,8 @@ export default function Hero() {
           <p data-reveal className="mt-4 text-sm text-ink-muted">
             Es una demo en vivo. Ella misma te agenda la llamada.
           </p>
+
+          <HeroStats />
         </div>
 
         {/* En móvil el video vive en su propia sección justo después del copy */}

@@ -18,3 +18,7 @@ export const META_DOMAIN_VERIFICATION = "uu4nvcqqe679bey4rib19cy7hgnux1";
 export const LINK_SOFIA = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
   "Hola Sofía, quiero ver la demo"
 )}`;
+
+// Franja de stats del hero (estilo josehuila: valor en oro verde + label).
+// VACÍO = no se muestra. Poner SOLO números reales del negocio.
+export const HERO_STATS: { value: string; label: string }[] = [];
