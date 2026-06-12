@@ -7,7 +7,7 @@ export const SITE = {
 
 // Meta Pixel (Administrador de eventos -> Orígenes de datos -> ID del píxel).
 // Vacío = el pixel no carga. Pegar el ID aquí y redesplegar.
-export const META_PIXEL_ID = "";
+export const META_PIXEL_ID = "1328657068988798";
 
 // Verificación de dominio de Meta (Business Manager -> Seguridad de la marca
 // -> Dominios -> alejandroohernandez.com -> verificación por metaetiqueta).

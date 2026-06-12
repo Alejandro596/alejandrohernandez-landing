@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import MetaPixel from "@/components/MetaPixel";
-import { META_DOMAIN_VERIFICATION } from "@/lib/site";
+import { META_DOMAIN_VERIFICATION, META_PIXEL_ID } from "@/lib/site";
 import "./globals.css";
 
 // Una sola familia con contraste por peso y anchura: voz sobria, sin monocultura de IA
@@ -53,6 +53,18 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         <MetaPixel />
+        {META_PIXEL_ID && (
+          <noscript>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              height="1"
+              width="1"
+              style={{ display: "none" }}
+              alt=""
+              src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            />
+          </noscript>
+        )}
         {children}
       </body>
     </html>
