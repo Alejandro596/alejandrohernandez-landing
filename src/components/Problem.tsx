@@ -1,5 +1,3 @@
-import Calculadora from "./Calculadora";
-
 const STATS = [
   {
     big: "3 a 4 de cada 10",
@@ -47,8 +45,6 @@ export default function Problem() {
           Eso no es un gasto de marketing.{" "}
           <span className="glow-red">Es plata quemada todos los días.</span>
         </p>
-
-        <Calculadora />
       </div>
     </section>
   );
