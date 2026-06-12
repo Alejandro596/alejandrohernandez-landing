@@ -119,11 +119,12 @@ p {
    Sin bandas, sin flujo. El lujo está en la sencillez del foil + un bloom
    discreto. */
 .glow-green {
-  background: linear-gradient(180deg, #e9ffb4 0%, #a5ee3c 38%, #6ec817 68%, #449f0b 100%);
+  /* el foil corre de IZQUIERDA a DERECHA como en la referencia */
+  background: linear-gradient(90deg, #f2ffc4 0%, #c9f964 24%, #8ce427 52%, #54b80f 80%, #8ce427 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 12px rgba(140, 228, 39, 0.4)) drop-shadow(0 0 36px rgba(140, 228, 39, 0.18));
+  filter: drop-shadow(0 0 13px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 42px rgba(140, 228, 39, 0.28));
   animation: glow-pulse-green 3.6s ease-in-out infinite;
 }
 
@@ -156,10 +157,10 @@ p {
 @keyframes glow-pulse-green {
   0%,
   100% {
-    filter: drop-shadow(0 0 12px rgba(140, 228, 39, 0.4)) drop-shadow(0 0 36px rgba(140, 228, 39, 0.18));
+    filter: drop-shadow(0 0 13px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 42px rgba(140, 228, 39, 0.28));
   }
   50% {
-    filter: drop-shadow(0 0 15px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 46px rgba(140, 228, 39, 0.28));
+    filter: drop-shadow(0 0 17px rgba(140, 228, 39, 0.72)) drop-shadow(0 0 54px rgba(140, 228, 39, 0.4));
   }
 }
 
