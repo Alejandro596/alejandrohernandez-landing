@@ -2,7 +2,7 @@ const ROWS = [
   { bot: "Tú lo configuras y te las arreglas", system: "Lo construimos a la medida de tu negocio" },
   { bot: "Responde preguntas frecuentes", system: "Entrenado para vender y cerrar" },
   { bot: "Suena a robot", system: "Suena humano, con tu forma de hablar" },
-  { bot: "Caja negra", system: "CRM completo: ves cada lead" },
+  { bot: "Caja negra", system: "CRM personalizado: ves cada lead" },
   { bot: "Lo dejan solo", system: "Un equipo optimizándolo cada mes" },
 ];
 

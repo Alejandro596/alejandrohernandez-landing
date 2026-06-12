@@ -29,7 +29,7 @@ const PAIRS = [
   {
     bad: "No saber qué pasó con tus leads",
     good: "Lo ves todo en tu CRM",
-    sub: "Cada lead, cada etapa, cada conversación, en un solo lugar.",
+    sub: "Un CRM hecho a la medida de tu negocio: cada lead, cada etapa, cada conversación.",
   },
 ];
 // Tras el último par, la frase queda fija y aparece el CTA

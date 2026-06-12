@@ -9,7 +9,7 @@ const FAQS = [
   },
   {
     q: "¿Necesito saber de tecnología?",
-    a: "Cero. Nosotros lo montamos, lo conectamos a tu WhatsApp y te entregamos el CRM funcionando. Tu único trabajo es atender las citas que Sofía te agenda.",
+    a: "Cero. Nosotros lo montamos, lo conectamos a tu WhatsApp y te entregamos tu CRM personalizado funcionando. Tu único trabajo es atender las citas que Sofía te agenda.",
   },
   {
     q: "¿Y si la IA dice algo que no debe?",

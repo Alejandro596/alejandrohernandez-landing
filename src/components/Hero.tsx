@@ -22,7 +22,8 @@ export default function Hero() {
           <p data-reveal className="mt-6 max-w-lg text-base leading-relaxed text-ink-muted md:text-lg">
             Mientras tu equipo descansa, tus clientes siguen escribiendo —y le terminan
             comprando a quien sí les responde. Instalamos un sistema que atiende, vende y
-            agenda por WhatsApp las 24 horas, y te muestra cada conversación en tu CRM.
+            agenda por WhatsApp las 24 horas, y te muestra cada conversación en un CRM
+            hecho a la medida de tu negocio.
           </p>
 
           {/* En móvil el video vive aquí: entre el copy y el CTA */}

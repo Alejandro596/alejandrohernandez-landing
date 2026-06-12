@@ -25,8 +25,8 @@ const BLOCKS = [
     ),
   },
   {
-    title: "CRM donde ves todo",
-    body: "Cada lead, cada etapa, cada conversación. Nada de cajas negras.",
+    title: "CRM personalizado donde ves todo",
+    body: "Hecho a la medida de tu operación: cada lead, cada etapa, cada conversación. Nada de cajas negras.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
         <rect x="3.5" y="4.5" width="17" height="15" rx="2" stroke="currentColor" strokeWidth="1.5" />
