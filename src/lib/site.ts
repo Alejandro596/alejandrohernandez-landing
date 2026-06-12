@@ -11,7 +11,7 @@ export const META_PIXEL_ID = "1328657068988798";
 
 // Verificación de dominio de Meta (Business Manager -> Seguridad de la marca
 // -> Dominios -> alejandroohernandez.com -> verificación por metaetiqueta).
-export const META_DOMAIN_VERIFICATION = "";
+export const META_DOMAIN_VERIFICATION = "uu4nvcqqe679bey4rib19cy7hgnux1";
 
 // CTA único de toda la página: el chat de Sofía (agente IA en WhatsApp).
 // El texto prellenado cae en la línea "ia" del router del bot de n8n → Sofía.
