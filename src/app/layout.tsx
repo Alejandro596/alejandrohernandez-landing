@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
+import MetaPixel from "@/components/MetaPixel";
+import { META_DOMAIN_VERIFICATION } from "@/lib/site";
 import "./globals.css";
 
 // Una sola familia con contraste por peso y anchura: voz sobria, sin monocultura de IA
@@ -45,8 +47,14 @@ export default function RootLayout({
             __html: "document.documentElement.classList.add('js')",
           }}
         />
+        {META_DOMAIN_VERIFICATION && (
+          <meta name="facebook-domain-verification" content={META_DOMAIN_VERIFICATION} />
+        )}
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <MetaPixel />
+        {children}
+      </body>
     </html>
   );
 }
