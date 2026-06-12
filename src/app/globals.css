@@ -114,64 +114,34 @@ p {
   box-shadow: 0 0 8px rgba(140, 228, 39, 0.7);
 }
 
-/* ---------- glow GOTY (referencia: josehuila.com, en la paleta de la pauta) ----------
-   ORO VERDE: bandas metálicas claro/oscuro como oro pulido que fluyen lento
-   (gold-shift) + doble bloom + pulso de resplandor. */
+/* ---------- gold foil verde (referencia: josehuila.com) ----------
+   UN degradado metálico suave: claro arriba -> saturado y oscuro abajo.
+   Sin bandas, sin flujo. El lujo está en la sencillez del foil + un bloom
+   discreto. */
 .glow-green {
-  background: linear-gradient(
-    180deg,
-    #f2ffc9 0%,
-    #d9fd8a 16%,
-    #8ce427 36%,
-    #4fae0c 50%,
-    #8ce427 60%,
-    #cdf870 76%,
-    #5cb80f 92%,
-    #9bec33 100%
-  );
-  background-size: 100% 220%;
+  background: linear-gradient(180deg, #e9ffb4 0%, #a5ee3c 38%, #6ec817 68%, #449f0b 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 10px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 34px rgba(140, 228, 39, 0.3));
-  animation:
-    glow-pulse-green 3.2s ease-in-out infinite,
-    gold-shift 6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 12px rgba(140, 228, 39, 0.4)) drop-shadow(0 0 36px rgba(140, 228, 39, 0.18));
+  animation: glow-pulse-green 3.6s ease-in-out infinite;
 }
 
-@keyframes gold-shift {
-  from {
-    background-position: 0% 0%;
-  }
-  to {
-    background-position: 0% 100%;
-  }
-}
-
-/* botones de ORO VERDE: gradiente metálico multibanda + filo especular
-   arriba + bisel oscuro abajo + bloom exterior */
+/* botones gold foil: mismo degradado suave + filo especular fino + bloom */
 .btn-gold-green {
-  background-image: linear-gradient(
-    180deg,
-    #eaffb0 0%,
-    #a8ef3e 16%,
-    #6ec817 46%,
-    #4ba50b 56%,
-    #7edc1f 84%,
-    #b9f55c 100%
-  );
+  background-image: linear-gradient(180deg, #d6fb84 0%, #9bec33 30%, #6ec817 70%, #4ba50b 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -2px 6px rgba(18, 58, 4, 0.5),
-    0 0 26px rgba(140, 228, 39, 0.5);
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 2px rgba(18, 58, 4, 0.35),
+    0 0 24px rgba(140, 228, 39, 0.45);
 }
 
 .btn-gold-green:hover {
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    inset 0 -2px 6px rgba(18, 58, 4, 0.5),
-    0 0 46px rgba(140, 228, 39, 0.72);
-  filter: brightness(1.07);
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 2px rgba(18, 58, 4, 0.35),
+    0 0 40px rgba(140, 228, 39, 0.65);
+  filter: brightness(1.06);
 }
 
 .glow-red {
@@ -186,10 +156,10 @@ p {
 @keyframes glow-pulse-green {
   0%,
   100% {
-    filter: drop-shadow(0 0 10px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 34px rgba(140, 228, 39, 0.3));
+    filter: drop-shadow(0 0 12px rgba(140, 228, 39, 0.4)) drop-shadow(0 0 36px rgba(140, 228, 39, 0.18));
   }
   50% {
-    filter: drop-shadow(0 0 16px rgba(140, 228, 39, 0.75)) drop-shadow(0 0 52px rgba(140, 228, 39, 0.45));
+    filter: drop-shadow(0 0 15px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 46px rgba(140, 228, 39, 0.28));
   }
 }
 
@@ -210,12 +180,6 @@ p {
   }
 }
 
-/* en teléfono el flujo del oro se queda quieto (pintura por frame) */
-@media (max-width: 767px) {
-  .glow-green {
-    animation: glow-pulse-green 3.2s ease-in-out infinite;
-  }
-}
 
 /* ---------- divisor luminoso entre secciones ----------
    Nace en el centro y se esparce a los lados hasta DESAPARECER por completo
