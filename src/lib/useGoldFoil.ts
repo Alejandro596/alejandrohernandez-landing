@@ -7,7 +7,9 @@ import { useEffect, useState } from "react";
 // la hidratación (estado inicial null) para no romper el SSR.
 function randomFoil(): string {
   const r = (a: number, b: number) => a + Math.random() * (b - a);
-  const angle = Math.round(r(70, 110));
+  // mitad de las veces la luz entra por la derecha (270° ± 20) pa variar
+  const base = Math.random() < 0.5 ? 90 : 270;
+  const angle = Math.round(base + r(-20, 20));
   const hLight = Math.round(r(74, 90));
   const hMid = Math.round(r(86, 98));
   const hDeep = Math.round(r(94, 104));
