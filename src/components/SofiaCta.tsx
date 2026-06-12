@@ -1,4 +1,7 @@
+"use client";
+
 import { LINK_SOFIA } from "@/lib/site";
+import { useGoldFoil } from "@/lib/useGoldFoil";
 
 type Props = {
   children?: React.ReactNode;
@@ -6,12 +9,15 @@ type Props = {
 };
 
 // El único CTA de la página. Siempre el mismo destino: el chat de Sofía.
+// Cada instancia trae su PROPIA lámina de oro verde (foil aleatorio).
 export default function SofiaCta({ children = "Habla con Sofía ahora", className = "" }: Props) {
+  const foil = useGoldFoil();
   return (
     <a
       href={LINK_SOFIA}
       target="_blank"
       rel="noopener"
+      style={foil}
       className={`group btn-shine btn-gold-green inline-flex items-center gap-3 rounded-full pl-7 pr-2.5 py-2.5 font-semibold text-on-accent t-premium hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] select-none ${className}`}
     >
       <span>{children}</span>
