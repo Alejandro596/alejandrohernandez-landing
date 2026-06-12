@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-10">
         <div className="flex flex-col items-center text-center md:items-start md:text-left">
           <span data-reveal className="eyebrow mb-6">
-            Para empresas que venden por WhatsApp
+            Para negocios que invierten en pauta y venden por WhatsApp
           </span>
 
           <h1

@@ -11,6 +11,11 @@ export default function FinalCta() {
           Escríbele a Sofía. Te resuelve las dudas y te agenda la llamada, sin que un
           humano mueva un dedo. Así de bien funciona.
         </p>
+        <p data-reveal className="mt-5 max-w-lg text-sm leading-relaxed text-ink-muted md:text-base">
+          Eso sí: esto es para negocios a los que ya les escriben todos los días. Si te
+          llegan dos chats a la semana, todavía no lo necesitas —y te lo vamos a decir de
+          frente.
+        </p>
         <p data-reveal className="mt-5 max-w-lg text-sm font-medium leading-relaxed text-ink md:text-base">
           Y mientras lo piensas, esta noche van a volver a entrar mensajes que nadie va a
           responder.

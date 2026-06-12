@@ -25,6 +25,13 @@ export default function Problem() {
           <span className="text-ink-muted">Pero no estás ahí para todos.</span>
         </h2>
 
+        <p
+          data-reveal
+          className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-ink-muted md:mx-0 md:text-left md:text-lg"
+        >
+          Si a tu WhatsApp entran 20, 50 o 200 chats al día, esta cuenta es contigo:
+        </p>
+
         <div data-reveal-group className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
           {STATS.map((s) => (
             <div key={s.big} className="border-t-2 border-bad/70 pt-5 text-center md:text-left">
