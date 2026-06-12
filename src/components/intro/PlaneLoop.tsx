@@ -119,13 +119,21 @@ export default function PlaneLoop() {
       }
     };
 
+    // En móvil el glow de las letras es de UNA capa (las sombras multicapa
+    // encarecen cada repintado de glifo)
+    const glowFor = (color: string) => {
+      const lite = window.innerWidth < 768;
+      if (color === GOOD) return lite ? "0 0 10px rgba(140,228,39,0.5)" : GLOW_GOOD;
+      if (color === INK) return lite ? "0 0 14px rgba(246,251,247,0.3)" : GLOW_INK;
+      return "none";
+    };
+
     const spawn = (t: Target, color: string): HTMLElement => {
       const s = document.createElement("span");
       s.className = "absolute left-0 top-0 inline-block will-change-transform";
       s.textContent = t.glyph;
       s.style.color = color;
-      if (color === GOOD) s.style.textShadow = GLOW_GOOD;
-      if (color === INK) s.style.textShadow = GLOW_INK;
+      s.style.textShadow = glowFor(color);
       poolBox.appendChild(s);
       gsap.set(s, { x: t.x, y: t.y });
       return s;
@@ -304,8 +312,7 @@ export default function PlaneLoop() {
             if (!swapped && this.progress() > 0.5) {
               swapped = true;
               el.textContent = t.glyph;
-              el.style.textShadow =
-                color === GOOD ? GLOW_GOOD : color === INK ? GLOW_INK : "none";
+              el.style.textShadow = glowFor(color);
             }
           },
         });
@@ -341,35 +348,37 @@ export default function PlaneLoop() {
     // desenfoque suave de movimiento
     const slideOut = (onDone?: () => void) => {
       const stageW = stage.clientWidth;
+      const lite = window.innerWidth < 768; // móvil: sin blur animado (pintura por frame)
       const old = pool;
       const oldSub = sub;
       pool = [];
       sub = null;
-      gsap
-        .timeline({
-          onComplete: () => {
-            old.forEach((el) => el.remove());
-            oldSub?.remove();
-            gsap.set(poolBox, { x: 0, filter: "none" });
-            if (!killed) onDone?.();
-          },
-        })
-        .to(poolBox, { x: stageW * 1.1, duration: 0.8, ease: "power2.in" }, 0)
-        .to(poolBox, { filter: "blur(10px)", duration: 0.5, ease: "power1.in" }, 0.15);
+      const tlO = gsap.timeline({
+        onComplete: () => {
+          old.forEach((el) => el.remove());
+          oldSub?.remove();
+          gsap.set(poolBox, { x: 0, filter: "none" });
+          if (!killed) onDone?.();
+        },
+      });
+      tlO.to(poolBox, { x: stageW * 1.1, duration: 0.8, ease: "power2.in" }, 0);
+      if (!lite) tlO.to(poolBox, { filter: "blur(10px)", duration: 0.5, ease: "power1.in" }, 0.15);
     };
 
     // La frase mala siguiente entra por la izquierda, también como bloque
     const slideIn = (text: string, color = BAD) => {
       currentText = text;
+      const lite = window.innerWidth < 768;
       const targets = measure(text);
       pool = targets.map((t) => spawn(t, color));
       const stageW = stage.clientWidth;
-      gsap.set(poolBox, { x: -stageW * 1.1, filter: "blur(10px)" });
-      gsap
-        .timeline()
-        .to(poolBox, { x: 0, duration: 0.9, ease: "power2.out" }, 0)
-        .to(poolBox, { filter: "blur(0px)", duration: 0.55, ease: "power1.out" }, 0.25)
-        .set(poolBox, { filter: "none" });
+      gsap.set(poolBox, { x: -stageW * 1.1, ...(lite ? {} : { filter: "blur(10px)" }) });
+      const tlI = gsap.timeline();
+      tlI.to(poolBox, { x: 0, duration: 0.9, ease: "power2.out" }, 0);
+      if (!lite) {
+        tlI.to(poolBox, { filter: "blur(0px)", duration: 0.55, ease: "power1.out" }, 0.25);
+        tlI.set(poolBox, { filter: "none" });
+      }
     };
 
     // Cierre del round: la frase final respira y el bucle reinicia

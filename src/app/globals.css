@@ -181,6 +181,20 @@ p {
   }
 }
 
+/* MÓVIL full optimización: glow estático de UNA sola capa (el pulso de
+   drop-shadow repinta el titular en cada frame) */
+@media (max-width: 767px) {
+  .glow-green {
+    animation: none;
+    filter: drop-shadow(0 0 10px rgba(140, 228, 39, 0.45));
+  }
+
+  .glow-red {
+    animation: none;
+    filter: drop-shadow(0 0 10px rgba(255, 45, 18, 0.35));
+  }
+}
+
 
 /* ---------- divisor luminoso entre secciones ----------
    Nace en el centro y se esparce a los lados hasta DESAPARECER por completo
