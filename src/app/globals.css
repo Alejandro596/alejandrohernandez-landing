@@ -115,14 +115,63 @@ p {
 }
 
 /* ---------- glow GOTY (referencia: josehuila.com, en la paleta de la pauta) ----------
-   Degradado luminoso vertical + doble bloom + pulso lento de resplandor. */
+   ORO VERDE: bandas metálicas claro/oscuro como oro pulido que fluyen lento
+   (gold-shift) + doble bloom + pulso de resplandor. */
 .glow-green {
-  background: linear-gradient(180deg, #d3fc7e 0%, #8ce427 46%, #4fae0c 100%);
+  background: linear-gradient(
+    180deg,
+    #f2ffc9 0%,
+    #d9fd8a 16%,
+    #8ce427 36%,
+    #4fae0c 50%,
+    #8ce427 60%,
+    #cdf870 76%,
+    #5cb80f 92%,
+    #9bec33 100%
+  );
+  background-size: 100% 220%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 0 10px rgba(140, 228, 39, 0.55)) drop-shadow(0 0 34px rgba(140, 228, 39, 0.3));
-  animation: glow-pulse-green 3.2s ease-in-out infinite;
+  animation:
+    glow-pulse-green 3.2s ease-in-out infinite,
+    gold-shift 6s ease-in-out infinite alternate;
+}
+
+@keyframes gold-shift {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 0% 100%;
+  }
+}
+
+/* botones de ORO VERDE: gradiente metálico multibanda + filo especular
+   arriba + bisel oscuro abajo + bloom exterior */
+.btn-gold-green {
+  background-image: linear-gradient(
+    180deg,
+    #eaffb0 0%,
+    #a8ef3e 16%,
+    #6ec817 46%,
+    #4ba50b 56%,
+    #7edc1f 84%,
+    #b9f55c 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 6px rgba(18, 58, 4, 0.5),
+    0 0 26px rgba(140, 228, 39, 0.5);
+}
+
+.btn-gold-green:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -2px 6px rgba(18, 58, 4, 0.5),
+    0 0 46px rgba(140, 228, 39, 0.72);
+  filter: brightness(1.07);
 }
 
 .glow-red {
@@ -158,6 +207,13 @@ p {
   .glow-green,
   .glow-red {
     animation: none;
+  }
+}
+
+/* en teléfono el flujo del oro se queda quieto (pintura por frame) */
+@media (max-width: 767px) {
+  .glow-green {
+    animation: glow-pulse-green 3.2s ease-in-out infinite;
   }
 }
 

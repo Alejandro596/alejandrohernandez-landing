@@ -9,7 +9,7 @@ export default function VslCard() {
         {/* Decorativo hasta que exista el VSL real: no es un control, no engaña al teclado */}
         <span
           aria-hidden
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-on-accent"
+          className="btn-gold-green flex h-16 w-16 items-center justify-center rounded-full text-on-accent"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
             <path d="M8 5.5v13l11-6.5-11-6.5Z" />

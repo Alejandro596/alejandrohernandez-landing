@@ -41,8 +41,9 @@ const INK = "#f6fbf7"; // cierre
 const BAD = "#ff2d12"; // lo malo: el rojo de la pauta sobre negro
 const GOOD = "#8ce427"; // lo bueno: el verde LIMA de la pauta
 const RUBBLE = "#8a2417"; // escombros: rojo apagado en el piso
-// Glow GOTY: las frases buenas y el cierre brillan como en la pauta
-const GLOW_GOOD = "0 0 14px rgba(140,228,39,0.6), 0 0 46px rgba(140,228,39,0.3)";
+// Glow GOTY: las frases buenas brillan con núcleo caliente de oro verde
+const GLOW_GOOD =
+  "0 0 5px rgba(240,255,200,0.7), 0 0 14px rgba(140,228,39,0.6), 0 0 46px rgba(140,228,39,0.3)";
 const GLOW_INK = "0 0 24px rgba(246,251,247,0.35)";
 
 type Target = { glyph: string; x: number; y: number };
