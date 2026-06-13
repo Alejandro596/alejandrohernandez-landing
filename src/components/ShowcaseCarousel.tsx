@@ -111,8 +111,8 @@ function Crm() {
 }
 
 const SLIDES = [
-  { label: "Tu bot cerrando ventas", sub: "Atiende y vende sin que estés.", body: <Chat msgs={VENTA} /> },
-  { label: "Tu bot haciendo seguimiento", sub: "Recupera a los que se enfrían.", body: <Chat msgs={SEGUIMIENTO} /> },
+  { label: "Tu agente cerrando ventas", sub: "Atiende y vende sin que estés.", body: <Chat msgs={VENTA} /> },
+  { label: "Tu agente haciendo seguimiento", sub: "Recupera a los que se enfrían.", body: <Chat msgs={SEGUIMIENTO} /> },
   { label: "Tu CRM personalizado", sub: "Cada lead, en un solo lugar.", body: <Crm /> },
 ];
 
@@ -173,7 +173,7 @@ export default function ShowcaseCarousel() {
         style={{ perspective: "1200px" }}
         role="group"
         aria-roledescription="carrusel"
-        aria-label="Demos del bot y el CRM"
+        aria-label="Demos del agente y el CRM"
       >
         {SLIDES.map((s, i) => {
           const rel = relOf(i);
