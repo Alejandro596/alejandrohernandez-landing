@@ -163,9 +163,10 @@ export default function ShowcaseCarousel() {
       onFocusCapture={() => (paused.current = true)}
       onBlurCapture={() => (paused.current = false)}
     >
-      <p className="mb-5 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-bright">
-        Tu sistema en acción
-      </p>
+      <div className="mb-5 text-center" aria-live="polite">
+        <p className="display text-lg font-semibold leading-tight">{SLIDES[active].label}</p>
+        <p className="mt-1 text-sm text-ink-muted">{SLIDES[active].sub}</p>
+      </div>
 
       <div
         className="relative mx-auto h-[420px] w-full max-w-[420px] overflow-hidden sm:h-[440px]"
@@ -215,10 +216,9 @@ export default function ShowcaseCarousel() {
         </button>
       </div>
 
-      <div className="mt-5 text-center" aria-live="polite">
-        <p className="display text-lg font-semibold leading-tight">{SLIDES[active].label}</p>
-        <p className="mt-1 text-sm text-ink-muted">{SLIDES[active].sub}</p>
-      </div>
+      <p className="mt-5 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-bright">
+        Tu sistema en acción
+      </p>
 
       <div className="mt-4 flex items-center justify-center gap-2">
         {SLIDES.map((s, i) => (
