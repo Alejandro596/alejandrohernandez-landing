@@ -1,6 +1,6 @@
 import HeroStats from "./HeroStats";
 import SofiaCta from "./SofiaCta";
-import VslCard from "./VslCard";
+import ShowcaseCarousel from "./ShowcaseCarousel";
 
 export default function Hero() {
   return (
@@ -26,9 +26,9 @@ export default function Hero() {
             hecho a la medida de tu negocio.
           </p>
 
-          {/* En móvil el video vive aquí: entre el copy y el CTA */}
-          <div data-reveal className="mt-8 w-full md:hidden">
-            <VslCard />
+          {/* En móvil la demo vive aquí: entre el copy y el CTA */}
+          <div data-reveal className="mt-10 w-full md:hidden">
+            <ShowcaseCarousel />
           </div>
 
           <div data-reveal className="mt-8 md:mt-9">
@@ -41,9 +41,9 @@ export default function Hero() {
           <HeroStats />
         </div>
 
-        {/* En móvil el video vive en su propia sección justo después del copy */}
+        {/* En móvil la demo vive arriba (entre copy y CTA); aquí es la columna derecha en desktop */}
         <div data-reveal className="hidden md:block">
-          <VslCard />
+          <ShowcaseCarousel />
         </div>
       </div>
     </section>
