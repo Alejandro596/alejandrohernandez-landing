@@ -327,3 +327,29 @@ html.js [data-chat] > * {
 .chat-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* ---------- indicador "se puede deslizar" en el chat del carrusel ---------- */
+.scroll-hint {
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+.scroll-hint[data-hidden] {
+  opacity: 0;
+}
+.scroll-hint svg {
+  animation: scroll-hint-bounce 1.4s ease-in-out infinite;
+}
+@keyframes scroll-hint-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint svg {
+    animation: none;
+  }
+}

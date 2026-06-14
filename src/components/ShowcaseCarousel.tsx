@@ -149,6 +149,8 @@ const SLIDES: Slide[] = [
 export default function ShowcaseCarousel() {
   const [active, setActive] = useState(0);
   const [stopped, setStopped] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [hideHint, setHideHint] = useState(false);
   const paused = useRef(false);
   const scrollers = useRef<(HTMLDivElement | null)[]>([]);
   const stageRef = useRef<HTMLDivElement | null>(null);
@@ -183,10 +185,54 @@ export default function ShowcaseCarousel() {
     return () => window.clearInterval(id);
   }, [n, stopped]);
 
+  // En PC (mouse), al pasar por encima del chat la rueda mueve solo la conversación.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(min-width: 768px) and (pointer: fine)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Indica si la tarjeta activa todavía tiene conversación por debajo (para la flechita).
+  const refreshHint = (i: number, el: HTMLDivElement) => {
+    if (i !== activeRef.current) return;
+    const max = el.scrollHeight - el.clientHeight;
+    setHideHint(max <= 8 || el.scrollTop >= max - 24);
+  };
+
+  // PC: la rueda sobre el chat mueve la conversación y frena la página (Lenis).
+  // Al llegar a un extremo deja pasar el scroll para no atrapar al visitante.
+  useEffect(() => {
+    if (!isDesktop) return;
+    const cleanups: Array<() => void> = [];
+    scrollers.current.forEach((el, i) => {
+      if (!el) return;
+      const onWheel = (e: WheelEvent) => {
+        if (i !== activeRef.current) return;
+        const max = el.scrollHeight - el.clientHeight;
+        if (max <= 0) return;
+        const atTop = el.scrollTop <= 0;
+        const atBottom = el.scrollTop >= max - 1;
+        if ((e.deltaY > 0 && atBottom) || (e.deltaY < 0 && atTop)) return;
+        e.preventDefault();
+        e.stopPropagation();
+        el.scrollTop = Math.max(0, Math.min(max, el.scrollTop + e.deltaY));
+        refreshHint(i, el);
+      };
+      el.addEventListener("wheel", onWheel, { passive: false });
+      cleanups.push(() => el.removeEventListener("wheel", onWheel));
+    });
+    return () => cleanups.forEach((c) => c());
+  }, [isDesktop]);
+
   // Al cambiar de tarjeta, la nueva activa toma la posición que corresponde al scroll actual.
   useEffect(() => {
     activeRef.current = active;
     drive();
+    const el = scrollers.current[active];
+    if (el) refreshHint(active, el);
   }, [active]);
 
   // El scroll de la página mueve la conversación. Se engancha a Lenis si está, y al
@@ -241,7 +287,11 @@ export default function ShowcaseCarousel() {
     <div
       className="w-full"
       onMouseEnter={() => (paused.current = true)}
-      onMouseLeave={() => (paused.current = false)}
+      onMouseLeave={() => {
+        paused.current = false;
+        // Salvaguarda: si el mouse sale del carrusel, Lenis siempre vuelve a andar.
+        if (isDesktop) scrollState.lenis?.start();
+      }}
       onFocusCapture={() => (paused.current = true)}
       onBlurCapture={() => (paused.current = false)}
       onPointerDown={() => setStopped(true)}
@@ -279,6 +329,13 @@ export default function ShowcaseCarousel() {
                 ref={(el) => {
                   scrollers.current[i] = el;
                 }}
+                onScroll={(e) => refreshHint(i, e.currentTarget)}
+                onMouseEnter={() => {
+                  if (isActive && isDesktop) scrollState.lenis?.stop();
+                }}
+                onMouseLeave={() => {
+                  if (isDesktop) scrollState.lenis?.start();
+                }}
                 className={`chat-scroll flex-1 overflow-y-auto overscroll-contain ${
                   s.kind === "chat" ? "bg-[#091009]" : "bg-bg-raised"
                 }`}
@@ -286,6 +343,20 @@ export default function ShowcaseCarousel() {
               >
                 {s.kind === "chat" ? <ChatMessages msgs={s.msgs!} /> : <CrmContent />}
               </div>
+
+              {isActive && (
+                <div
+                  className="scroll-hint pointer-events-none absolute inset-x-0 bottom-2 flex justify-center"
+                  data-hidden={hideHint || undefined}
+                >
+                  <span className="flex items-center gap-1 rounded-full border border-hairline bg-bg/85 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-accent-bright backdrop-blur">
+                    {isDesktop ? "Pasa el mouse y desliza" : "Desliza"}
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </span>
+                </div>
+              )}
             </div>
           );
         })}
