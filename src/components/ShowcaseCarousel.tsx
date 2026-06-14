@@ -3,28 +3,38 @@
 import { useEffect, useRef, useState } from "react";
 
 /* Carrusel "coverflow" que reemplaza al VSL mientras el video real no está listo.
-   3 demos en formato celular: dos conversaciones de WhatsApp (el bot vendiendo y
+   3 demos en formato celular: dos conversaciones de WhatsApp (el agente vendiendo y
    haciendo seguimiento) y un CRM inventado. Tarjeta central nítida + laterales
-   asomándose, flechas, puntos y autoavance (se pausa al pasar el mouse y respeta
-   prefers-reduced-motion). Visible sin JS: renderiza la primera tarjeta al centro. */
+   asomándose, flechas, puntos y autoavance (se pausa al pasar el mouse y se detiene
+   cuando el visitante toca/arrastra para leer). Las conversaciones se pueden
+   desplazar con scroll dentro de la tarjeta, como un chat real. Visible sin JS. */
 
-type ChatMsg = { from: "user" | "sofia"; text: string };
+type ChatMsg = { from: "user" | "sofia"; text: string; time: string };
 
 const VENTA: ChatMsg[] = [
-  { from: "user", text: "Vi el anuncio, ¿cuánto cuesta?" },
-  { from: "sofia", text: "¡Hola! 😊 Está en $189.000 con envío gratis. ¿Te lo despacho hoy?" },
-  { from: "user", text: "Sí, lo quiero" },
-  { from: "sofia", text: "¡Listo! Pedido confirmado ✅ Llega mañana. ¿Pagas contra entrega?" },
-  { from: "user", text: "Sí, contra entrega" },
-  { from: "sofia", text: "Perfecto, quedó agendado. ¡Gracias por tu compra! 🎉" },
+  { from: "user", text: "Hola, vi el anuncio en Instagram. ¿Todavía tienen el combo disponible?", time: "11:58 p. m." },
+  { from: "sofia", text: "¡Hola! 😊 Sí, claro, lo tenemos disponible y con envío gratis a todo el país. ¿Para qué ciudad sería?", time: "11:58 p. m." },
+  { from: "user", text: "Para Bogotá", time: "11:59 p. m." },
+  { from: "sofia", text: "¡Perfecto! A Bogotá te llega en 1 o 2 días hábiles. El combo está en $189.000, pago contra entrega. ¿Te lo despacho?", time: "11:59 p. m." },
+  { from: "user", text: "Sí, lo quiero", time: "12:01 a. m." },
+  { from: "sofia", text: "¡Genial! Para agendar el envío, ¿me confirmas tu nombre completo, dirección y un teléfono?", time: "12:01 a. m." },
+  { from: "user", text: "Carlos Gómez, Calle 134 #18-40, apto 502. Cel 311 555 0192", time: "12:03 a. m." },
+  { from: "sofia", text: "¡Listo, Carlos! ✅ Pedido confirmado: Combo x1 — $189.000, contra entrega. Dirección: Calle 134 #18-40, apto 502. Llega entre mañana y pasado.", time: "12:03 a. m." },
+  { from: "sofia", text: "Te escribo apenas salga a reparto 🚚", time: "12:03 a. m." },
+  { from: "user", text: "Listo, muchas gracias 🙌", time: "12:04 a. m." },
+  { from: "sofia", text: "¡Con gusto! Cualquier cosa me escribes por aquí 😊", time: "12:04 a. m." },
 ];
 
 const SEGUIMIENTO: ChatMsg[] = [
-  { from: "sofia", text: "Hola Laura 👋 Ayer preguntaste por el plan y no alcanzamos a cerrar. ¿Sigues interesada?" },
-  { from: "user", text: "Sí, es que se me pasó" },
-  { from: "sofia", text: "Tranquila 😊 Te aparté el cupo con 10% de descuento, válido hoy. ¿Lo activamos?" },
-  { from: "user", text: "Listo, hagámoslo" },
-  { from: "sofia", text: "¡Genial! Te paso el link de pago 🙌" },
+  { from: "sofia", text: "Hola Laura 👋 Soy Sofía. Ayer preguntaste por el plan pero no alcanzamos a terminar. ¿Te quedó alguna duda?", time: "9:12 a. m." },
+  { from: "user", text: "Hola, sí, es que se me pasó responder 🙈", time: "9:40 a. m." },
+  { from: "sofia", text: "Tranquila, sé que el día se llena 😊 ¿Te cuento rápido cómo quedaría?", time: "9:40 a. m." },
+  { from: "user", text: "Dale", time: "9:41 a. m." },
+  { from: "sofia", text: "El plan completo te queda en $250.000/mes, sin cláusula de permanencia. Y si lo activas hoy, te dejo el primer mes con 10% de descuento.", time: "9:41 a. m." },
+  { from: "user", text: "Mmm me interesa, pero ¿incluye soporte?", time: "9:43 a. m." },
+  { from: "sofia", text: "¡Sí! Soporte por WhatsApp todos los días y ajustes cada mes. ¿Lo activamos con el descuento antes de que se venza hoy?", time: "9:44 a. m." },
+  { from: "user", text: "Listo, hagámoslo", time: "9:46 a. m." },
+  { from: "sofia", text: "¡Excelente decisión, Laura! 🙌 Te mando el link de pago y quedamos andando hoy mismo.", time: "9:46 a. m." },
 ];
 
 type Lead = { name: string; stage: string; note: string; tone: "muted" | "accent" | "deep" | "won" };
@@ -34,39 +44,56 @@ const LEADS: Lead[] = [
   { name: "Andrés T.", stage: "En chat", note: "Pidió fotos del producto", tone: "accent" },
   { name: "Diana V.", stage: "Agendado", note: "Demo · jueves 3:00 p. m.", tone: "deep" },
   { name: "Carlos G.", stage: "Vendido", note: "$189.000 · contra entrega", tone: "won" },
+  { name: "Laura P.", stage: "Vendido", note: "Plan mensual · 10% dto.", tone: "won" },
+  { name: "Jorge M.", stage: "Nuevo", note: "Vio el anuncio · 1:15 a. m.", tone: "muted" },
 ];
 
-function Chat({ msgs }: { msgs: ChatMsg[] }) {
+function ChatHeader() {
   return (
-    <div className="flex h-full flex-col bg-[#091009]">
-      <div className="flex items-center gap-2.5 border-b border-hairline bg-bg px-3.5 py-2.5">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-[11px] font-bold text-on-accent">
-          S
-        </span>
-        <div>
-          <p className="text-[11px] font-semibold leading-tight">Sofía · Asesora</p>
-          <p className="text-[9px] leading-tight text-accent-deep">en línea</p>
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col justify-end gap-1.5 overflow-hidden p-3">
-        {msgs.map((m, i) => (
-          <div
-            key={i}
-            className={`max-w-[90%] rounded-xl px-2.5 py-1.5 text-[11px] leading-snug shadow-sm ${
-              m.from === "sofia"
-                ? "self-start rounded-bl-sm bg-[#1d2a20] text-ink"
-                : "self-end rounded-br-sm bg-[#005c4b] text-ink"
-            }`}
-          >
-            {m.text}
-          </div>
-        ))}
+    <div className="flex shrink-0 items-center gap-2.5 border-b border-hairline bg-bg px-3.5 py-2.5">
+      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-[11px] font-bold text-on-accent">
+        S
+      </span>
+      <div>
+        <p className="text-[11px] font-semibold leading-tight">Sofía · Asesora</p>
+        <p className="text-[9px] leading-tight text-accent-deep">en línea</p>
       </div>
     </div>
   );
 }
 
-function Crm() {
+function ChatMessages({ msgs }: { msgs: ChatMsg[] }) {
+  return (
+    <div className="flex flex-col gap-1.5 p-3">
+      {msgs.map((m, i) => (
+        <div
+          key={i}
+          className={`max-w-[90%] shrink-0 rounded-xl px-2.5 py-1.5 text-[11px] leading-snug shadow-sm ${
+            m.from === "sofia"
+              ? "self-start rounded-bl-sm bg-[#1d2a20] text-ink"
+              : "self-end rounded-br-sm bg-[#005c4b] text-ink"
+          }`}
+        >
+          {m.text}
+          <span className="ml-2 align-bottom text-[8px] text-ink/50">{m.time}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CrmHeader() {
+  return (
+    <div className="flex shrink-0 items-center gap-1.5 border-b border-hairline bg-bg px-3.5 py-2.5">
+      <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
+      <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
+      <span className="h-2 w-2 rounded-full bg-[#28c840]" />
+      <span className="ml-2 text-[10px] font-medium text-ink-muted">Tu CRM · Hoy</span>
+    </div>
+  );
+}
+
+function CrmContent() {
   const chip: Record<Lead["tone"], string> = {
     muted: "bg-ink-muted/15 text-ink-muted",
     accent: "bg-accent/15 text-accent-bright",
@@ -74,14 +101,8 @@ function Crm() {
     won: "bg-accent text-on-accent",
   };
   return (
-    <div className="flex h-full flex-col bg-bg-raised">
-      <div className="flex items-center gap-1.5 border-b border-hairline bg-bg px-3.5 py-2.5">
-        <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
-        <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
-        <span className="h-2 w-2 rounded-full bg-[#28c840]" />
-        <span className="ml-2 text-[10px] font-medium text-ink-muted">Tu CRM · Hoy</span>
-      </div>
-      <div className="grid grid-cols-3 gap-1.5 px-3 pt-3">
+    <div className="p-3">
+      <div className="grid grid-cols-3 gap-1.5 pb-3">
         {[
           { k: "Leads", v: "24" },
           { k: "Agendados", v: "6" },
@@ -93,7 +114,7 @@ function Crm() {
           </div>
         ))}
       </div>
-      <div className="flex flex-1 flex-col gap-1.5 p-3">
+      <div className="flex flex-col gap-1.5">
         {LEADS.map((l) => (
           <div key={l.name} className="rounded-lg border border-hairline bg-bg p-2">
             <div className="flex items-center justify-between gap-2">
@@ -110,27 +131,47 @@ function Crm() {
   );
 }
 
-const SLIDES = [
-  { label: "Tu agente cerrando ventas", sub: "Atiende y vende sin que estés.", body: <Chat msgs={VENTA} /> },
-  { label: "Tu agente haciendo seguimiento", sub: "Recupera a los que se enfrían.", body: <Chat msgs={SEGUIMIENTO} /> },
-  { label: "Tu CRM personalizado", sub: "Cada lead, en un solo lugar.", body: <Crm /> },
+type Slide = {
+  label: string;
+  sub: string;
+  kind: "chat" | "crm";
+  msgs?: ChatMsg[];
+};
+
+const SLIDES: Slide[] = [
+  { label: "Tu agente cerrando ventas", sub: "Atiende y vende sin que estés.", kind: "chat", msgs: VENTA },
+  { label: "Tu agente haciendo seguimiento", sub: "Recupera a los que se enfrían.", kind: "chat", msgs: SEGUIMIENTO },
+  { label: "Tu CRM personalizado", sub: "Cada lead, en un solo lugar.", kind: "crm" },
 ];
 
 export default function ShowcaseCarousel() {
   const [active, setActive] = useState(0);
+  const [stopped, setStopped] = useState(false);
   const paused = useRef(false);
+  const scrollers = useRef<(HTMLDivElement | null)[]>([]);
   const n = SLIDES.length;
 
-  const go = (dir: number) => setActive((a) => (a + dir + n) % n);
+  const go = (dir: number) => {
+    setStopped(true);
+    setActive((a) => (a + dir + n) % n);
+  };
 
+  // Autoavance: se detiene en cuanto el visitante interactúa (para que pueda leer/scrollear).
   useEffect(() => {
+    if (stopped) return;
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setInterval(() => {
       if (!paused.current) setActive((a) => (a + 1) % n);
-    }, 5000);
+    }, 6000);
     return () => window.clearInterval(id);
-  }, [n]);
+  }, [n, stopped]);
+
+  // Al cambiar de tarjeta, la nueva activa arranca desde el inicio de la conversación.
+  useEffect(() => {
+    const el = scrollers.current[active];
+    if (el) el.scrollTop = 0;
+  }, [active]);
 
   const relOf = (i: number) => {
     let d = i - active;
@@ -162,6 +203,7 @@ export default function ShowcaseCarousel() {
       onMouseLeave={() => (paused.current = false)}
       onFocusCapture={() => (paused.current = true)}
       onBlurCapture={() => (paused.current = false)}
+      onPointerDown={() => setStopped(true)}
     >
       <div className="mb-5 text-center" aria-live="polite">
         <p className="display text-lg font-semibold leading-tight">{SLIDES[active].label}</p>
@@ -169,7 +211,7 @@ export default function ShowcaseCarousel() {
       </div>
 
       <div
-        className="relative mx-auto h-[420px] w-full max-w-[420px] overflow-hidden sm:h-[440px]"
+        className="relative mx-auto h-[440px] w-full max-w-[420px] overflow-hidden sm:h-[460px]"
         style={{ perspective: "1200px" }}
         role="group"
         aria-roledescription="carrusel"
@@ -179,18 +221,30 @@ export default function ShowcaseCarousel() {
           const rel = relOf(i);
           const isActive = rel === 0;
           return (
-            <button
+            <div
               key={i}
-              type="button"
+              role="group"
               aria-label={s.label}
-              aria-current={isActive}
-              tabIndex={isActive ? 0 : -1}
-              onClick={() => !isActive && setActive(i)}
-              className="card absolute left-1/2 top-1/2 h-[396px] w-[228px] cursor-pointer overflow-hidden p-0 text-left transition-all duration-500 ease-out sm:h-[412px]"
+              aria-hidden={!isActive}
+              onClick={() => !isActive && (setStopped(true), setActive(i))}
+              className={`card absolute left-1/2 top-1/2 flex h-[416px] w-[228px] flex-col overflow-hidden p-0 text-left transition-all duration-500 ease-out sm:h-[436px] ${
+                isActive ? "" : "cursor-pointer"
+              }`}
               style={styleFor(rel)}
             >
-              {s.body}
-            </button>
+              {s.kind === "chat" ? <ChatHeader /> : <CrmHeader />}
+              <div
+                ref={(el) => {
+                  scrollers.current[i] = el;
+                }}
+                className={`chat-scroll flex-1 overflow-y-auto overscroll-contain ${
+                  s.kind === "chat" ? "bg-[#091009]" : "bg-bg-raised"
+                }`}
+                style={{ WebkitOverflowScrolling: "touch" }}
+              >
+                {s.kind === "chat" ? <ChatMessages msgs={s.msgs!} /> : <CrmContent />}
+              </div>
+            </div>
           );
         })}
 
@@ -225,7 +279,10 @@ export default function ShowcaseCarousel() {
           <button
             key={i}
             type="button"
-            onClick={() => setActive(i)}
+            onClick={() => {
+              setStopped(true);
+              setActive(i);
+            }}
             aria-label={`Ver: ${s.label}`}
             aria-current={i === active}
             className={`h-2 rounded-full transition-all ${

@@ -311,3 +311,19 @@ html.js [data-chat] > * {
 .t-premium {
   transition: all 0.5s var(--ease-premium);
 }
+
+/* ---------- scroll del chat del carrusel (delgado, verde) ---------- */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(140, 228, 39, 0.45) transparent;
+}
+.chat-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: rgba(140, 228, 39, 0.4);
+  border-radius: 9999px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
