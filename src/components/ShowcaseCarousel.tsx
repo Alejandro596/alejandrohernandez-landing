@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { scrollState } from "@/lib/scroll";
+
 /* Carrusel "coverflow" que reemplaza al VSL mientras el video real no está listo.
    3 demos en formato celular: dos conversaciones de WhatsApp (el agente vendiendo y
    haciendo seguimiento) y un CRM inventado. Tarjeta central nítida + laterales
@@ -149,7 +151,21 @@ export default function ShowcaseCarousel() {
   const [stopped, setStopped] = useState(false);
   const paused = useRef(false);
   const scrollers = useRef<(HTMLDivElement | null)[]>([]);
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const activeRef = useRef(0);
   const n = SLIDES.length;
+
+  // Mueve el scroll interno de la tarjeta activa según cuánto se ha desplazado la
+  // sección en la pantalla: la conversación "avanza" con el scroll de la página.
+  const drive = () => {
+    const stage = stageRef.current;
+    const sc = scrollers.current[activeRef.current];
+    if (!stage || !sc || stage.offsetParent === null) return;
+    const rect = stage.getBoundingClientRect();
+    const progress = Math.min(1, Math.max(0, -rect.top / rect.height));
+    const max = Math.max(0, sc.scrollHeight - sc.clientHeight);
+    sc.scrollTop = progress * max;
+  };
 
   const go = (dir: number) => {
     setStopped(true);
@@ -167,11 +183,36 @@ export default function ShowcaseCarousel() {
     return () => window.clearInterval(id);
   }, [n, stopped]);
 
-  // Al cambiar de tarjeta, la nueva activa arranca desde el inicio de la conversación.
+  // Al cambiar de tarjeta, la nueva activa toma la posición que corresponde al scroll actual.
   useEffect(() => {
-    const el = scrollers.current[active];
-    if (el) el.scrollTop = 0;
+    activeRef.current = active;
+    drive();
   }, [active]);
+
+  // El scroll de la página mueve la conversación. Se engancha a Lenis si está, y al
+  // scroll nativo como respaldo; rAF para no recalcular de más.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        drive();
+      });
+    };
+    const lenis = scrollState.lenis;
+    lenis?.on("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    drive();
+    return () => {
+      lenis?.off("scroll", onScroll);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
+  }, []);
 
   const relOf = (i: number) => {
     let d = i - active;
@@ -211,6 +252,7 @@ export default function ShowcaseCarousel() {
       </div>
 
       <div
+        ref={stageRef}
         className="relative mx-auto h-[440px] w-full max-w-[420px] overflow-hidden sm:h-[460px]"
         style={{ perspective: "1200px" }}
         role="group"
